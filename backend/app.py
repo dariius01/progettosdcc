@@ -15,20 +15,29 @@ load_dotenv()  # carica le variabili da .env
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-
 # Recupera tutte le notizie
 @app.route('/api/notizie', methods=['GET'])
 def get_notizie():
-    notizie = Notizia.query.all()
-    return jsonify([n.to_dict() for n in notizie])
+    try:
+        notizie = Notizia.query.all()
+        if not notizie:
+            return jsonify({"messaggio": "Nessuna notizia trovata"}), 404
+        return jsonify([n.to_dict() for n in notizie])
+    except Exception as e:
+        return jsonify({"errore": f"Errore interno: {str(e)}"}), 500
+
 
 # Recupera una notizia specifica per ID
-@app.route('/api/notizie/<int:notizia_id>', methods=['GET'])
-def get_notizia(notizia_id):
-    notizia = Notizia.query.get(id)
-    if not notizia:
-        return jsonify({"errore": "Notizia non trovata"}), 404
-    return jsonify(notizia.to_dict())
+@app.route('/api/notizie/<int:id>', methods=['GET'])
+def get_notizia(id):
+    try:
+        notizia = Notizia.query.get(id)
+        if not notizia:
+            return jsonify({"errore": "Notizia non trovata"}), 404
+        return jsonify(notizia.to_dict())
+    except Exception as e:
+        return jsonify({"errore": f"Errore interno: {str(e)}"}), 500
+
 
 #Elimina notizia
 @app.route('/api/notizie/<int:id>', methods=['DELETE'])
@@ -36,9 +45,13 @@ def elimina_notizia(id):
     notizia = Notizia.query.get(id)
     if not notizia:
         return jsonify({"errore": "Notizia non trovata"}), 404
-    db.session.delete(notizia)
-    db.session.commit()
-    return jsonify({"messaggio": "Notizia eliminata"})
+    try:
+        db.session.delete(notizia)
+        db.session.commit()
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"success": False, "message": f"Errore durante l'eliminazione: {str(e)}"}), 500
+    return jsonify({"success": True, "message": "Notizia eliminata"})
 
 # Modifica una notizia (facoltativo)
 @app.route('/api/notizie/<int:id>', methods=['PUT'])
@@ -46,12 +59,19 @@ def modifica_notizia(id):
     notizia = Notizia.query.get(id)
     if not notizia:
         return jsonify({"errore": "Notizia non trovata"}), 404
-    dati = request.get_json()
-    notizia.titolo = dati.get('titolo', notizia.titolo)
-    notizia.sottotitolo = dati.get('sottotitolo', notizia.sottotitolo)
-    notizia.testo = dati.get('testo', notizia.testo)
-    db.session.commit()
-    return jsonify({"messaggio": "Notizia aggiornata"})
+    
+    try:
+        dati = request.get_json()
+        if not dati:
+            return jsonify({"errore": "Dati JSON non validi"}), 400
+        
+        notizia.titolo = dati.get('titolo', notizia.titolo)
+        notizia.sottotitolo = dati.get('sottotitolo', notizia.sottotitolo)
+        notizia.testo = dati.get('testo', notizia.testo)
+        db.session.commit()
+        return jsonify({"messaggio": "Notizia aggiornata"})
+    except Exception as e:
+        return jsonify({"errore": "Errore durante l'aggiornamento della notizia", "dettagli": str(e)}), 500
 
 # Genera una notizia fittizia con IA (placeholder per ora)
 @app.route('/api/genera-notizia', methods=['POST'])
@@ -79,8 +99,12 @@ def ricerca_notizie():
     if not query:
         return jsonify({"errore": "Parametro 'q' mancante"}), 400
 
-    risultati = cerca_notizie_web(query)
-    return jsonify(risultati)
+    try:
+        risultati = cerca_notizie_web(query)
+        return jsonify(risultati)
+    except Exception as e:
+        return jsonify({"errore": "Errore nella ricerca delle notizie", "dettagli": str(e)}), 500
+
 
 
 
