@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 from models import db, Notizia
 from services import cerca_notizie_web
-from ai import genera_notizia_da_ai
+from ai import genera_notizia_da_articoli
 from dotenv import load_dotenv
 import os
 
@@ -55,11 +55,23 @@ def modifica_notizia(id):
 
 # Genera una notizia fittizia con IA (placeholder per ora)
 @app.route('/api/genera-notizia', methods=['POST'])
-def genera_notizia():
+def genera_notizia_da_articoli_route():
     dati = request.get_json()
-    tema = dati.get('nome', 'Atleta sconosciuto')
-    notizia = genera_notizia_da_ai(tema)
-    return jsonify(notizia)
+    articoli_web = dati.get("articoli_web", [])
+    articoli_manuali = dati.get("articoli_manuali", [])
+    tema = dati.get("tema", "")
+
+    articolo_generato = genera_notizia_da_articoli(articoli_web, articoli_manuali, tema)
+
+    nuova_notizia = Notizia(
+        titolo=articolo_generato["titolo"],
+        sottotitolo=articolo_generato["sottotitolo"],
+        testo=articolo_generato["testo"]
+    )
+    db.session.add(nuova_notizia)
+    db.session.commit()
+
+    return jsonify(nuova_notizia.to_dict()), 201
 
 @app.route('/api/ricerca-notizie', methods=['GET'])
 def ricerca_notizie():
@@ -71,8 +83,8 @@ def ricerca_notizie():
     return jsonify(risultati)
 
 
-# Aggiungi articolo manualmente
-@app.route('/api/aggiungi-articolo', methods=['POST'])
+
+"""@app.route('/api/aggiungi-articolo', methods=['POST'])
 def aggiungi_articolo():
     dati = request.get_json()
     nuova = Notizia(
@@ -84,7 +96,7 @@ def aggiungi_articolo():
     db.session.add(nuova)
     db.session.commit()
     return jsonify(nuova.to_dict()), 201
-
+"""
 
 if __name__ == '__main__':
     print("🚀 Avvio server Flask...")
