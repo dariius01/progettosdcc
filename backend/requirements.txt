@@ -1,0 +1,12 @@
+flask
+flask-cors
+openai
+requests
+
+#db
+pass:prova01
+user:postgres
+
+#newsAPI
+dario.dolcetti2001@gmail.com
+
