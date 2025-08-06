@@ -3,57 +3,54 @@ import os
 from dotenv import load_dotenv
 
 load_dotenv()
-openai.api_key = os.getenv("OPENAI_API_KEY")
+
+client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+
 def genera_notizia_da_ai(prompt: str) -> dict:
     try:
-        response = openai.chat.completions.create(
+        response = client.chat.completions.create(
             model="gpt-4o-mini",
             messages=[
-                {"role": "system", "content": "Sei un giornalista sportivo."},
+                {"role": "system", "content": "Sei un giornalista sportivo. Scrivi la notizia in un formato semplice: la prima riga è il titolo, la seconda il sottotitolo e il resto è il testo."},
                 {"role": "user", "content": prompt}
             ],
             temperature=0.7,
             max_tokens=500
         )
         testo_generato = response.choices[0].message.content
-        sezioni = parse_articolo(testo_generato)
+        sezioni = parse_articolo_flessibile(testo_generato)
         return {
-            "titolo": sezioni["titolo"],
-            "sottotitolo": sezioni["sottotitolo"],
-            "testo": sezioni["testo"],
-            "testo_grezzo": testo_generato  # qui il testo completo
+            "titolo": sezioni.get("titolo", ""),
+            "sottotitolo": sezioni.get("sottotitolo", ""),
+            "testo": sezioni.get("testo", ""),
+           # "testo_grezzo": testo_generato
         }
     except Exception as e:
         return {"titolo": "", "sottotitolo": "", "testo": f"Errore AI: {str(e)}"}
 
+# ---
+
+def parse_articolo_flessibile(testo_generato: str) -> dict:
+    """
+    Analizza il testo generato dall'AI in modo flessibile.
+    Cerca il titolo nella prima riga, il sottotitolo nella seconda e il resto nel testo.
+    """
+    righe = [riga.strip() for riga in testo_generato.splitlines() if riga.strip()]
     
-def parse_articolo(testo_generato: str) -> dict:
-    sezioni = {"titolo": "", "sottotitolo": "", "testo": ""}
-    current_section = None
+    titolo = righe[0] if len(righe) > 0 else ""
+    sottotitolo = righe[1] if len(righe) > 1 else ""
+    testo = " ".join(righe[2:]) if len(righe) > 2 else ""
 
-    for riga in testo_generato.splitlines():
-        riga_strip = riga.strip()
-        if riga_strip.lower().startswith("titolo:"):
-            current_section = "titolo"
-            sezioni[current_section] = riga_strip[7:].strip()
-        elif riga_strip.lower().startswith("sottotitolo:"):
-            current_section = "sottotitolo"
-            sezioni[current_section] = riga_strip[12:].strip()
-        elif riga_strip.lower().startswith("testo:"):
-            current_section = "testo"
-            sezioni[current_section] = riga_strip[6:].strip()
-        elif current_section:
-            # Aggiungi righe multilinea alla sezione corrente
-            sezioni[current_section] += " " + riga_strip
+    return {
+        "titolo": titolo,
+        "sottotitolo": sottotitolo,
+        "testo": testo
+    }
 
-    # Optional: strip finale per pulire spazi residui
-    for key in sezioni:
-        sezioni[key] = sezioni[key].strip()
-
-    return sezioni
-
+# ---
 
 def genera_prompt_da_articoli(articoli_web: list[dict], articoli_manuali: list[dict], tema: str) -> str:
+  
     def format_articoli(lista):
         testi = []
         for art in lista:
@@ -67,22 +64,27 @@ def genera_prompt_da_articoli(articoli_web: list[dict], articoli_manuali: list[d
     prompt = (
         f"Usa i seguenti articoli per scrivere una notizia sportiva professionale e accattivante sul tema '{tema}'. "
         "La notizia deve essere chiara, sintetica e informativa, rivolta a un pubblico appassionato di sport. "
-        "Segui questo formato preciso:\n"
-        "Titolo: un titolo efficace e coinvolgente, massimo 10 parole\n"
-        "Sottotitolo: una breve frase che approfondisce il titolo\n"
-        "Testo: un riassunto dettagliato ma conciso, massimo 500 caratteri, che includa i fatti principali, "
-        "le emozioni e un tocco di originalità.\n"
+        "Scrivi la notizia nel formato richiesto: la prima riga è il titolo, la seconda il sottotitolo, e il resto è il corpo del testo.\n"
+        "Il titolo non deve superare le 10 parole. Il sottotitolo deve essere una breve frase che approfondisce il titolo. Il testo deve essere un riassunto conciso e dettagliato, massimo 500 caratteri.\n"
         "Evita ripetizioni e usa un linguaggio semplice e diretto.\n\n"
-
         "Articoli web:\n"
         f"{format_articoli(articoli_web)}\n\n"
-
         "Articoli manuali:\n"
         f"{format_articoli(articoli_manuali)}\n"
     )
     return prompt
 
+# ---
 
-def genera_notizia_da_articoli(articoli_web: list[dict], articoli_manuali: list[dict], tema: str) -> dict:
+def genera_notizia_da_articoli(articoli_web: list[dict], articoli_manuali: list[dict], tema: str = "") -> dict:
+    # Se il tema non è fornito, prova a inferirlo dai titoli degli articoli
+    if not tema:
+        if articoli_web and articoli_web[0].get("titolo"):
+            tema = articoli_web[0]["titolo"]
+        elif articoli_manuali and articoli_manuali[0].get("titolo"):
+            tema = articoli_manuali[0]["titolo"]
+        else:
+            tema = "Sport"
+
     prompt = genera_prompt_da_articoli(articoli_web, articoli_manuali, tema)
     return genera_notizia_da_ai(prompt)

@@ -1,0 +1,88 @@
+<div class="container">
+  <h1 class="titolo">Ricerca Notizie</h1>
+
+  <!-- Barra di ricerca con icona lente -->
+  <div class="barra-ricerca">
+    <mat-icon class="icona-lente">search</mat-icon>
+    <input
+      type="text"
+      [(ngModel)]="query"
+      (keydown.enter)="cerca()"
+      placeholder="Cerca notizie"
+      class="input-elegante"
+    />
+  </div>
+
+  <!-- Messaggio di errore -->
+  <div *ngIf="errore" class="messaggio-errore">{{ errore }}</div>
+
+  <!-- Lista risultati -->
+  <div class="lista-risultati">
+    <div
+      *ngFor="let notizia of risultati"
+      class="card-notizia"
+      [class.selezionata]="isSelezionata(notizia)"
+    >
+      <!-- Checkbox di selezione -->
+      <label class="check-container">
+        <input
+          type="checkbox"
+          [checked]="isSelezionata(notizia)"
+          (change)="toggleSelezione(notizia, $event)"
+        />
+        <span class="custom-check"></span>
+      </label>
+
+      <!-- Contenuto notizia -->
+      <div class="contenuto-notizia">
+        <h3>
+          <a
+            *ngIf="notizia.link"
+            [href]="notizia.link"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="titolo-notizia-link"
+          >
+            {{ notizia.titolo }}
+          </a>
+          <span *ngIf="!notizia.link">{{ notizia.titolo }}</span>
+        </h3>
+
+        <p *ngIf="notizia.sottotitolo"><em>{{ notizia.sottotitolo }}</em></p>
+        <p *ngIf="notizia.source" class="fonte">Fonte: {{ notizia.source }}</p>
+
+        <a
+          *ngIf="notizia.link"
+          [href]="notizia.link"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="link-fonte"
+        >
+          Leggi la fonte
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Area generazione articolo (mostrata solo se ci sono risultati) -->
+<div class="area-generazione" *ngIf="risultati.length > 0">
+  <button
+    (click)="generaArticolo()"
+    [disabled]="loadingGenerazione || notizieSelezionate.length === 0"
+    [class.attivo]="notizieSelezionate.length > 0"
+  >
+    {{ loadingGenerazione ? 'Generazione in corso...' : 'Genera Articolo' }}
+  </button>
+
+
+  <div *ngIf="erroreGenerazione" class="messaggio-errore">
+    {{ erroreGenerazione }}
+  </div>
+
+  <div *ngIf="articoloGenerato" class="articolo-generato">
+    <h2>Articolo Generato</h2>
+    <h3>{{ articoloGenerato.titolo }}</h3>
+    <p>{{ articoloGenerato.testo }}</p>
+  </div>
+</div>

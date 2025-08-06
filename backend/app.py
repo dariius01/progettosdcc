@@ -8,12 +8,14 @@ import os
 
 app = Flask(__name__)
 CORS(app)
-db.init_app(app)
 
-load_dotenv()  # carica le variabili da .env
+load_dotenv()  
 
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+db.init_app(app)
+
 
 # Recupera tutte le notizie
 @app.route('/api/notizie', methods=['GET'])
@@ -73,7 +75,7 @@ def modifica_notizia(id):
     except Exception as e:
         return jsonify({"errore": "Errore durante l'aggiornamento della notizia", "dettagli": str(e)}), 500
 
-# Genera una notizia fittizia con IA (placeholder per ora)
+# Genera una notizia 
 @app.route('/api/genera-notizia', methods=['POST'])
 def genera_notizia_da_articoli_route():
     dati = request.get_json()
@@ -83,10 +85,23 @@ def genera_notizia_da_articoli_route():
 
     articolo_generato = genera_notizia_da_articoli(articoli_web, articoli_manuali, tema)
 
+    # Non salva più la notizia, ma ritorna solo i dati generati
+    return jsonify(articolo_generato), 200
+
+@app.route('/api/salva-notizia', methods=['POST'])
+def salva_notizia_route():
+    dati = request.get_json()
+    titolo = dati.get("titolo", "")
+    sottotitolo = dati.get("sottotitolo", "")
+    testo = dati.get("testo", "")
+
+    if not titolo or not testo:
+        return jsonify({"errore": "Titolo e testo sono obbligatori"}), 400
+
     nuova_notizia = Notizia(
-        titolo=articolo_generato["titolo"],
-        sottotitolo=articolo_generato["sottotitolo"],
-        testo=articolo_generato["testo"]
+        titolo=titolo,
+        sottotitolo=sottotitolo,
+        testo=testo
     )
     db.session.add(nuova_notizia)
     db.session.commit()
