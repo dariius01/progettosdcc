@@ -4,6 +4,7 @@ import { ArticoloGeneratoComponent } from './articolo-generato/articolo-generato
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { AggiuntaManualeComponent } from './aggiunta-manuale/aggiunta-manuale.component';
+import { DettagliNotiziaComponent } from './dettagli-notizia/dettagli-notizia/dettagli-notizia.component';
   
 
 export const routes: Routes = [
@@ -12,9 +13,9 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
 
-  // Rotta protetta con AuthGuard
   { path: 'articolo-generato', component: ArticoloGeneratoComponent},
   { path: 'aggiunta-manuale', component: AggiuntaManualeComponent},
+  { path: 'notizia/:id', component: DettagliNotiziaComponent},
 
   // fallback
   { path: '**', redirectTo: '' },

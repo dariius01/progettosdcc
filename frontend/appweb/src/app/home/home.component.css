@@ -175,17 +175,24 @@
   margin: 0 0 0.25rem 0;
   font-size: 1.25rem;
 }
-
 .titolo-notizia-link {
-  color: var(--text);
   text-decoration: none;
+  color: #1976d2;
+  font-weight: 600;
   transition: color 0.2s ease;
 }
 
 .titolo-notizia-link:hover {
-  color: var(--primary);
   text-decoration: underline;
+  color: #125a9c;
 }
+
+
+
+
+
+
+
 
 .contenuto-notizia p {
   margin: 0.2rem 0;
@@ -385,3 +392,75 @@
   outline: 2px solid #ff4444;
   outline-offset: 2px;
 }
+
+
+.cronologia-icon-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  cursor: pointer;
+  z-index: 1001;
+}
+
+.cronologia-icon {
+  font-size: 32px;
+  color: #3f51b5; /* blu mat-icon */
+  transition: color 0.3s ease;
+}
+
+.cronologia-icon:hover {
+  color: #303f9f; /* colore hover */
+}
+
+.lista-cronologia {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 320px;
+  height: 100vh;
+  background: #f9f9f9;
+  box-shadow: -2px 0 8px rgba(0,0,0,0.15);
+  padding: 20px;
+  overflow-y: auto;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+}
+
+.lista-cronologia h3 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  font-weight: 600;
+  font-size: 1.2rem;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
+}
+
+.lista-cronologia ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  flex-grow: 1;
+}
+
+.item-cronologia {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 5px;
+  border-bottom: 1px solid #ddd;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.item-cronologia:hover {
+  background-color: #e0e0e0;
+}
+
+.titolo-cronologia {
+  flex-grow: 1;
+  font-weight: 500;
+  margin-right: 10px;
+  user-select: none;
+}
+

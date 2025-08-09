@@ -17,13 +17,13 @@ export class AuthService {
   constructor(private http: HttpClient) {}
 
   private hasToken(): boolean {
-    return !!localStorage.getItem('access_token');
+    return !!sessionStorage.getItem('access_token');
   }
 
   login(email: string, password: string): Observable<LoginResponse> {
     return this.http.post<LoginResponse>(`${this.apiUrl}/login`, { email, password }).pipe(
       tap(res => {
-        localStorage.setItem('access_token', res.access_token);
+        sessionStorage.setItem('access_token', res.access_token);
         this.loggedIn.next(true);
       })
     );
@@ -34,7 +34,7 @@ export class AuthService {
   }
 
   logout() {
-    localStorage.removeItem('access_token');
+    sessionStorage.removeItem('access_token');
     this.loggedIn.next(false);
   }
 
@@ -43,6 +43,6 @@ export class AuthService {
   }
 
   getToken(): string | null {
-    return localStorage.getItem('access_token');
+    return sessionStorage.getItem('access_token');
   }
 }

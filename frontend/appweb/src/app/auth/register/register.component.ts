@@ -38,49 +38,50 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit(): void {
-  if (this.registerForm.invalid) return;
+    if (this.registerForm.invalid) return;
 
-  const { email, password } = this.registerForm.value;
+    const { email, password } = this.registerForm.value;
 
-  this.authService.register(email, password).subscribe({
-    next: () => {
-      this.authService.login(email, password).subscribe({
-        next: () => {
-          if (this.articoloDaSalvare) {
-            this.router.navigate(['/articolo-generato'], {
-              state: {
-                articolo: this.articoloDaSalvare,
-                autoSave: this.autoSave
-              }
-            });
-          } else {
-            this.router.navigate(['/']);
-          }
-        },
-        error: () => {
-          this.errorMessage = 'Registrazione riuscita ma login automatico fallito';
+    this.authService.register(email, password).subscribe({
+      next: () => {
+        this.authService.login(email, password).subscribe({
+      next: () => {
+        if (this.articoloDaSalvare) {
+          this.router.navigate(['/articolo-generato'], {
+            state: {
+              articolo: this.articoloDaSalvare,
+              autoSave: this.autoSave
+            },
+            replaceUrl: true  // <-- aggiungi qui
+          });
+        } else {
+          this.router.navigate(['/'], { replaceUrl: true });  // <-- e qui
         }
+      },
+      error: () => {
+        this.errorMessage = 'Registrazione riuscita ma login automatico fallito';
+      }
       });
     },
-    error: (err) => {
-      if (!err.status) {
-        this.errorMessage = 'Errore di connessione o server non disponibile';
-        return;
-      }
+      error: (err) => {
+        if (!err.status) {
+          this.errorMessage = 'Errore di connessione o server non disponibile';
+          return;
+        }
 
-      switch (err.status) {
-        case 400:
-          this.errorMessage = err.error?.errore || 'Dati non validi';
-          break;
-        case 409:
-          this.errorMessage = 'Email già esistente';
-          break;
-        default:
-          this.errorMessage = err.error?.errore || 'Errore nella registrazione';
-          break;
+        switch (err.status) {
+          case 400:
+            this.errorMessage = err.error?.errore || 'Dati non validi';
+            break;
+          case 409:
+            this.errorMessage = 'Email già esistente';
+            break;
+          default:
+            this.errorMessage = err.error?.errore || 'Errore nella registrazione';
+            break;
+        }
       }
-    }
-  });
-}
+    });
+  }
 
 }

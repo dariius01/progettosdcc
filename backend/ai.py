@@ -50,7 +50,6 @@ def parse_articolo_flessibile(testo_generato: str) -> dict:
 # ---
 
 def genera_prompt_da_articoli(articoli_web: list[dict], articoli_manuali: list[dict], tema: str) -> str:
-  
     def format_articoli(lista):
         testi = []
         for art in lista:
@@ -63,6 +62,7 @@ def genera_prompt_da_articoli(articoli_web: list[dict], articoli_manuali: list[d
 
     prompt = (
         f"Usa i seguenti articoli per scrivere una notizia sportiva professionale e accattivante sul tema '{tema}'. "
+        "La notizia DEVE avere come focus principale il termine indicato nel tema e menzionarlo esplicitamente almeno una volta nel testo. "
         "La notizia deve essere chiara, sintetica e informativa, rivolta a un pubblico appassionato di sport. "
         "Scrivi la notizia nel formato richiesto: la prima riga è il titolo, la seconda il sottotitolo (deve essere sempre presente), e il resto è il corpo del testo.\n"
         "Il titolo non deve superare le 10 parole. Il sottotitolo deve essere una breve frase che approfondisce il titolo. Il testo deve essere un riassunto conciso e dettagliato, massimo 500 caratteri.\n"
@@ -73,6 +73,7 @@ def genera_prompt_da_articoli(articoli_web: list[dict], articoli_manuali: list[d
         f"{format_articoli(articoli_manuali)}\n"
     )
     return prompt
+
 
 # ---
 

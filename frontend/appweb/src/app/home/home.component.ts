@@ -26,6 +26,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   loadingGenerazione = false;
   erroreGenerazione: string | null = null;
   mostraCronologia = false;
+  cronologiaNotizie: any[] = []; // ✅ nuove variabile
   isLoggedIn = false;
 
   articoliManuali: any[] = [];
@@ -47,12 +48,12 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.isLoggedIn = status;
     });
 
-    // Carica articoli manuali dal service (aggiornamento reattivo)
+    // Carica articoli manuali dal service
     this.articoliSubscription = this.articoliManualiService.articoli$.subscribe(articoli => {
       this.articoliManuali = articoli;
     });
 
-    // Riprendi query, risultati e selezionati dallo stato (se presenti)
+    // Riprendi stato se esiste
     const state = history.state;
     if (state) {
       if (state.query) this.query = state.query;
@@ -109,9 +110,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   generaNotizia(): void {
-    // Unisci articoli selezionati web + articoli manuali
     const articoliDaGenerare = [...this.notizieSelezionate, ...this.articoliManuali];
-
     if (articoliDaGenerare.length === 0) {
       this.erroreGenerazione = 'Seleziona almeno un articolo (web o manuale) prima di generare.';
       return;
@@ -120,7 +119,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.loadingGenerazione = true;
     this.erroreGenerazione = null;
 
-    this.notizieService.generaNotizia(articoliDaGenerare, [], '').subscribe({
+    // Passa this.query come tema
+    this.notizieService.generaNotizia(this.notizieSelezionate, this.articoliManuali, this.query.trim()).subscribe({
       next: (res) => {
         this.loadingGenerazione = false;
         this.router.navigate(['/articolo-generato'], {
@@ -141,9 +141,28 @@ export class HomeComponent implements OnInit, OnDestroy {
     });
   }
 
+
+  apriLink(notizia: any): void {
+    if (notizia && notizia.url) {
+      window.open(notizia.url, '_blank', 'noopener,noreferrer');
+    }
+  }
+
+
   toggleCronologia(): void {
     this.mostraCronologia = !this.mostraCronologia;
-  }
+    if (this.mostraCronologia && this.cronologiaNotizie.length === 0) {
+      this.notizieService.getAllNotizie().subscribe({
+        next: (res) => {
+          this.cronologiaNotizie = res;
+        },
+        error: () => {
+          this.errore = 'Errore nel recupero della cronologia.';
+        }
+      });
+    }
+}
+
 
   logout(): void {
     this.authService.logout();
@@ -151,7 +170,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   vaiAdAggiuntaManuale(): void {
-    // Passa stato corrente per mantenere ricerca e selezione al ritorno
     this.router.navigate(['/aggiunta-manuale'], {
       state: {
         query: this.query,
@@ -171,7 +189,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   rimuoviArticoloManuale(articolo: any, event: Event): void {
-    event.stopPropagation();  // evita di selezionare l'articolo
+    event.stopPropagation();
     this.articoliManualiService.rimuoviArticolo(articolo);
 
     if (this.articoloManualeSelezionato === articolo) {

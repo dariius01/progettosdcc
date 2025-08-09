@@ -75,11 +75,21 @@ def login():
     return jsonify({'errore': 'Email o password non validi'}), 401
 
 
+@app.route('/api/cronologia-notizie', methods=['GET'])
+@jwt_required()
+def get_cronologia_notizie():
+    current_user_id = get_jwt_identity()
+    notizie = Notizia.query.filter_by(user_id=current_user_id).order_by(Notizia.id.desc()).all()  # o ordine a piacere
+    return jsonify([n.to_dict() for n in notizie])
+
+
+
+
 ## GET notizie utente loggato
 @app.route('/api/notizie', methods=['GET'])
 @jwt_required()
 def get_notizie():
-    current_user_id = get_jwt_identity()
+    current_user_id = int(get_jwt_identity())
     notizie = Notizia.query.filter_by(user_id=current_user_id).all()
     return jsonify([n.to_dict() for n in notizie])
 
@@ -88,7 +98,7 @@ def get_notizie():
 @app.route('/api/notizie/<int:id>', methods=['GET'])
 @jwt_required()
 def get_notizia(id):
-    current_user_id = get_jwt_identity()
+    current_user_id = int(get_jwt_identity())
     notizia = Notizia.query.get(id)
 
     if not notizia or notizia.user_id != current_user_id:
@@ -97,11 +107,12 @@ def get_notizia(id):
     return jsonify(notizia.to_dict())
 
 
+
 ## DELETE notizia
 @app.route('/api/notizie/<int:id>', methods=['DELETE'])
 @jwt_required()
 def elimina_notizia(id):
-    current_user_id = get_jwt_identity()
+    current_user_id = int(get_jwt_identity())
     notizia = Notizia.query.get(id)
 
     if not notizia or notizia.user_id != current_user_id:

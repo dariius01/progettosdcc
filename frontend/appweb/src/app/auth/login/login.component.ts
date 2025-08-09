@@ -29,15 +29,15 @@ export class LoginComponent {
     this.authService.login(this.email, this.password).subscribe({
       next: () => {
         if (this.articoloDaSalvare) {
-          // Torna all'articolo con autoSave
           this.router.navigate(['/articolo-generato'], { 
             state: { 
               articolo: this.articoloDaSalvare, 
-              autoSave: this.autoSave // <- mantieni l'opzione
-            } 
+              autoSave: this.autoSave
+            },
+            replaceUrl: true  // <-- qui
           });
         } else {
-          this.router.navigate(['/']); 
+          this.router.navigate(['/'], { replaceUrl: true });  // <-- qui
         }
       },
       error: () => this.error = 'Credenziali errate'

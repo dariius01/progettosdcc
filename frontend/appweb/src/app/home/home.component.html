@@ -62,54 +62,48 @@
   <!-- Messaggio di errore -->
   <div *ngIf="errore" class="messaggio-errore">{{ errore }}</div>
 
-  <!-- Lista risultati -->
+
+
+
   <div class="lista-risultati">
-    <div
-      *ngFor="let notizia of risultati"
-      class="card-notizia"
-      [class.selezionata]="isSelezionata(notizia)"
-    >
-      <!-- Checkbox di selezione -->
-      <label class="check-container">
-        <input
-          type="checkbox"
-          [checked]="isSelezionata(notizia)"
-          (change)="toggleSelezione(notizia, $event)"
-        />
-        <span class="custom-check"></span>
-      </label>
+  <div
+    *ngFor="let notizia of risultati"
+    class="card-notizia"
+    [class.selezionata]="isSelezionata(notizia)"
+  >
+    <!-- Checkbox di selezione -->
+    <label class="check-container">
+      <input
+        type="checkbox"
+        [checked]="isSelezionata(notizia)"
+        (change)="toggleSelezione(notizia, $event)"
+      />
+      <span class="custom-check"></span>
+    </label>
 
-      <!-- Contenuto notizia -->
-      <div class="contenuto-notizia">
-        <h3>
-          <a
-            *ngIf="notizia.link"
-            [href]="notizia.link"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="titolo-notizia-link"
-          >
-            {{ notizia.titolo }}
-          </a>
-          <span *ngIf="!notizia.link">{{ notizia.titolo }}</span>
-        </h3>
-
-        <p *ngIf="notizia.sottotitolo"><em>{{ notizia.sottotitolo }}</em></p>
-        <p *ngIf="notizia.source" class="fonte">Fonte: {{ notizia.source }}</p>
-
+    <!-- Contenuto notizia -->
+    <div class="contenuto-notizia">
+      <h3>
         <a
-          *ngIf="notizia.link"
-          [href]="notizia.link"
+          *ngIf="notizia.url"
+          [href]="notizia.url"
           target="_blank"
           rel="noopener noreferrer"
-          class="link-fonte"
+          class="titolo-notizia-link"
         >
-          Leggi la fonte
+          {{ notizia.titolo }}
         </a>
-      </div>
+        <span *ngIf="!notizia.url">{{ notizia.titolo }}</span>
+      </h3>
+
+      <p *ngIf="notizia.sottotitolo"><em>{{ notizia.sottotitolo }}</em></p>
+      <p *ngIf="notizia.source" class="fonte">Fonte: {{ notizia.source }}</p>
     </div>
   </div>
 </div>
+
+
+
 
 <!-- Area generazione articolo (mostrata se ci sono risultati o articoli manuali) -->
 <div class="area-generazione" *ngIf="(risultati.length > 0) || (articoliManuali.length > 0)">
@@ -125,3 +119,22 @@
     {{ erroreGenerazione }}
   </div>
 </div>
+
+<!-- Icona orologio per mostrare/nascondere cronologia (solo se loggato) -->
+<div *ngIf="isLoggedIn" class="cronologia-icon-container">
+  <mat-icon (click)="toggleCronologia()" class="cronologia-icon">access_time</mat-icon>
+</div>
+
+<!-- Colonna laterale della cronologia -->
+<div *ngIf="mostraCronologia" class="lista-cronologia">
+  <h3>Ultime notizie generate</h3>
+  <ul>
+    <li *ngFor="let notizia of cronologiaNotizie" class="item-cronologia">
+      <a *ngIf="notizia.id" [routerLink]="['/notizia', notizia.id]" class="titolo-cronologia-link">
+        {{ notizia.titolo }}
+      </a>
+    </li>
+  </ul>
+
+  <p *ngIf="cronologiaNotizie.length === 0">Nessuna notizia in cronologia.</p>
+</div> 

@@ -8,7 +8,9 @@ export interface Notizia {
   titolo: string;
   sottotitolo?: string;
   testo: string;
+  created_at?: string;  
 }
+
 
 @Injectable({
   providedIn: 'root',
@@ -43,12 +45,22 @@ export class NotizieService {
 
   // Recupera tutte le notizie (GET /api/notizie)
   getAllNotizie(): Observable<Notizia[]> {
-    return this.http.get<Notizia[]>(`${this.apiUrl}/notizie`);
+    const headers = this.getAuthHeaders();
+    return this.http.get<Notizia[]>(`${this.apiUrl}/notizie`, { headers });
   }
 
+
   // Recupera notizia per ID (GET /api/notizie/:id)
-  getNotizia(id: number): Observable<Notizia> {
-    return this.http.get<Notizia>(`${this.apiUrl}/notizie/${id}`);
+  getNotizia(id: number) {
+    const headers = this.getAuthHeaders();
+    return this.http.get<Notizia>(`${this.apiUrl}/notizie/${id}`, { headers });
+  }
+
+
+  // Recupera ultime 4 notizie (GET /api/cronologia-notizie)
+  getCronologiaNotizie(): Observable<Notizia[]> {
+    const headers = this.getAuthHeaders();
+    return this.http.get<Notizia[]>(`${this.apiUrl}/cronologia-notizie`, { headers });
   }
 
   // Modifica notizia esistente (PUT /api/notizie/:id)
@@ -58,8 +70,10 @@ export class NotizieService {
 
   // Elimina notizia (DELETE /api/notizie/:id)
   eliminaNotizia(id: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/notizie/${id}`);
+    const headers = this.getAuthHeaders();
+    return this.http.delete(`${this.apiUrl}/notizie/${id}`, { headers });
   }
+
 
   // Genera notizia da articoli (POST /api/genera-notizia)
   generaNotizia(

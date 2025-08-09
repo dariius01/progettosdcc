@@ -2,6 +2,7 @@ import requests
 import logging
 import os
 from dotenv import load_dotenv
+from datetime import datetime, timedelta
 
 load_dotenv()
 
@@ -16,17 +17,19 @@ def cerca_notizie_web(query):
     params = {
         'q': query,
         'apiKey': news_api_key,
-        'pageSize': 10     # Limita il numero di articoli
+        'pageSize': 10,
+        'language': 'it',            # ✅ Solo notizie in italiano
+        'sortBy': 'relevancy',       # ✅ Risultati più pertinenti
+        'searchIn': 'title,description',  # ✅ Cerca solo in titolo e descrizione
     }
 
     try:
         response = requests.get(BASE_URL, params=params, timeout=5)
-        response.raise_for_status()  # solleva eccezione se status_code non è 2xx
+        response.raise_for_status()
 
         dati = response.json()
         articoli = dati.get('articles', [])
 
-        # Filtra solo campi essenziali per il tuo progetto
         articoli_filtrati = []
         for art in articoli:
             articoli_filtrati.append({
@@ -34,7 +37,8 @@ def cerca_notizie_web(query):
                 'sottotitolo': art.get('description', ''),
                 'testo': art.get('content', ''),
                 'url': art.get('url', ''),
-                'data_pubblicazione': art.get('publishedAt', '')
+                'data_pubblicazione': art.get('publishedAt', ''),
+                'source': art.get('source', {}).get('name', '')
             })
 
         return articoli_filtrati

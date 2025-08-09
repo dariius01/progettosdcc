@@ -1,0 +1,23 @@
+<div class="container-dettaglio">
+  <ng-container *ngIf="loading">
+    <p>Caricamento in corso...</p>
+  </ng-container>
+
+  <ng-container *ngIf="notizia && !loading">
+  <h1 class="titolo">{{ notizia.titolo }}</h1>
+  <h3 *ngIf="notizia.sottotitolo" class="sottotitolo">{{ notizia.sottotitolo }}</h3>
+  <p class="testo">{{ notizia.testo }}</p>
+  <p class="data" *ngIf="notizia.created_at">
+    Pubblicato il: {{ notizia.created_at | date:'dd/MM/yyyy HH:mm' }}
+  </p>
+
+  <!-- Pulsante elimina -->
+  <button (click)="onEliminaNotizia()" class="btn btn-danger">
+    Elimina notizia
+  </button>
+</ng-container>
+
+
+
+  
+</div>
