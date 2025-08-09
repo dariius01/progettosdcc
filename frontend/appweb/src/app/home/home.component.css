@@ -2,7 +2,7 @@
   --primary: #0077cc;
   --primary-hover: #005fa3;
   --accent: #26a69a;
-  --accent-hover: #1f8c7c; /* per hover attivo */
+  --accent-hover: #1f8c7c;
   --light-bg: #f9f9f9;
   --card-bg: #fff;
   --border: #e0e0e0;
@@ -72,11 +72,9 @@
   flex-direction: column;
   gap: 1rem;
   margin-top: 2rem;
-
   max-height: calc(5 * 4.5rem);
   overflow-y: auto;
   padding-right: 8px;
-
   scrollbar-width: thin;
   scrollbar-color: var(--accent) var(--light-bg);
 }
@@ -211,17 +209,18 @@
 .link-fonte:hover {
   color: var(--primary-hover);
 }
+
 .area-generazione {
   max-width: 800px;
   margin: 2rem auto 4rem;
   padding: 1rem 2rem;
   display: flex;
-  justify-content: center; /* centra orizzontalmente */
+  justify-content: center;
   align-items: center;
 }
 
 .area-generazione button {
-  background-color: #a0a0a0; /* Colore grigio di default */
+  background-color: #a0a0a0;
   border: none;
   padding: 0.85rem 2rem;
   font-size: 1.1rem;
@@ -232,26 +231,20 @@
   text-align: center;
 }
 
-
-/* Quando il bottone è attivo (cioè articoli selezionati) */
 .area-generazione button.attivo {
-  background-color: #28a745; /* verde brillante */
+  background-color: #28a745;
   cursor: pointer;
 }
 
-/* Hover solo se attivo */
 .area-generazione button.attivo:hover {
-  background-color: #218838; /* verde scuro */
+  background-color: #218838;
 }
 
-/* Disabled mantiene grigio e non cliccabile */
 .area-generazione button:disabled {
   background-color: #a0a0a0;
   cursor: not-allowed;
 }
 
-
-/* Generazione in corso (puoi personalizzare) */
 .area-generazione button.loading {
   background-color: var(--primary);
   cursor: progress;
@@ -281,4 +274,114 @@
 .articolo-generato p {
   line-height: 1.5;
   color: var(--text);
+}
+
+.auth-links {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.btn-auth {
+  background-color: #1976d2;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.btn-auth:hover {
+  background-color: #125ea4;
+}
+
+/* Pulsanti "Aggiungi manualmente" e "Mostra articoli aggiunti" */
+.btn-manuale {
+  background-color: #007acc; /* blu acceso */
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 0.5rem 1.2rem;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+  margin-right: 10px;
+}
+
+.btn-manuale:hover {
+  background-color: #005a9e; /* blu più scuro */
+}
+
+/* Lista articoli manuali */
+.lista-articoli-manuali ul {
+  list-style: none;
+  padding-left: 0;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.lista-articoli-manuali li {
+  padding: 8px 12px;
+  border-bottom: 1px solid #ccc;
+  cursor: pointer;
+  color: #222; /* testo scuro */
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+}
+
+.lista-articoli-manuali li:hover {
+  background-color: #cce4f7; /* azzurro chiaro */
+  color: #007acc; /* blu */
+}
+
+.lista-articoli-manuali li.selezionato {
+  background-color: #007acc; /* blu */
+  color: white;
+  font-weight: 700;
+}
+
+/* Dettaglio articolo manuale */
+.dettaglio-articolo-manuale {
+  max-width: 600px;
+  margin: 1rem auto;
+  padding: 1rem 1.5rem;
+  border-radius: 10px;
+  background-color: #f9f9f9; /* sfondo chiaro */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  color: #222; /* testo scuro */
+}
+
+.dettaglio-articolo-manuale h3 {
+  margin-top: 0;
+  margin-bottom: 0.3rem;
+}
+
+.dettaglio-articolo-manuale h4 {
+  margin-top: 0;
+  margin-bottom: 0.8rem;
+  font-style: italic;
+  color: #666; /* grigio medio */
+}
+.btn-cestino {
+  background: none;
+  border: none;
+  color: #c00;
+  cursor: pointer;
+  font-size: 24px; /* dimensione icona */
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.3s ease;
+}
+
+.btn-cestino:hover {
+  color: #ff4444;
+}
+
+.btn-cestino:focus {
+  outline: 2px solid #ff4444;
+  outline-offset: 2px;
 }

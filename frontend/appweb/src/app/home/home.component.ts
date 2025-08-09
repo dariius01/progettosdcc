@@ -1,18 +1,22 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NotizieService } from '../services/notizie.service';
-import { HttpClient } from '@angular/common/http';
 import { MatIconModule } from '@angular/material/icon';
+import { Router } from '@angular/router';
+import { RouterLink } from '@angular/router';
+import { AuthService } from '../services/auth.service';
+import { Subscription } from 'rxjs';
+import { ArticoliManualiService } from '../services/articoli-manuali.service';
 
 @Component({
-  standalone: true,
   selector: 'app-home',
-  imports: [CommonModule, FormsModule, MatIconModule],
+  standalone: true,
+  imports: [CommonModule, RouterLink, FormsModule, MatIconModule],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit, OnDestroy {
   query = '';
   risultati: any[] = [];
   loading = false;
@@ -21,8 +25,47 @@ export class HomeComponent {
   articoloGenerato: any = null;
   loadingGenerazione = false;
   erroreGenerazione: string | null = null;
+  mostraCronologia = false;
+  isLoggedIn = false;
 
-  constructor(private notizieService: NotizieService) {}
+  articoliManuali: any[] = [];
+  mostraArticoliManuali = false;
+  articoloManualeSelezionato: any | null = null;
+
+  private authSubscription!: Subscription;
+  private articoliSubscription!: Subscription;
+
+  constructor(
+    private notizieService: NotizieService,
+    private router: Router,
+    private authService: AuthService,
+    private articoliManualiService: ArticoliManualiService
+  ) {}
+
+  ngOnInit(): void {
+    this.authSubscription = this.authService.isLoggedIn().subscribe(status => {
+      this.isLoggedIn = status;
+    });
+
+    // Carica articoli manuali dal service (aggiornamento reattivo)
+    this.articoliSubscription = this.articoliManualiService.articoli$.subscribe(articoli => {
+      this.articoliManuali = articoli;
+    });
+
+    // Riprendi query, risultati e selezionati dallo stato (se presenti)
+    const state = history.state;
+    if (state) {
+      if (state.query) this.query = state.query;
+      if (state.risultati) this.risultati = state.risultati;
+      if (state.notizieSelezionate) this.notizieSelezionate = state.notizieSelezionate;
+      if (state.articoloGenerato) this.articoloGenerato = state.articoloGenerato;
+    }
+  }
+
+  ngOnDestroy(): void {
+    this.authSubscription.unsubscribe();
+    if (this.articoliSubscription) this.articoliSubscription.unsubscribe();
+  }
 
   cerca(): void {
     const trimmed = this.query.trim();
@@ -46,7 +89,6 @@ export class HomeComponent {
 
   toggleSelezione(notizia: any, event: Event): void {
     event.stopPropagation();
-    // Usa id univoco o combinazione chiave
     const id = this.getId(notizia);
     const exists = this.notizieSelezionate.some(n => this.getId(n) === id);
     if (exists) {
@@ -62,26 +104,34 @@ export class HomeComponent {
   }
 
   private getId(notizia: any): string {
-    // Se hai id vero, usalo
     if (notizia.id) return notizia.id.toString();
-    // Altrimenti fallback su link o titolo uniti (assicurati sia unico!)
     return `${notizia.link || ''}||${notizia.titolo || ''}`;
   }
-  generaArticolo(): void {
-    if (this.notizieSelezionate.length === 0) {
-      this.erroreGenerazione = 'Seleziona almeno un articolo prima di generare.';
+
+  generaNotizia(): void {
+    // Unisci articoli selezionati web + articoli manuali
+    const articoliDaGenerare = [...this.notizieSelezionate, ...this.articoliManuali];
+
+    if (articoliDaGenerare.length === 0) {
+      this.erroreGenerazione = 'Seleziona almeno un articolo (web o manuale) prima di generare.';
       return;
     }
 
     this.loadingGenerazione = true;
     this.erroreGenerazione = null;
-    this.articoloGenerato = null;
 
-    // Manda gli articoli selezionati al servizio
-    this.notizieService.generaNotizia(this.notizieSelezionate, [], '').subscribe({
+    this.notizieService.generaNotizia(articoliDaGenerare, [], '').subscribe({
       next: (res) => {
-        this.articoloGenerato = res;
         this.loadingGenerazione = false;
+        this.router.navigate(['/articolo-generato'], {
+          state: {
+            articolo: res,
+            query: this.query,
+            risultati: this.risultati,
+            notizieSelezionate: this.notizieSelezionate,
+            articoliManuali: this.articoliManuali
+          }
+        });
       },
       error: (err) => {
         this.erroreGenerazione = 'Errore durante la generazione dell\'articolo.';
@@ -89,5 +139,43 @@ export class HomeComponent {
         console.error(err);
       },
     });
+  }
+
+  toggleCronologia(): void {
+    this.mostraCronologia = !this.mostraCronologia;
+  }
+
+  logout(): void {
+    this.authService.logout();
+    this.router.navigate(['/']);
+  }
+
+  vaiAdAggiuntaManuale(): void {
+    // Passa stato corrente per mantenere ricerca e selezione al ritorno
+    this.router.navigate(['/aggiunta-manuale'], {
+      state: {
+        query: this.query,
+        risultati: this.risultati,
+        notizieSelezionate: this.notizieSelezionate
+      }
+    });
+  }
+
+  toggleMostraArticoliManuali(): void {
+    this.mostraArticoliManuali = !this.mostraArticoliManuali;
+    this.articoloManualeSelezionato = null;
+  }
+
+  selezionaArticoloManuale(articolo: any): void {
+    this.articoloManualeSelezionato = articolo;
+  }
+
+  rimuoviArticoloManuale(articolo: any, event: Event): void {
+    event.stopPropagation();  // evita di selezionare l'articolo
+    this.articoliManualiService.rimuoviArticolo(articolo);
+
+    if (this.articoloManualeSelezionato === articolo) {
+      this.articoloManualeSelezionato = null;
+    }
   }
 }

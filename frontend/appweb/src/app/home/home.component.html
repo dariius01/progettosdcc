@@ -1,4 +1,10 @@
 <div class="container">
+  <div class="auth-links">
+    <button *ngIf="!isLoggedIn" routerLink="/login" class="btn-auth">Accedi</button>
+    <button *ngIf="!isLoggedIn" routerLink="/register" class="btn-auth">Registrati</button>
+    <button *ngIf="isLoggedIn" (click)="logout()" class="btn-auth">Logout</button>
+  </div>
+
   <h1 class="titolo">Ricerca Notizie</h1>
 
   <!-- Barra di ricerca con icona lente -->
@@ -11,6 +17,46 @@
       placeholder="Cerca notizie"
       class="input-elegante"
     />
+  </div>
+
+  <!-- Bottone aggiungi manualmente -->
+  <div class="azioni-manuali" style="margin: 10px 0;">
+    <button (click)="vaiAdAggiuntaManuale()" class="btn-manuale">
+      Aggiungi manualmente
+    </button>
+
+    <button *ngIf="articoliManuali.length > 0" (click)="toggleMostraArticoliManuali()" class="btn-manuale">
+      {{ mostraArticoliManuali ? 'Nascondi articoli aggiunti' : 'Mostra articoli aggiunti' }}
+    </button>
+  </div>
+
+  <!-- Lista articoli manuali aggiunti -->
+  <div *ngIf="mostraArticoliManuali" class="lista-articoli-manuali">
+    <ul>
+      <li
+        *ngFor="let articolo of articoliManuali"
+        [class.selezionato]="articoloManualeSelezionato === articolo"
+        style="cursor:pointer; padding: 5px; border-bottom: 1px solid #ddd; display: flex; justify-content: space-between; align-items: center;"
+        (click)="selezionaArticoloManuale(articolo)"
+      >
+        <span>{{ articolo.titolo }}</span>
+        <!-- Cestino per rimuovere articolo -->
+        <button
+          class="btn-cestino"
+          (click)="rimuoviArticoloManuale(articolo, $event)"
+          aria-label="Elimina articolo"
+          title="Elimina articolo"
+        >
+          <mat-icon>delete</mat-icon>
+        </button>
+      </li>
+    </ul>
+
+    <div *ngIf="articoloManualeSelezionato" class="dettaglio-articolo-manuale" style="margin-top: 10px; padding: 10px; border: 1px solid #ccc;">
+      <h3>{{ articoloManualeSelezionato.titolo }}</h3>
+      <h4 *ngIf="articoloManualeSelezionato.sottotitolo"><em>{{ articoloManualeSelezionato.sottotitolo }}</em></h4>
+      <p>{{ articoloManualeSelezionato.testo }}</p>
+    </div>
   </div>
 
   <!-- Messaggio di errore -->
@@ -65,24 +111,17 @@
   </div>
 </div>
 
-<!-- Area generazione articolo (mostrata solo se ci sono risultati) -->
-<div class="area-generazione" *ngIf="risultati.length > 0">
+<!-- Area generazione articolo (mostrata se ci sono risultati o articoli manuali) -->
+<div class="area-generazione" *ngIf="(risultati.length > 0) || (articoliManuali.length > 0)">
   <button
-    (click)="generaArticolo()"
-    [disabled]="loadingGenerazione || notizieSelezionate.length === 0"
-    [class.attivo]="notizieSelezionate.length > 0"
+    (click)="generaNotizia()"
+    [disabled]="loadingGenerazione || (notizieSelezionate.length === 0 && articoliManuali.length === 0)"
+    [class.attivo]="notizieSelezionate.length > 0 || articoliManuali.length > 0"
   >
     {{ loadingGenerazione ? 'Generazione in corso...' : 'Genera Articolo' }}
   </button>
 
-
   <div *ngIf="erroreGenerazione" class="messaggio-errore">
     {{ erroreGenerazione }}
-  </div>
-
-  <div *ngIf="articoloGenerato" class="articolo-generato">
-    <h2>Articolo Generato</h2>
-    <h3>{{ articoloGenerato.titolo }}</h3>
-    <p>{{ articoloGenerato.testo }}</p>
   </div>
 </div>

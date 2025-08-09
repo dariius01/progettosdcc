@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http'; // aggiungi HttpHeaders
 import { Observable } from 'rxjs';
+import { AuthService } from './auth.service';  // importa AuthService per prendere il token
 
 export interface Notizia {
   id?: number;
@@ -15,7 +16,24 @@ export interface Notizia {
 export class NotizieService {
   private apiUrl = 'http://localhost:5000/api'; 
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private authService: AuthService) {}
+
+  // Metodo per creare headers con token se presente
+  private getAuthHeaders(): HttpHeaders {
+    const token = this.authService.getToken();
+    let headers = new HttpHeaders();
+    if (token) {
+      headers = headers.set('Authorization', `Bearer ${token}`);
+    }
+    return headers;
+  }
+
+  // Salva nuova notizia (POST /api/salva-notizia)
+  salvaNotizia(notizia: Notizia): Observable<Notizia> {
+    const headers = this.getAuthHeaders();
+    return this.http.post<Notizia>(`${this.apiUrl}/salva-notizia`, notizia, { headers });
+  }
+
 
   // Cerca notizie web (GET /api/ricerca-notizie?q=...)
   cercaNotizie(query: string): Observable<any[]> {
@@ -33,15 +51,10 @@ export class NotizieService {
     return this.http.get<Notizia>(`${this.apiUrl}/notizie/${id}`);
   }
 
-  // Salva nuova notizia (POST /api/salva-notizia)
-  salvaNotizia(notizia: Notizia): Observable<Notizia> {
-    return this.http.post<Notizia>(`${this.apiUrl}/salva-notizia`, notizia);
-  }
-
   // Modifica notizia esistente (PUT /api/notizie/:id)
-  modificaNotizia(id: number, notizia: Partial<Notizia>): Observable<any> {
-    return this.http.put(`${this.apiUrl}/notizie/${id}`, notizia);
-  }
+  //modificaNotizia(id: number, notizia: Partial<Notizia>): Observable<any> {
+    //return this.http.put(`${this.apiUrl}/notizie/${id}`, notizia);
+  //}
 
   // Elimina notizia (DELETE /api/notizie/:id)
   eliminaNotizia(id: number): Observable<any> {

@@ -1,0 +1,19 @@
+<div *ngIf="articolo">
+  <h2>{{ articolo.titolo }}</h2>
+  <h4>{{ articolo.sottotitolo }}</h4>
+  <p>{{ articolo.testo }}</p>
+
+  <button (click)="salvaArticolo()">Salva Articolo</button>
+
+  <!-- Messaggio per chi non è loggato -->
+  <div *ngIf="mostraAccessoRichiesto" style="margin-top: 10px; color: red;">
+    <p>Per salvare l'articolo devi effettuare l'accesso o registrarti.</p>
+    <button (click)="vaiAlLogin()">Login</button>
+    <button (click)="vaiARegistrazione()">Registrati</button>
+  </div>
+
+  <p *ngIf="messaggio" style="color: green;">{{ messaggio }}</p>
+  <p *ngIf="errore" style="color: red;">{{ errore }}</p>
+</div>
+
+<button (click)="tornaAllaHome()">Torna alla Home</button>

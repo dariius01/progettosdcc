@@ -64,7 +64,7 @@ def genera_prompt_da_articoli(articoli_web: list[dict], articoli_manuali: list[d
     prompt = (
         f"Usa i seguenti articoli per scrivere una notizia sportiva professionale e accattivante sul tema '{tema}'. "
         "La notizia deve essere chiara, sintetica e informativa, rivolta a un pubblico appassionato di sport. "
-        "Scrivi la notizia nel formato richiesto: la prima riga è il titolo, la seconda il sottotitolo, e il resto è il corpo del testo.\n"
+        "Scrivi la notizia nel formato richiesto: la prima riga è il titolo, la seconda il sottotitolo (deve essere sempre presente), e il resto è il corpo del testo.\n"
         "Il titolo non deve superare le 10 parole. Il sottotitolo deve essere una breve frase che approfondisce il titolo. Il testo deve essere un riassunto conciso e dettagliato, massimo 500 caratteri.\n"
         "Evita ripetizioni e usa un linguaggio semplice e diretto.\n\n"
         "Articoli web:\n"

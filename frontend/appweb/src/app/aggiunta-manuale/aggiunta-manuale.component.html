@@ -1,0 +1,24 @@
+<div class="form-manuale">
+  <h2>Aggiungi Articolo Manualmente</h2>
+
+  <label>
+    Titolo:<br />
+    <input type="text" [(ngModel)]="titolo" />
+  </label>
+
+  <label>
+    Sottotitolo:<br />
+    <input type="text" [(ngModel)]="sottotitolo" />
+  </label>
+
+  <label>
+    Testo:<br />
+    <textarea rows="6" [(ngModel)]="testo"></textarea>
+  </label>
+
+  <div *ngIf="errore" class="messaggio-errore">{{ errore }}</div>
+
+  <button (click)="aggiungiArticolo()" [disabled]="!titolo.trim() || !testo.trim()">
+    Aggiungi Articolo
+  </button>
+</div>
