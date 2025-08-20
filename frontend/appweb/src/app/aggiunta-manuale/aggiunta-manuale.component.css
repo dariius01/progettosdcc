@@ -2,76 +2,127 @@
   max-width: 700px;
   margin: 2rem auto;
   padding: 1.5rem 2rem;
-  background-color: var(--card-bg);
+  background-color: rgba(255, 255, 255, 0.6);
   border: 1.5px solid var(--border);
   border-radius: 10px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.05);
   box-sizing: border-box;
-  color: var(--text);
-  font-family: inherit;
+  color: #2c3e50;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 
 .form-manuale h2 {
   margin-bottom: 1.5rem;
-  font-weight: 700;
-  color: var(--primary);
+  font-weight: 800;
+  font-size: 1.5rem;
+  color: #34495e;
   text-align: center;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-family: 'Merriweather', serif;
 }
 
 .form-manuale label {
   display: block;
-  font-weight: 600;
-  margin-bottom: 0.3rem;
-  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 0.6rem;
+  font-size: 0.9rem;
+  color: #34495e;
+  letter-spacing: 0.03em;
+  text-transform: capitalize;
 }
 
 .form-manuale input[type="text"],
 .form-manuale textarea {
   width: 100%;
   padding: 10px 14px;
-  margin-bottom: 1.5rem;
-  border: 1.5px solid var(--border);
-  border-radius: 8px;
-  font-size: 1rem;
-  font-family: inherit;
+  margin-bottom: 1.2rem;
+  border: 1.5px solid #bdc3c7;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   resize: vertical;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
   box-sizing: border-box;
-  color: var(--text);
+  color: #2c3e50;
+  background-color: #f9f9f9;
+  margin-top: 0.4rem;
 }
 
 .form-manuale input[type="text"]:focus,
 .form-manuale textarea:focus {
-  border-color: var(--primary);
-  box-shadow: 0 0 6px rgba(0, 119, 204, 0.35);
+  border-color: #2980b9;
+  box-shadow: 0 0 8px rgba(41, 128, 185, 0.4);
   outline: none;
+  background-color: white;
 }
 
 .messaggio-errore {
-  color: #d9534f;
-  margin-bottom: 1rem;
-  font-weight: 600;
+  color: #e74c3c;
+  margin-bottom: 1.5rem;
+  font-weight: 700;
   text-align: center;
+  font-size: 1rem;
 }
 
-.form-manuale button {
-  background-color: var(--primary);
+.input-titolo {
+  font-weight: 700;
+}
+
+.button-row {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-start;
+  margin-top: 1rem;
+}
+
+/* Stile base pulsanti */
+.btn-home,
+.btn-success {
   color: white;
   border: none;
-  border-radius: 8px;
-  padding: 0.75rem 1.5rem;
-  font-weight: 700;
+  padding: 10px 18px;
   font-size: 1rem;
+  font-weight: 600;
+  border-radius: 8px;
   cursor: pointer;
-  width: 100%;
-  transition: background-color 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: background-color 0.25s ease;
 }
 
-.form-manuale button:disabled {
-  background-color: #999;
+/* Blu per btn-home */
+.btn-home {
+  background-color: #1976d2;
+}
+
+.btn-home:hover {
+  background-color: #115293;
+}
+
+/* Verde per btn-success */
+.btn-success {
+  background-color: #28a745;
+}
+
+.btn-success:hover {
+  background-color: #1e7e34;
+}
+
+/* Stato disabilitato per btn-success */
+.btn-success:disabled {
+  background-color: #6c757d;
   cursor: not-allowed;
+  opacity: 0.7;
 }
 
-.form-manuale button:not(:disabled):hover {
-  background-color: #005bbb;
+/* Icone dimensioni e allineamento uniformi */
+.icon-home,
+.icon-add {
+  font-size: 20px;
+  line-height: 1;
+  vertical-align: middle;
 }

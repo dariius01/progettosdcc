@@ -5,6 +5,7 @@ import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { AggiuntaManualeComponent } from './aggiunta-manuale/aggiunta-manuale.component';
 import { DettagliNotiziaComponent } from './dettagli-notizia/dettagli-notizia/dettagli-notizia.component';
+import { ModificaNotiziaComponent } from './modifica-notizia/modifica-notizia/modifica-notizia.component';
   
 
 export const routes: Routes = [
@@ -16,6 +17,8 @@ export const routes: Routes = [
   { path: 'articolo-generato', component: ArticoloGeneratoComponent},
   { path: 'aggiunta-manuale', component: AggiuntaManualeComponent},
   { path: 'notizia/:id', component: DettagliNotiziaComponent},
+  { path: 'notizia/:id/modifica', component: ModificaNotiziaComponent },
+
 
   // fallback
   { path: '**', redirectTo: '' },

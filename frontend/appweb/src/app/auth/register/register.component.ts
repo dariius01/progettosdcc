@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { Notizia } from '../../services/notizie.service';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-register',
@@ -18,13 +19,13 @@ export class RegisterComponent implements OnInit {
   errorMessage: string | null = null;
   articoloDaSalvare: Notizia | null = null;
   autoSave = false;
+  submitted = false;  // <--- variabile per controllo submit
 
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
     private router: Router
   ) {
-    // Recupero eventuale articolo e flag autoSave passato nello stato di navigazione
     const stato = this.router.getCurrentNavigation()?.extras.state as { articolo?: Notizia, autoSave?: boolean };
     this.articoloDaSalvare = stato?.articolo ?? null;
     this.autoSave = stato?.autoSave ?? false;
@@ -38,6 +39,8 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit(): void {
+    this.submitted = true;  // <--- segna che è stato premuto submit
+
     if (this.registerForm.invalid) return;
 
     const { email, password } = this.registerForm.value;
@@ -45,24 +48,24 @@ export class RegisterComponent implements OnInit {
     this.authService.register(email, password).subscribe({
       next: () => {
         this.authService.login(email, password).subscribe({
-      next: () => {
-        if (this.articoloDaSalvare) {
-          this.router.navigate(['/articolo-generato'], {
-            state: {
-              articolo: this.articoloDaSalvare,
-              autoSave: this.autoSave
-            },
-            replaceUrl: true  // <-- aggiungi qui
-          });
-        } else {
-          this.router.navigate(['/'], { replaceUrl: true });  // <-- e qui
-        }
+          next: () => {
+            if (this.articoloDaSalvare) {
+              this.router.navigate(['/articolo-generato'], {
+                state: {
+                  articolo: this.articoloDaSalvare,
+                  autoSave: this.autoSave
+                },
+                replaceUrl: true
+              });
+            } else {
+              this.router.navigate(['/'], { replaceUrl: true });
+            }
+          },
+          error: () => {
+            this.errorMessage = 'Registrazione riuscita ma login automatico fallito';
+          }
+        });
       },
-      error: () => {
-        this.errorMessage = 'Registrazione riuscita ma login automatico fallito';
-      }
-      });
-    },
       error: (err) => {
         if (!err.status) {
           this.errorMessage = 'Errore di connessione o server non disponibile';
@@ -83,5 +86,4 @@ export class RegisterComponent implements OnInit {
       }
     });
   }
-
 }

@@ -1,65 +1,113 @@
 .register-container {
-  max-width: 400px;
-  margin: 30px auto;
-  padding: 20px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  font-family: Arial, sans-serif;
-  background-color: #f9f9f9;
-}
-
-h2 {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-label {
-  font-weight: bold;
-}
-
-input[type="email"],
-input[type="password"] {
-  width: 100%;
-  padding: 8px 10px;
-  margin-top: 5px;
-  margin-bottom: 10px;
+  width: 600px;
+  padding: 30px 40px;
+  background-color: rgba(255, 255, 255, 0.80);
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
   box-sizing: border-box;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 14px;
+  text-align: center;
+
+  position: fixed;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-button {
+/* Titolo (se presente) */
+.register-container h2 {
+  margin-bottom: 25px;
+  color: #222;
+  font-weight: 600;
+  font-size: 1.8rem;
+}
+
+/* Wrapper dei singoli campi */
+.register-container > div {
+  margin-bottom: 18px;
+  text-align: left;
+}
+
+/* Label */
+.register-container label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+  font-size: 1rem;
+  color: #333;
+}
+
+/* Input */
+.register-container input[type="email"],
+.register-container input[type="password"] {
   width: 100%;
-  padding: 10px;
-  background-color: #3f51b5;
-  color: white;
-  font-size: 16px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+  padding: 12px 14px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+  font-family: inherit;
 }
 
-button[disabled] {
-  background-color: #9fa8da;
+.register-container input[type="email"]:focus,
+.register-container input[type="password"]:focus {
+  border-color: #4a90e2;
+  outline: none;
+}
+
+/* Bottone submit */
+.register-container button[type="submit"] {
+  width: 100%;
+  padding: 14px;
+  background-color: #4a90e2;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-weight: 600;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.register-container button[type="submit"]:hover:not(:disabled) {
+  background-color: #357abd;
+}
+
+.register-container button[type="submit"]:disabled {
+  background-color: #999;
   cursor: not-allowed;
 }
-
-.error small {
-  color: #d32f2f;
-  font-size: 12px;
+.info-password {
+  font-size: 0.875rem;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-style: italic;
+  color: #0b0101; /* colore base */
 }
 
+.info-password.errore {
+  color: #d9534f; /* rosso */
+}
+
+.info-password.valido {
+  color: #28a745; /* verde */
+}
+
+
+
+/* Messaggi di errore */
+.errore {
+  color: #d9534f;
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-top: 5px;
+}
+
+/* Messaggio di errore generico */
 .error-message {
-  margin-bottom: 15px;
-  color: #d32f2f;
-  font-weight: bold;
+  margin-top: 15px;
+  color: #d9534f;
+  font-weight: 600;
   text-align: center;
 }
-
-.errore {
-  color: red;
-  font-size: 0.9em;
-  margin-top: 4px;
-}
-

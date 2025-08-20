@@ -1,19 +1,37 @@
-<div *ngIf="articolo">
+<div class="container-articolo" *ngIf="articolo">
   <h2>{{ articolo.titolo }}</h2>
   <h4>{{ articolo.sottotitolo }}</h4>
   <p>{{ articolo.testo }}</p>
 
-  <button (click)="salvaArticolo()">Salva Articolo</button>
+  <!-- Pulsante Salva -->
+  <button class="btn-generico btn-salva" (click)="salvaArticolo()">Salva Articolo</button>
 
-  <!-- Messaggio per chi non è loggato -->
-  <div *ngIf="mostraAccessoRichiesto" style="margin-top: 10px; color: red;">
-    <p>Per salvare l'articolo devi effettuare l'accesso o registrarti.</p>
-    <button (click)="vaiAlLogin()">Login</button>
-    <button (click)="vaiARegistrazione()">Registrati</button>
-  </div>
-
-  <p *ngIf="messaggio" style="color: green;">{{ messaggio }}</p>
-  <p *ngIf="errore" style="color: red;">{{ errore }}</p>
+  <!-- Messaggi di errore -->
+  <p class="errore" *ngIf="errore">{{ errore }}</p>
 </div>
 
-<button (click)="tornaAllaHome()">Torna alla Home</button>
+<!-- Pulsante Home -->
+<button class="btn-generico btn-home" (click)="tornaAllaHome()">Torna alla Home</button>
+
+<!-- MODALE per accesso richiesto -->
+<div class="modal-overlay" *ngIf="mostraAccessoRichiesto">
+  <div class="modal-content">
+    <h3>Accesso richiesto</h3>
+    <p>Per salvare l'articolo devi effettuare l'accesso o registrarti.</p>
+    <div class="modal-actions">
+      <button class="modal-btn-login" (click)="vaiAlLogin()">Login</button>
+      <button class="modal-btn-register" (click)="vaiARegistrazione()">Registrati</button>
+    </div>
+  </div>
+</div>
+
+<!-- ✅ MODALE SUCCESSO SALVATAGGIO -->
+<div class="modal-overlay" *ngIf="messaggio">
+  <div class="modal-content modal-success">
+    <h3>Salvataggio completato!</h3>
+    <p>{{ messaggio }}</p>
+    <div class="modal-actions">
+      <button class="modal-btn-ok" (click)="messaggio = null">OK</button>
+    </div>
+  </div>
+</div>

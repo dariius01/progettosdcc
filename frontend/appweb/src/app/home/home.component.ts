@@ -28,6 +28,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   mostraCronologia = false;
   cronologiaNotizie: any[] = []; // ✅ nuove variabile
   isLoggedIn = false;
+  erroreCronologia: string | null = null; 
 
   articoliManuali: any[] = [];
   mostraArticoliManuali = false;
@@ -151,17 +152,20 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   toggleCronologia(): void {
     this.mostraCronologia = !this.mostraCronologia;
+
     if (this.mostraCronologia && this.cronologiaNotizie.length === 0) {
       this.notizieService.getAllNotizie().subscribe({
         next: (res) => {
           this.cronologiaNotizie = res;
+          this.erroreCronologia = null; // ✅ reset
         },
         error: () => {
-          this.errore = 'Errore nel recupero della cronologia.';
+          this.erroreCronologia = 'Errore nel recupero della cronologia.'; // ✅ messaggio
         }
       });
     }
-}
+  }
+
 
 
   logout(): void {
@@ -185,8 +189,15 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   selezionaArticoloManuale(articolo: any): void {
-    this.articoloManualeSelezionato = articolo;
+    if (this.articoloManualeSelezionato === articolo) {
+      // Se è già selezionato, lo deseleziono
+      this.articoloManualeSelezionato = null;
+    } else {
+      // Altrimenti lo seleziono
+      this.articoloManualeSelezionato = articolo;
+    }
   }
+
 
   rimuoviArticoloManuale(articolo: any, event: Event): void {
     event.stopPropagation();

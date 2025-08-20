@@ -16,79 +16,78 @@ export class ArticoloGeneratoComponent {
   messaggio: string | null = null;
   errore: string | null = null;
   isLoggedIn = false;
+  mostraAccessoRichiesto = false;
 
   constructor(
     private router: Router,
     private authService: AuthService,
     private notizieService: NotizieService
   ) {
-    // Prendo l'articolo dallo stato di navigazione (può essere null se arrivi da reload)
+    // Recupero articolo dallo stato di navigazione
     const stato = this.router.getCurrentNavigation()?.extras.state as { articolo?: Notizia, autoSave?: boolean };
-    this.articolo = stato?.articolo ?? null;
+    this.articolo = stato?.articolo ? this.pulisciNotizia(stato.articolo) : null;
 
+    // Controllo login
     this.authService.isLoggedIn().subscribe(logged => {
-    this.isLoggedIn = logged;
+      this.isLoggedIn = logged;
 
-    // Se siamo tornati dal login e autoSave è attivo, salva subito
-    if (logged && stato?.autoSave && this.articolo) {
-      this.salvaArticolo();
-    }
-  });
-
+      // Se siamo tornati dal login e autoSave è attivo, salva subito
+      if (logged && stato?.autoSave && this.articolo) {
+        this.salvaArticolo();
+      }
+    });
   }
+
+  // 🔧 Metodo per rimuovere i ** dal testo/titoli
+  private pulisciNotizia(n: Notizia): Notizia {
+    return {
+      ...n,
+      titolo: n.titolo.replace(/\*\*/g, '').replace(/^Titolo:\s*'|'$/g, ''),
+      sottotitolo: n.sottotitolo?.replace(/\*\*/g, '').replace(/^Sottotitolo:\s*'|'$/g, '') || '',
+      testo: n.testo.replace(/\*\*/g, '')
+    };
+  }
+
 
   tornaAllaHome(): void {
     this.router.navigate(['/']);
   }
 
-  mostraAccessoRichiesto = false;
-
-salvaArticolo(): void {
-  if (!this.articolo || !this.articolo.titolo || !this.articolo.testo) {
-    this.errore = 'Titolo e testo sono obbligatori';
-    return;
-  }
-
-  if (!this.isLoggedIn) {
-    // Mostra messaggio con scelte
-    this.mostraAccessoRichiesto = true;
-    return;
-  }
-
-  this.salvaNotiziaPulita();
-}
-
-private salvaNotiziaPulita() {
-  const notiziaPulita = {
-    titolo: this.articolo!.titolo.replace(/\*\*/g, ''),
-    sottotitolo: this.articolo!.sottotitolo?.replace(/\*\*/g, '') || '',
-    testo: this.articolo!.testo
-  };
-
-  this.notizieService.salvaNotizia(notiziaPulita).subscribe({
-    next: () => {
-      this.messaggio = 'Articolo salvato con successo!';
-      this.mostraAccessoRichiesto = false;
-    },
-    error: (err) => {
-      console.error('[DEBUG] Errore salvataggio:', err);
-      this.errore = err.error?.errore || 'Errore durante il salvataggio';
+  salvaArticolo(): void {
+    if (!this.articolo || !this.articolo.titolo || !this.articolo.testo) {
+      this.errore = 'Titolo e testo sono obbligatori';
+      return;
     }
-  });
-}
 
-vaiAlLogin() {
-  this.router.navigate(['/login'], {
-    state: { articolo: this.articolo, autoSave: true }
-  });
-}
+    if (!this.isLoggedIn) {
+      // Mostra popup con scelte login/registrazione
+      this.mostraAccessoRichiesto = true;
+      return;
+    }
 
-vaiARegistrazione() {
-  this.router.navigate(['/register'], {
-    state: { articolo: this.articolo, autoSave: true }
-  });
-}
+    // Salva con testo pulito
+    const notiziaPulita = this.pulisciNotizia(this.articolo);
+    this.notizieService.salvaNotizia(notiziaPulita).subscribe({
+      next: () => {
+        this.messaggio = 'Articolo salvato con successo!';
+        this.mostraAccessoRichiesto = false;
+      },
+      error: (err) => {
+        console.error('[DEBUG] Errore salvataggio:', err);
+        this.errore = err.error?.errore || 'Errore durante il salvataggio';
+      }
+    });
+  }
 
+  vaiAlLogin() {
+    this.router.navigate(['/login'], {
+      state: { articolo: this.articolo, autoSave: true }
+    });
+  }
 
-
+  vaiARegistrazione() {
+    this.router.navigate(['/register'], {
+      state: { articolo: this.articolo, autoSave: true }
+    });
+  }
 }

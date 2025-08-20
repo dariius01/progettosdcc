@@ -1,8 +1,15 @@
-<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="register-container">
+  <h2>Registrati</h2>
+
   <!-- Email -->
   <div>
-    <label for="email">Email</label>
-    <input id="email" type="email" formControlName="email" />
+    <label for="email">Email:</label>
+    <input
+      id="email"
+      type="email"
+      formControlName="email"
+      placeholder="Email"
+    />
     <div *ngIf="registerForm.get('email')?.touched && registerForm.get('email')?.invalid" class="errore">
       <span *ngIf="registerForm.get('email')?.errors?.['required']">Email obbligatoria</span>
       <span *ngIf="registerForm.get('email')?.errors?.['email']">Email non valida</span>
@@ -11,13 +18,29 @@
 
   <!-- Password -->
   <div>
-    <label for="password">Password</label>
-    <input id="password" type="password" formControlName="password" />
-    <div *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.invalid" class="errore">
-      <span *ngIf="registerForm.get('password')?.errors?.['required']">Password obbligatoria</span>
-      <span *ngIf="registerForm.get('password')?.errors?.['minlength']">
-        La password deve contenere almeno {{ registerForm.get('password')?.errors?.['minlength'].requiredLength }} caratteri
-        (attuali: {{ registerForm.get('password')?.errors?.['minlength'].actualLength }})
+    <label for="password">Password:</label>
+    <input
+      id="password"
+      type="password"
+      formControlName="password"
+      placeholder="Password"
+    />
+    
+    <!-- Messaggio fisso sulla lunghezza minima con colori dinamici -->
+    <div
+      class="info-password"
+      [class.errore]="
+        registerForm.get('password')?.invalid &&
+        (submitted || registerForm.get('password')?.touched)
+      "
+      [class.valido]="
+        registerForm.get('password')?.valid &&
+        registerForm.get('password')?.value?.length >= 8
+      "
+    >
+      La password deve contenere almeno 8 caratteri
+      <span *ngIf="registerForm.get('password')?.value?.length">
+        (attuali: {{ registerForm.get('password')?.value.length }})
       </span>
     </div>
   </div>

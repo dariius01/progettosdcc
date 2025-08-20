@@ -1,24 +1,33 @@
-<div class="form-manuale">
-  <h2>Aggiungi Articolo Manualmente</h2>
+<div class="form-manuale"> 
+  <h2>Aggiungi Notizia Manualmente</h2>
 
   <label>
     Titolo:<br />
-    <input type="text" [(ngModel)]="titolo" />
+    <input type="text" [(ngModel)]="titolo" class="input-titolo" placeholder="Scrivi il titolo..." />
   </label>
 
   <label>
     Sottotitolo:<br />
-    <input type="text" [(ngModel)]="sottotitolo" />
+    <input type="text" [(ngModel)]="sottotitolo" placeholder="Scrivi il sottotitolo..." />
   </label>
 
   <label>
     Testo:<br />
-    <textarea rows="6" [(ngModel)]="testo"></textarea>
+    <textarea rows="6" [(ngModel)]="testo" placeholder="Scrivi il testo..."></textarea>
   </label>
 
   <div *ngIf="errore" class="messaggio-errore">{{ errore }}</div>
 
-  <button (click)="aggiungiArticolo()" [disabled]="!titolo.trim() || !testo.trim()">
-    Aggiungi Articolo
-  </button>
+  <div class="button-row">
+    <button type="button" class="btn-home" (click)="tornaHome()">
+      <mat-icon class="icon-home">home</mat-icon>
+      Torna indietro
+    </button>
+
+    <button (click)="aggiungiNotizia()" [disabled]="!titolo.trim() || !testo.trim()" class="btn-success">
+      <mat-icon class="icon-add">add</mat-icon>
+      Aggiungi Notizia
+    </button>
+  </div>
+
 </div>

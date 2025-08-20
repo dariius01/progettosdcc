@@ -8,7 +8,8 @@ export interface Notizia {
   titolo: string;
   sottotitolo?: string;
   testo: string;
-  created_at?: string;  
+  data_creazione?: string; 
+  data_modifica?: string;
 }
 
 
@@ -64,9 +65,11 @@ export class NotizieService {
   }
 
   // Modifica notizia esistente (PUT /api/notizie/:id)
-  //modificaNotizia(id: number, notizia: Partial<Notizia>): Observable<any> {
-    //return this.http.put(`${this.apiUrl}/notizie/${id}`, notizia);
-  //}
+  modificaNotizia(id: number, notizia: Partial<Notizia>): Observable<any> {
+    const headers = this.getAuthHeaders(); 
+    return this.http.put(`${this.apiUrl}/notizie/${id}`, notizia, { headers });
+  }
+
 
   // Elimina notizia (DELETE /api/notizie/:id)
   eliminaNotizia(id: number): Observable<any> {

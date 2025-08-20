@@ -1,23 +1,65 @@
-<div class="container-dettaglio">
+<div class="container-dettaglio-elegante">
   <ng-container *ngIf="loading">
     <p>Caricamento in corso...</p>
   </ng-container>
 
   <ng-container *ngIf="notizia && !loading">
-  <h1 class="titolo">{{ notizia.titolo }}</h1>
-  <h3 *ngIf="notizia.sottotitolo" class="sottotitolo">{{ notizia.sottotitolo }}</h3>
-  <p class="testo">{{ notizia.testo }}</p>
-  <p class="data" *ngIf="notizia.created_at">
-    Pubblicato il: {{ notizia.created_at | date:'dd/MM/yyyy HH:mm' }}
-  </p>
+    <h1 class="titolo">{{ notizia.titolo }}</h1>
+    <h3 *ngIf="notizia.sottotitolo" class="sottotitolo">{{ notizia.sottotitolo }}</h3>
+    <p class="testo">{{ notizia.testo }}</p>
+    <p class="data" *ngIf="notizia.data_creazione">
+      Pubblicato il: {{ notizia.data_creazione | date:'dd/MM/yyyy HH:mm' }}
+    </p>
 
-  <!-- Pulsante elimina -->
-  <button (click)="onEliminaNotizia()" class="btn btn-danger">
-    Elimina notizia
-  </button>
-</ng-container>
+    <p class="data" *ngIf="notizia.data_modifica && notizia.data_modifica !== notizia.data_creazione">
+      Modificato il: {{ notizia.data_modifica | date:'dd/MM/yyyy HH:mm' }}
+    </p>
+
+    <!-- Pulsante torna alla home -->
+    <button (click)="tornaHome()" class="btn-home">
+      <mat-icon class="icon-home">home</mat-icon>
+      Torna alla home
+    </button>
+    
+
+    <!-- Pulsante elimina blu con icona cestino -->
+    <button (click)="onEliminaNotizia()" class="btn-elimina">
+      <mat-icon class="icon-cestino">delete</mat-icon>
+      Elimina notizia
+    </button>
+
+    <button class="btn-generico btn-scarica" (click)="scaricaPDF()">Scarica PDF</button>
 
 
+    <!-- Pulsante modifica arancione con icona -->
+    <button (click)="vaiAModifica()" class="btn-modifica">
+      <mat-icon class="icon-edit">edit</mat-icon>
+      Modifica notizia
+    </button>
 
-  
+  </ng-container>
+
+  <!-- MODALE CONFERMA ELIMINAZIONE -->
+  <div class="modal-overlay" *ngIf="mostraConfermaEliminazione">
+    <div class="modal-content modal-danger">
+      <h3>⚠️ Conferma eliminazione</h3>
+      <p>Sei sicuro di voler eliminare questa notizia?</p>
+      <div class="modal-actions">
+        <button class="modal-btn-cancel" (click)="annullaEliminazione()">Annulla</button>
+        <button class="modal-btn-delete" (click)="confermaEliminazione()">Elimina</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODALE SUCCESSO ELIMINAZIONE -->
+  <div class="modal-overlay" *ngIf="mostraSuccessoEliminazione">
+    <div class="modal-content modal-success">
+      <h3> Eliminazione completata!</h3>
+      <p>La notizia è stata eliminata con successo.</p>
+      <div class="modal-actions">
+        <button class="modal-btn-ok" (click)="vaiAllaHomeDopoEliminazione()">OK</button>
+      </div>
+    </div>
+  </div>
+
 </div>

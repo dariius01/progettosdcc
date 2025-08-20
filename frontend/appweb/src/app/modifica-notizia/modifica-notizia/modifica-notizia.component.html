@@ -1,0 +1,19 @@
+<div class="container-dettaglio-elegante" *ngIf="notizia">
+  <h2>Modifica Notizia</h2>
+
+  <label>Titolo</label>
+  <input [(ngModel)]="notizia.titolo" class="input-elegante" />
+
+  <label>Sottotitolo</label>
+  <input [(ngModel)]="notizia.sottotitolo" class="input-elegante" />
+
+  <label>Testo</label>
+  <textarea [(ngModel)]="notizia.testo" class="input-elegante" rows="6"></textarea>
+
+  <div class="azioni-form">
+    <button class="btn-salva" (click)="salvaModifiche()">💾 Salva</button>
+    <button class="btn-cancella" (click)="annulla()">❌ Annulla</button>
+  </div>
+
+  <p class="errore" *ngIf="errore">{{ errore }}</p>
+</div>

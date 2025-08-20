@@ -3,10 +3,11 @@ import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';  // per *ngIf
 import { FormsModule } from '@angular/forms';
 import { ArticoliManualiService } from '../services/articoli-manuali.service';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-aggiunta-manuale',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, MatIcon],
   templateUrl: './aggiunta-manuale.component.html',
   styleUrls: ['./aggiunta-manuale.component.css'],
   standalone: true,
@@ -34,7 +35,7 @@ export class AggiuntaManualeComponent {
     }
   }
 
-  aggiungiArticolo(): void {
+  aggiungiNotizia(): void {
     this.errore = null;
 
     if (!this.titolo.trim() || !this.testo.trim()) {
@@ -59,4 +60,16 @@ export class AggiuntaManualeComponent {
       },
     });
   }
+
+  tornaHome(): void {
+  // Torna alla home mantenendo stato ricerca e selezione
+    this.router.navigate(['/'], {
+      state: {
+        query: this.queryCorrente,
+        risultati: this.risultatiCorrenti,
+        notizieSelezionate: this.notizieSelezionateCorrenti,
+      },
+    });
+  }
+
 }

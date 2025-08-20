@@ -1,180 +1,176 @@
-/* Stili per il componente articolo generato */
+/* Contenitore principale stile elegante */
+.container-articolo {
+  max-width: 750px;
+  margin: 30px auto;
+  padding: 30px 35px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 20px;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  color: #222;
+  text-align: left;
+}
 
-.btn-torna {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+/* Titolo */
+.container-articolo h2 {
+  font-size: 2.2rem;
+  margin-bottom: 10px;
+  font-weight: 700;
+}
+
+/* Sottotitolo */
+.container-articolo h4 {
+  font-size: 1.3rem;
+  font-style: italic;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+/* Testo articolo */
+.container-articolo p {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  white-space: pre-wrap;
+  color: #333;
+}
+
+/* Pulsanti */
+.btn-generico {
+  background-color: #1976d2;
   color: white;
   border: none;
-  padding: 12px 24px;
-  border-radius: 8px;
-  font-size: 14px;
+  padding: 10px 20px;
+  margin: 10px 10px 0 0;
+  font-size: 1rem;
   font-weight: 600;
+  border-radius: 10px;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
-  margin-bottom: 2rem;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+  transition: background-color 0.25s ease, transform 0.2s ease;
 }
 
-.btn-torna:hover {
+.btn-generico:hover {
+  background-color: #115293;
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
-  background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
 }
 
-.btn-torna:active {
-  transform: translateY(0);
-  box-shadow: 0 2px 10px rgba(102, 126, 234, 0.3);
-}
-
-.articolo-generato-container {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 2rem;
-  background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
-  border-radius: 16px;
-  box-shadow: 
-    0 20px 40px rgba(0, 0, 0, 0.1),
-    0 0 0 1px rgba(255, 255, 255, 0.8);
-  animation: fadeInUp 0.6s ease-out;
-  position: relative;
-  overflow: hidden;
-}
-
-.articolo-generato-container::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: linear-gradient(90deg, #667eea, #764ba2, #f093fb, #f5576c);
-  background-size: 300% 100%;
-  animation: gradientShift 3s ease-in-out infinite;
-}
-
-.articolo-generato-container h2 {
-  font-family: 'Georgia', 'Times New Roman', serif;
-  font-size: 2.5rem;
-  font-weight: 700;
-  color: #1e293b;
-  margin: 0 0 1rem 0;
-  line-height: 1.2;
-  text-align: center;
-  position: relative;
-}
-
-
-
-.articolo-generato-container h3 {
-  font-family: 'Georgia', 'Times New Roman', serif;
-  font-size: 1.5rem;
-  font-weight: 400;
-  color: #64748b;
-  margin: 0 0 2rem 0;
-  text-align: center;
-  line-height: 1.4;
-}
-
-.articolo-generato-container p {
-  font-family: 'Georgia', 'Times New Roman', serif;
-  font-size: 1.1rem;
-  line-height: 1.8;
-  color: #374151;
-  margin: 0;
-  text-align: justify;
-  text-indent: 2rem;
-}
-
-/* Animazioni */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes gradientShift {
-  0%, 100% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-}
-
-/* Responsive design */
-@media (max-width: 768px) {
-  .articolo-generato-container {
-    margin: 0 1rem;
-    padding: 1.5rem;
-    border-radius: 12px;
-  }
-  
-  .articolo-generato-container h2 {
-    font-size: 2rem;
-  }
-  
-  .articolo-generato-container h3 {
-    font-size: 1.3rem;
-  }
-  
-  .articolo-generato-container p {
-    font-size: 1rem;
-    text-indent: 1.5rem;
-  }
-  
-  .btn-torna {
-    width: 100%;
-    margin-bottom: 1.5rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .articolo-generato-container {
-    margin: 0 0.5rem;
-    padding: 1rem;
-  }
-  
-  .articolo-generato-container h2 {
-    font-size: 1.8rem;
-  }
-  
-  .articolo-generato-container h3 {
-    font-size: 1.2rem;
-    margin-bottom: 1.5rem;
-  }
-  
-  .articolo-generato-container p {
-    text-align: left;
-    text-indent: 1rem;
-  }
-
-  .azioni {
-  margin-top: 20px;
-  display: flex;
-  gap: 10px;
-}
-
-.btn-torna,
+/* Pulsante Salva (verde) */
 .btn-salva {
-  padding: 10px 16px;
-  font-size: 16px;
-  cursor: pointer;
+  background-color: #2e7d32;
 }
 
-.successo {
-  color: green;
+.btn-salva:hover {
+  background-color: #1b5e20;
+}
+
+/* Pulsante Home (blu) */
+.btn-home {
+  background-color: #1976d2;
+}
+
+.btn-home:hover {
+  background-color: #115293;
+}
+
+/* Messaggi feedback */
+.messaggio {
   margin-top: 15px;
+  color: green;
+  font-weight: 600;
 }
 
 .errore {
-  color: red;
   margin-top: 15px;
+  color: red;
+  font-weight: 600;
 }
 
+/* --- MODALE per login/registrazione --- */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: #fff;
+  padding: 30px;
+  border-radius: 15px;
+  max-width: 400px;
+  text-align: center;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+}
+
+.modal-content h3 {
+  margin-bottom: 15px;
+  font-size: 1.5rem;
+  color: #222;
+}
+
+.modal-content p {
+  margin-bottom: 20px;
+  color: #555;
+  font-size: 1rem;
+}
+
+.modal-actions button {
+  margin: 0 10px;
+  padding: 10px 18px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.modal-btn-login {
+  background-color: #1976d2;
+  color: #fff;
+}
+
+.modal-btn-login:hover {
+  background-color: #115293;
+}
+
+.modal-btn-register {
+  background-color: #2e7d32;
+  color: #fff;
+}
+
+.modal-btn-register:hover {
+  background-color: #1b5e20;
+}
+/* Modale successo */
+.modal-success {
+  border-left: 6px solid #2e7d32; /* verde */
+}
+
+.modal-success h3 {
+  color: #2e7d32;
+  margin-bottom: 10px;
+}
+
+.modal-success p {
+  color: #333;
+}
+
+.modal-btn-ok {
+  background-color: #2e7d32;
+  color: #fff;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.25s ease;
+}
+
+.modal-btn-ok:hover {
+  background-color: #1b5e20;
 }

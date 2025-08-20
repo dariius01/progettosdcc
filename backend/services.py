@@ -14,13 +14,17 @@ def cerca_notizie_web(query):
         logging.error("Chiave API per NewsAPI non trovata!")
         return []
 
+    terms = query.split()  # divide la query in singole parole
+    query_or = " OR ".join(terms)
+
     params = {
-        'q': query,
+        'q': query_or, 
         'apiKey': news_api_key,
         'pageSize': 10,
-        'language': 'it',            # ✅ Solo notizie in italiano
-        'sortBy': 'relevancy',       # ✅ Risultati più pertinenti
-        'searchIn': 'title,description',  # ✅ Cerca solo in titolo e descrizione
+        'language': 'it',
+        'sortBy': 'relevancy',
+        'searchIn': 'title,description',
+        'from': (datetime.utcnow() - timedelta(days=7)).strftime('%Y-%m-%dT%H:%M:%SZ')
     }
 
     try:

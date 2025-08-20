@@ -23,7 +23,6 @@ def genera_notizia_da_ai(prompt: str) -> dict:
             "titolo": sezioni.get("titolo", ""),
             "sottotitolo": sezioni.get("sottotitolo", ""),
             "testo": sezioni.get("testo", ""),
-           # "testo_grezzo": testo_generato
         }
     except Exception as e:
         return {"titolo": "", "sottotitolo": "", "testo": f"Errore AI: {str(e)}"}

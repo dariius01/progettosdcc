@@ -84,7 +84,6 @@ def get_cronologia_notizie():
 
 
 
-
 ## GET notizie utente loggato
 @app.route('/api/notizie', methods=['GET'])
 @jwt_required()
@@ -99,7 +98,7 @@ def get_notizie():
 @jwt_required()
 def get_notizia(id):
     current_user_id = int(get_jwt_identity())
-    notizia = Notizia.query.get(id)
+    notizia = db.session.get(Notizia, id)
 
     if not notizia or notizia.user_id != current_user_id:
         return jsonify({"errore": "Notizia non trovata o accesso non autorizzato"}), 404
@@ -113,7 +112,7 @@ def get_notizia(id):
 @jwt_required()
 def elimina_notizia(id):
     current_user_id = int(get_jwt_identity())
-    notizia = Notizia.query.get(id)
+    notizia = db.session.get(Notizia, id)
 
     if not notizia or notizia.user_id != current_user_id:
         return jsonify({"errore": "Notizia non trovata o accesso non autorizzato"}), 404
@@ -128,13 +127,12 @@ def elimina_notizia(id):
 
 
 
-""""
 ## PUT notizia
 @app.route('/api/notizie/<int:id>', methods=['PUT'])
 @jwt_required()
 def modifica_notizia(id):
-    current_user_id = get_jwt_identity()
-    notizia = Notizia.query.get(id)
+    current_user_id = int(get_jwt_identity())
+    notizia = db.session.get(Notizia, id)
 
     if not notizia or notizia.user_id != current_user_id:
         return jsonify({"errore": "Notizia non trovata o accesso non autorizzato"}), 404
@@ -149,8 +147,6 @@ def modifica_notizia(id):
     db.session.commit()
 
     return jsonify({"messaggio": "Notizia aggiornata"}), 200
-
-"""
 
 
 ## Genera notizia da articoli

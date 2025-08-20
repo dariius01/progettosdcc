@@ -1,5 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+from datetime import timezone, timedelta
 
 db = SQLAlchemy()
 
@@ -9,15 +10,18 @@ class Notizia(db.Model):
     titolo = db.Column(db.String(200))
     sottotitolo = db.Column(db.String(200))
     testo = db.Column(db.Text)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    data_creazione = db.Column(db.DateTime, default=datetime.utcnow)
+    data_modifica = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow) 
 
     def to_dict(self):
+        local_tz = timezone(timedelta(hours=2))
         return {
             'id': self.id,
             'titolo': self.titolo,
             'sottotitolo': self.sottotitolo,
             'testo': self.testo,
-            'created_at': self.created_at.isoformat()
+            'data_creazione': self.data_creazione.replace(tzinfo=timezone.utc).astimezone(local_tz).isoformat(),
+            'data_modifica': self.data_modifica.replace(tzinfo=timezone.utc).astimezone(local_tz).isoformat()
         }
 from werkzeug.security import generate_password_hash, check_password_hash
 

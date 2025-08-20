@@ -12,11 +12,18 @@
 }
 
 .container {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 0 20px;
+  max-width: 1000px;
+  margin: 40px auto 0; 
+  padding: 20px;
   box-sizing: border-box;
+
+  background-color: rgba(255, 255, 255, 0.8); /* un po' più opaco */
+  border: 1px solid rgba(255, 255, 255, 0.5); /* bordo chiaro sottile */
+  border-radius: 18px;
+  backdrop-filter: blur(8px); /* sfocatura più evidente */
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.45); /* ombra soft */
 }
+
 
 .titolo {
   font-size: 2.5em;
@@ -32,17 +39,20 @@
   width: 100%;
   border: 5px solid var(--border);
   border-radius: 8px;
-  background-color: var(--card-bg);
+  background-color: white;
   padding: 12px 16px;
   box-sizing: border-box;
-  box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.);
   transition: box-shadow 0.3s ease, border-color 0.3s ease;
 }
 
 .barra-ricerca:focus-within {
-  box-shadow: 0 0 6px rgba(0, 119, 204, 0.15);
   border-color: var(--primary);
+  box-shadow: 0 4px 12px rgba(1, 6, 10, 0.25);
+  transform: translateY(-2px);
+  transition: box-shadow 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
 }
+
 
 .icona-lente {
   font-size: 24px;
@@ -77,6 +87,8 @@
   padding-right: 8px;
   scrollbar-width: thin;
   scrollbar-color: var(--accent) var(--light-bg);
+  background-color: #f0f0f0;
+;
 }
 
 .lista-risultati::-webkit-scrollbar {
@@ -104,6 +116,7 @@
   background-color: var(--card-bg);
   transition: background-color 0.3s, border-color 0.3s;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+  
 }
 
 .card-notizia.selezionata {
@@ -174,6 +187,7 @@
 .contenuto-notizia h3 {
   margin: 0 0 0.25rem 0;
   font-size: 1.25rem;
+  
 }
 .titolo-notizia-link {
   text-decoration: none;
@@ -186,12 +200,6 @@
   text-decoration: underline;
   color: #125a9c;
 }
-
-
-
-
-
-
 
 
 .contenuto-notizia p {
@@ -216,6 +224,36 @@
 .link-fonte:hover {
   color: var(--primary-hover);
 }
+
+.azioni-manuali {
+  margin: 10px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-start; /* Allinea i bottoni a sinistra senza riempire il container */
+}
+
+.btn-manuale {
+  padding: 6px 12px;
+  font-size: 14px;
+  background-color: #1976d2;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  display: inline-flex; /* Larghezza basata sul contenuto */
+  align-items: center;
+  gap: 6px;
+}
+
+.btn-manuale:hover {
+  background-color: #145ca0;
+}
+
+.icon-plus {
+  font-size: 18px;
+}
+
 
 .area-generazione {
   max-width: 800px;
@@ -306,19 +344,26 @@
 
 /* Pulsanti "Aggiungi manualmente" e "Mostra articoli aggiunti" */
 .btn-manuale {
-  background-color: #007acc; /* blu acceso */
-  color: white;
-  border: none;
-  border-radius: 6px;
-  padding: 0.5rem 1.2rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px; /* distanza tra icona e testo */
+  padding: 8px 12px;
+  font-size: 14px;
   cursor: pointer;
-  font-weight: 600;
+  background-color: #1976d2;
+  border: none;
+  border-radius: 5px;
+  color: white;
   transition: background-color 0.3s ease;
-  margin-right: 10px;
 }
 
 .btn-manuale:hover {
-  background-color: #005a9e; /* blu più scuro */
+  background-color: #1565c0;
+}
+
+.icon-plus {
+  font-size: 20px;
+  vertical-align: middle;
 }
 
 /* Lista articoli manuali */
@@ -393,74 +438,93 @@
   outline-offset: 2px;
 }
 
-
-.cronologia-icon-container {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  cursor: pointer;
-  z-index: 1001;
+/* Allinea l'icona accanto ai pulsanti */
+.auth-links {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* spazio tra logout e icona */
 }
 
 .cronologia-icon {
-  font-size: 32px;
-  color: #3f51b5; /* blu mat-icon */
-  transition: color 0.3s ease;
+  font-size: 28px;
+  cursor: pointer;
+  color: #555;
+  transition: color 0.2s ease;
 }
 
 .cronologia-icon:hover {
-  color: #303f9f; /* colore hover */
+  color: #000;
 }
 
-.lista-cronologia {
+
+.lista-cronologia-flottante {
   position: fixed;
   top: 0;
   right: 0;
-  width: 320px;
+  width: 340px;
   height: 100vh;
-  background: #f9f9f9;
-  box-shadow: -2px 0 8px rgba(0,0,0,0.15);
+  background-color: rgba(255, 255, 255, 0.8); /* come container */
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 18px;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.45);
   padding: 20px;
   overflow-y: auto;
   z-index: 1000;
-  display: flex;
-  flex-direction: column;
+  animation: slideIn 0.3s ease-out;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.lista-cronologia h3 {
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.lista-cronologia-flottante h3 {
   margin-top: 0;
-  margin-bottom: 15px;
+  font-size: 1.4rem;
   font-weight: 600;
-  font-size: 1.2rem;
-  border-bottom: 1px solid #ddd;
-  padding-bottom: 10px;
+  color: #2c3e50;
+  border-bottom: 2px solid #e6ecf3;
+  padding-bottom: 8px;
 }
 
-.lista-cronologia ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  flex-grow: 1;
-}
-
-.item-cronologia {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 8px 5px;
-  border-bottom: 1px solid #ddd;
-  cursor: pointer;
+.lista-cronologia-flottante .item-cronologia {
+  padding: 10px 0;
+  border-bottom: 1px solid #eef1f5;
   transition: background-color 0.2s ease;
 }
 
-.item-cronologia:hover {
-  background-color: #e0e0e0;
+.lista-cronologia-flottante .item-cronologia:hover {
+  background-color: rgba(0, 123, 255, 0.05);
+  cursor: pointer;
+  border-radius: 6px;
 }
 
-.titolo-cronologia {
-  flex-grow: 1;
+.lista-cronologia-flottante .titolo-cronologia-link {
+  color: #34495e;
+  text-decoration: none;
+  font-size: 0.95rem;
   font-weight: 500;
-  margin-right: 10px;
-  user-select: none;
 }
 
+.lista-cronologia-flottante .titolo-cronologia-link:hover {
+  color: #007bff;
+  text-decoration: underline;
+}
+
+.messaggio-errore {
+  color: #e74c3c;
+  background: rgba(231, 76, 60, 0.08);
+  padding: 10px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  margin-top: 10px;
+}
