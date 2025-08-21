@@ -1,3 +1,4 @@
+from datetime import timedelta
 from flask import Flask, request, jsonify
 from flask_cors import CORS, cross_origin
 from models import db, Notizia, User
@@ -17,6 +18,7 @@ CORS(app, origins=["http://localhost:4200"], supports_credentials=True)
 
 # === Configurazione ===
 app.config['JWT_SECRET_KEY'] = os.getenv('JWT_SECRET_KEY', 'super-secret-key')
+app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(hours=1)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 jwt = JWTManager(app)

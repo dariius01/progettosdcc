@@ -49,7 +49,7 @@ export class DettagliNotiziaComponent implements OnInit {
     }
   }
 
-  vaiAllaHomeDopoEliminazione(): void {
+  vaiAllaHome(): void {
     this.router.navigate(['/']);
   }
 
@@ -117,41 +117,53 @@ export class DettagliNotiziaComponent implements OnInit {
     const doc = new jsPDF();
     const pageWidth = doc.internal.pageSize.getWidth();
     const pageHeight = doc.internal.pageSize.getHeight();
-    const margin = 15;
-    let y = 30; // partenza un po' più in basso
+    const margin = 20;
+    let y = 40; // partire un po' più in basso
 
-    // Titolo in grassetto, font più grande
+    // Titolo centrato, grassetto, grande
     doc.setFont('helvetica', 'bold');
-    doc.setFontSize(20);
-    doc.text(this.notizia.titolo || '', margin , y);
-    y += 10; // più spazio dopo il titolo
+    doc.setFontSize(24);
+    doc.setTextColor(34, 15, 103); // blu elegante
+    const titleLines = doc.splitTextToSize(this.notizia.titolo || '', pageWidth - 2 * margin);
+    doc.text(titleLines, pageWidth / 2, y, { align: 'center' });
+    y += titleLines.length * 10 + 5;
 
-    // Sottotitolo in corsivo, leggermente più in basso
-    doc.setFont('helvetica', 'italic');
-    doc.setFontSize(14);
+    // Linea sottile sotto il titolo
+    doc.setDrawColor(34, 15, 103);
+    doc.setLineWidth(0.5);
+    doc.line(margin, y, pageWidth - margin, y);
+    y += 10;
+
+    // Sottotitolo in corsivo, grigio scuro
     if (this.notizia.sottotitolo) {
-      doc.text(this.notizia.sottotitolo, margin, y);
-      y += 20; // più spazio dopo il sottotitolo
+      doc.setFont('helvetica', 'italic');
+      doc.setFontSize(14);
+      doc.setTextColor(80, 80, 80);
+      const subLines = doc.splitTextToSize(this.notizia.sottotitolo, pageWidth - 2 * margin);
+      doc.text(subLines, margin, y);
+      y += subLines.length * 8 + 10;
     }
 
-    // Testo normale, più in basso
+    // Testo normale, giustificato
     doc.setFont('helvetica', 'normal');
     doc.setFontSize(12);
+    doc.setTextColor(0, 0, 0);
     const testo = this.notizia.testo || '';
     const lines = doc.splitTextToSize(testo, pageWidth - 2 * margin);
 
     for (const line of lines) {
       if (y > pageHeight - 30) {
         doc.addPage();
-        y = 30; // nuova pagina inizia con margine superiore
+        y = 30;
       }
-      doc.text(line, margin, y);
-      y += 8; // distanza tra le righe
+      doc.text(line, margin, y, { align: 'justify', maxWidth: pageWidth - 2 * margin });
+      y += 7; // distanza tra le righe leggermente più compatta
     }
 
-    // Data creazione in basso a destra
+    // Data pubblicazione in basso a destra
     doc.setFontSize(10);
     doc.setFont('helvetica', 'italic');
+    doc.setTextColor(100, 100, 100);
     const dataStr = this.notizia.data_creazione ? new Date(this.notizia.data_creazione).toLocaleString() : '';
     doc.text(`Pubblicato il: ${dataStr}`, pageWidth - margin, pageHeight - 15, { align: 'right' });
 

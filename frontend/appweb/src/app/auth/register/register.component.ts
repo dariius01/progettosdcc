@@ -10,7 +10,7 @@ import { MatIcon } from '@angular/material/icon';
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, MatIcon],
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
@@ -77,7 +77,7 @@ export class RegisterComponent implements OnInit {
             this.errorMessage = err.error?.errore || 'Dati non validi';
             break;
           case 409:
-            this.errorMessage = 'Email già esistente';
+            this.errorMessage = 'Utente già esistente';
             break;
           default:
             this.errorMessage = err.error?.errore || 'Errore nella registrazione';
@@ -85,5 +85,8 @@ export class RegisterComponent implements OnInit {
         }
       }
     });
+  }
+  goToLogin(){
+    this.router.navigate(['/login']);
   }
 }

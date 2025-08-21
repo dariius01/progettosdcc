@@ -3,15 +3,21 @@
   <h4>{{ articolo.sottotitolo }}</h4>
   <p>{{ articolo.testo }}</p>
 
-  <!-- Pulsante Salva -->
-  <button class="btn-generico btn-salva" (click)="salvaArticolo()">Salva Articolo</button>
+  <!-- Pulsanti Salva e Home sulla stessa riga -->
+  <div class="btn-row">
+    <button class="btn-generico btn-home" (click)="tornaAllaHome()">
+      <mat-icon>home</mat-icon> Torna alla Home
+    </button>
+
+    <button class="btn-generico btn-salva" (click)="salvaArticolo()">
+      <mat-icon>save</mat-icon> Salva Articolo
+    </button>
+    
+  </div>
 
   <!-- Messaggi di errore -->
   <p class="errore" *ngIf="errore">{{ errore }}</p>
 </div>
-
-<!-- Pulsante Home -->
-<button class="btn-generico btn-home" (click)="tornaAllaHome()">Torna alla Home</button>
 
 <!-- MODALE per accesso richiesto -->
 <div class="modal-overlay" *ngIf="mostraAccessoRichiesto">
@@ -31,7 +37,20 @@
     <h3>Salvataggio completato!</h3>
     <p>{{ messaggio }}</p>
     <div class="modal-actions">
-      <button class="modal-btn-ok" (click)="messaggio = null">OK</button>
+      <button class="modal-btn-ok" (click)="chiudiMessaggio()">OK</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- MODALE CONFERMA USCITA -->
+<div class="modal-overlay" *ngIf="mostraConfermaUscita">
+  <div class="modal-content modal-confirm">
+    <h3>Sei sicuro?</h3>
+    <p>Non hai salvato l'articolo. Vuoi davvero tornare alla Home?</p>
+    <div class="modal-actions">
+      <button class="modal-btn-conferma" (click)="tornaHomeConfermata()">✅Torna Home</button>
+      <button class="modal-btn-nega" (click)="mostraConfermaUscita = false">❌Annulla</button>
     </div>
   </div>
 </div>

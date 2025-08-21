@@ -14,7 +14,7 @@
 .container {
   max-width: 1000px;
   margin: 40px auto 0; 
-  padding: 20px;
+  padding: 10px;
   box-sizing: border-box;
 
   background-color: rgba(255, 255, 255, 0.8); /* un po' più opaco */
@@ -24,42 +24,94 @@
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.45); /* ombra soft */
 }
 
-
 .titolo {
-  font-size: 2.5em;
-  color: var(--text);
-  margin-bottom: 30px;
+  font-size: 3rem;
+  font-weight: 900;
   text-align: center;
+  margin-bottom: 10px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+  /* Gradient più brillante */
+  background: linear-gradient(45deg, #ff5f6d, #ffc371, #6a11cb, #2575fc, #279439);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  /* Ombra glow */
+  text-shadow: 0 0 8px rgba(255,255,255,0.3), 2px 2px 6px rgba(0,0,0,0.3);
+
+  /* Animazione di ingresso */
+  opacity: 0;
+  transform: translateY(-20px);
+  animation: titoloEntrata 1s forwards, gradientShift 20s ease infinite; /* durata più lunga */
+}
+
+/* Entrata morbida */
+@keyframes titoloEntrata {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Animazione gradient più lenta */
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+
+
+.sottotitolo {
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: #141414;  /* verde elegante */
+  text-align: center;
+  margin-bottom: 20px;
+  letter-spacing: 0.5px;
+  font-style: italic;
+  animation: fadeIn 1.2s ease; /* effetto ingresso */
+  margin-top: 10px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Animazione ingresso morbido */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .barra-ricerca {
-  margin-top: 20px;
+  margin-top: 30px;
   display: flex;
   align-items: center;
   width: 100%;
-  border: 5px solid var(--border);
-  border-radius: 8px;
-  background-color: white;
+  background: #fff;
   padding: 12px 16px;
+  border-radius: 12px; /* più morbida e moderna */
   box-sizing: border-box;
-  box-shadow: 0 0 4px rgba(0, 0, 0, 0.);
-  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+
+  /* Ombra fissa elegante */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12), 
+              0 4px 12px rgba(0, 0, 0, 0.08);
+
+  transition: box-shadow 0.3s ease, transform 0.2s ease;
 }
 
 .barra-ricerca:focus-within {
-  border-color: var(--primary);
-  box-shadow: 0 4px 12px rgba(1, 6, 10, 0.25);
-  transform: translateY(-2px);
-  transition: box-shadow 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18), 
+              0 8px 24px rgba(0, 0, 0, 0.12);
+  transform: translateY(-2px); /* leggero sollevamento */
 }
 
-
 .icona-lente {
-  font-size: 24px;
+  font-size: 22px;
   color: var(--muted);
   margin-right: 10px;
   pointer-events: none;
 }
+
 
 .input-elegante {
   flex: 1;
@@ -77,69 +129,89 @@
   text-align: center;
 }
 
-.lista-risultati {
+
+
+.lista-risultati { 
   display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  margin-top: 2rem;
-  max-height: calc(5 * 4.5rem);
-  overflow-y: auto;
-  padding-right: 8px;
-  scrollbar-width: thin;
-  scrollbar-color: var(--accent) var(--light-bg);
-  background-color: #f0f0f0;
-;
+  flex-direction: column; 
+  gap: 1rem; 
+  margin-top: 2rem; 
+  max-height: calc(7 * 4.2rem);
+  overflow-y: auto; 
+  padding: 5px; 
+  scrollbar-width: thin; 
+  scrollbar-color: var(--accent) var(--light-bg); 
+  background-color: #f1eded;
 }
 
-.lista-risultati::-webkit-scrollbar {
-  width: 8px;
+.lista-risultati::-webkit-scrollbar { width: 8px; } 
+.lista-risultati::-webkit-scrollbar-track { background: var(--light-bg); border-radius: 8px; } 
+.lista-risultati::-webkit-scrollbar-thumb { background-color: var(--accent); 
+  border-radius: 8px; 
+  border: 2px solid var(--light-bg); 
+
+
 }
 
-.lista-risultati::-webkit-scrollbar-track {
-  background: var(--light-bg);
+.nessun-risultato {
+  text-align: center;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #242424;
+  margin-top: 20px;
+  padding: 15px;
   border-radius: 8px;
+  background: #f8f8f8;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.lista-risultati::-webkit-scrollbar-thumb {
-  background-color: var(--accent);
-  border-radius: 8px;
-  border: 2px solid var(--light-bg);
-}
 
+
+/* Card notizia */
 .card-notizia {
   display: flex;
   align-items: flex-start;
   gap: 1rem;
-  padding: 1rem 1.5rem;
+  padding: 1.3rem 1.6rem;
   border: 1px solid var(--border);
-  border-radius: 10px;
-  background-color: var(--card-bg);
-  transition: background-color 0.3s, border-color 0.3s;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
-  
+  border-radius: 20px;
+  background: #f3f4f5;
+  transition: transform 0.25s cubic-bezier(.4,.0,.2,1), 
+              box-shadow 0.25s ease, 
+              border-color 0.25s ease;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.25);
+}
+
+.card-notizia:hover {
+  transform: translateY(-4px) scale(1.01);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  border-color: var(--primary);
 }
 
 .card-notizia.selezionata {
-  background-color: #e0f7fa;
+  background: linear-gradient(135deg, #f1ffff, #6fadad);
   border-color: var(--accent);
-  box-shadow: 0 4px 10px rgba(38, 166, 154, 0.3);
+  box-shadow: 0 8px 18px rgba(38, 166, 154, 0.25);
 }
 
+
+
+/* Checkbox elegante */
 .check-container {
   position: relative;
-  width: 24px;
-  height: 24px;
+  width: 22px;
+  height: 22px;
   flex-shrink: 0;
 }
 
 .check-container input {
-  width: 24px;
-  height: 24px;
+  width: 22px;
+  height: 22px;
   margin: 0;
   cursor: pointer;
   position: absolute;
-  top: 0;
-  left: 0;
+  opacity: 0;
   z-index: 2;
 }
 
@@ -149,81 +221,90 @@
   left: 0;
   width: 24px;
   height: 24px;
-  border: 2px solid var(--border);
+  border: 1px solid #000; /* bordo nero sempre visibile */
   border-radius: 6px;
-  background-color: var(--card-bg);
+  background-color: #fff; /* sfondo bianco fisso */
   cursor: pointer;
-  transition: background-color 0.3s, border-color 0.3s;
-  z-index: 1;
-  box-shadow: 0 0 3px rgba(0,0,0,0.1);
-}
-
-.check-container input:checked + .custom-check {
-  background-color: var(--accent);
-  border-color: var(--accent);
+  transition: border-color 0.3s, box-shadow 0.3s;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
 .custom-check::after {
   content: '';
   position: absolute;
-  display: none;
-  left: 7px;
-  top: 3px;
-  width: 6px;
-  height: 12px;
-  border: solid white;
-  border-width: 0 2px 2px 0;
-  transform: rotate(45deg);
+  left: 6px;  /* più centrata */
+  top: 1px;
+  width: 7px;  /* più larga */
+  height: 14px; /* più lunga */
+  border: solid rgb(39, 148, 57);
+  border-width: 0 3px 3px 0; /* linea un po' più spessa */
+  transform: rotate(45deg) scale(0);
+  opacity: 0;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+
+.check-container input:checked + .custom-check {
+  border-color: #000; /* resta nero */
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
 }
 
 .check-container input:checked + .custom-check::after {
-  display: block;
+  transform: rotate(45deg) scale(1);
+  opacity: 1;
 }
 
+
+/* Contenuto notizia */
 .contenuto-notizia {
   flex: 1;
 }
-
 .contenuto-notizia h3 {
-  margin: 0 0 0.25rem 0;
+  margin: 0 0 0.3rem 0;
   font-size: 1.25rem;
-  
-}
-.titolo-notizia-link {
-  text-decoration: none;
-  color: #1976d2;
   font-weight: 600;
+}
+
+/* Link del titolo della notizia */
+.titolo-notizia-link {
+  color: #1976d2; /* blu moderno */
+  text-decoration: underline;
+  text-underline-offset: 4px; /* distanza sottolineatura dal testo */
+  text-decoration-thickness: qpx; /* linea più marcata */
   transition: color 0.2s ease;
 }
 
 .titolo-notizia-link:hover {
-  text-decoration: underline;
-  color: #125a9c;
+  color: #0d47a1; /* blu più scuro al passaggio */
 }
 
 
+/* Descrizione */
 .contenuto-notizia p {
-  margin: 0.2rem 0;
+  margin: 0.3rem 0;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+/* Fonte */
+.fonte {
+  font-size: 0.85rem;
+  font-style: italic;
   color: var(--muted);
 }
-
-.fonte {
-  font-size: 0.9rem;
-  font-style: italic;
-}
-
 .link-fonte {
   display: inline-block;
   margin-top: 0.5rem;
   color: var(--primary);
-  text-decoration: underline;
   font-weight: 500;
-  transition: color 0.3s ease;
+  text-decoration: underline;
+  transition: color 0.2s ease;
 }
-
 .link-fonte:hover {
   color: var(--primary-hover);
 }
+
+
 
 .azioni-manuali {
   margin: 10px 0;
@@ -264,62 +345,52 @@
   align-items: center;
 }
 
+/* Bottone moderno e grande */
 .area-generazione button {
-  background-color: #a0a0a0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 16px 25px; /* più grande */
+  font-size: 1.2rem;  /* testo più grande */
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: #fff;
+  background: linear-gradient(135deg, #30c653, #186e3c); /* gradiente verde */
   border: none;
-  padding: 0.85rem 2rem;
-  font-size: 1.1rem;
-  color: white;
-  border-radius: 10px;
+  border-radius: 50px;
   cursor: not-allowed;
-  transition: background-color 0.3s ease;
+  transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
   text-align: center;
+  min-width: 260px; /* per dargli presenza */
 }
 
+/* Stato attivo */
 .area-generazione button.attivo {
-  background-color: #28a745;
   cursor: pointer;
+  background: #32ab4f;
 }
 
 .area-generazione button.attivo:hover {
-  background-color: #218838;
+  background: linear-gradient(135deg, #30c653, #186e3c);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.25);
 }
 
+/* Stato disabilitato */
 .area-generazione button:disabled {
-  background-color: #a0a0a0;
+  background: linear-gradient(135deg, #b0b0b0, #8c8c8c);
   cursor: not-allowed;
+  box-shadow: none;
 }
 
+/* Stato loading */
 .area-generazione button.loading {
-  background-color: var(--primary);
+  background: linear-gradient(135deg, #1976d2, #1e88e5); /* blu per feedback */
   cursor: progress;
 }
 
-.articolo-generato {
-  margin-top: 2rem;
-  padding: 1.5rem;
-  background-color: var(--card-bg);
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  text-align: left;
-}
-
-.articolo-generato h2 {
-  color: var(--primary);
-  margin-bottom: 1rem;
-}
-
-.articolo-generato h3 {
-  margin-top: 0;
-  color: var(--accent);
-  margin-bottom: 1rem;
-  font-weight: 600;
-}
-
-.articolo-generato p {
-  line-height: 1.5;
-  color: var(--text);
-}
 
 .auth-links {
   display: flex;
@@ -328,133 +399,236 @@
   margin-bottom: 15px;
 }
 
+/* Bottone principale (eventuali altri usi) */
 .btn-auth {
   background-color: #1976d2;
   color: white;
   border: none;
-  padding: 6px 12px;
-  border-radius: 4px;
+  padding: 8px 16px;
+  border-radius: 6px;
   cursor: pointer;
   font-weight: 600;
+  font-size: 1rem;
+  transition: background-color 0.3s, transform 0.2s;
 }
 
 .btn-auth:hover {
   background-color: #125ea4;
+  transform: translateY(-1px); /* leggero sollevamento */
 }
 
+/* Bottone login con icona + testo */
+.btn-login {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #111; /* quasi nero, meno duro del nero pieno */
+  background-color: transparent;
+  border: 2px solid #111; /* sottile e netto */
+  border-radius: 50px; /* pill shape, molto elegante */
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.08); /* leggero rilievo */
+}
+
+.btn-login mat-icon {
+  font-size: 1.5rem;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.btn-login:hover {
+  color: #fff; /* testo diventa bianco */
+  background: linear-gradient(135deg, #333, #555); /* effetto elegante e soft */
+  transform: translateY(-2px); /* leggero sollevamento */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2); /* shadow più evidente al passaggio */
+}
+
+.btn-login:hover mat-icon {
+  transform: rotate(15deg) scale(1.2); /* piccola rotazione + ingrandimento icona */
+  color: #f8f8f8; /* optional: un dettaglio di colore per icona */
+}
+
+
+
 /* Pulsanti "Aggiungi manualmente" e "Mostra articoli aggiunti" */
+.azioni-manuali {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between; /* bottoni a sx e cronologia a dx */
+  align-items: center;
+  margin-top: 20px;
+}
+
+.azioni-sx {
+  display: flex;
+  gap: 8px; /* mantiene la distanza tra i bottoni */
+  align-items: center;
+}
+
+
 .btn-manuale {
   display: inline-flex;
   align-items: center;
-  gap: 4px; /* distanza tra icona e testo */
-  padding: 8px 12px;
-  font-size: 14px;
+  gap: 6px;
+  padding: 10px 18px;
+  font-size: 0.95rem;
+  font-weight: 600;
   cursor: pointer;
-  background-color: #1976d2;
+  background: linear-gradient(145deg, #1976d2, #1e88e5);
   border: none;
-  border-radius: 5px;
+  border-radius: 50px;
   color: white;
-  transition: background-color 0.3s ease;
+  transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.15);
 }
 
 .btn-manuale:hover {
-  background-color: #1565c0;
+  background: linear-gradient(145deg, #1565c0, #143856);
+  color: #fff;
+  box-shadow: 0 5px 12px rgba(0,0,0,0.2);
 }
 
-.icon-plus {
-  font-size: 20px;
+.icon-plus, .icon-eye {
+  font-size: 1.2rem;
   vertical-align: middle;
+  color: #fff;
 }
 
 /* Lista articoli manuali */
+/* Lista articoli manuali */
+.lista-articoli-manuali {
+  margin-top: 16px; /* distanza dai pulsanti sopra */
+}
+
 .lista-articoli-manuali ul {
   list-style: none;
-  padding-left: 0;
+  padding: 0;
   max-width: 600px;
   margin: 0 auto;
 }
 
 .lista-articoli-manuali li {
-  padding: 8px 12px;
-  border-bottom: 1px solid #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
   cursor: pointer;
-  color: #222; /* testo scuro */
+  color: #333;
   font-weight: 500;
-  transition: background-color 0.2s ease;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  background-color: #fff;
+  margin-bottom: 10px; /* più spazio tra i blocchi */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25); /* ombra più visibile */
 }
 
 .lista-articoli-manuali li:hover {
-  background-color: #cce4f7; /* azzurro chiaro */
-  color: #007acc; /* blu */
+  background-color: #f0f8ff;
+  color: #007acc;
+  transform: translateY(-3px); /* sollevamento maggiore */
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.18); /* ombra più intensa */
 }
 
 .lista-articoli-manuali li.selezionato {
-  background-color: #007acc; /* blu */
-  color: white;
+  background-color: #007acc;
+  color: #fff;
+  font-weight: 600;
+  box-shadow: 0 6px 14px rgba(0, 122, 204, 0.5); /* glow blu */
+}
+
+/* Titolo articolo a sinistra in grassetto e più grande */
+.titolo-articolo {
+  flex-grow: 1;
+  margin-right: 12px;
   font-weight: 700;
+  font-size: 1.1rem;
 }
 
-/* Dettaglio articolo manuale */
-.dettaglio-articolo-manuale {
-  max-width: 600px;
-  margin: 1rem auto;
-  padding: 1rem 1.5rem;
-  border-radius: 10px;
-  background-color: #f9f9f9; /* sfondo chiaro */
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  color: #222; /* testo scuro */
-}
 
-.dettaglio-articolo-manuale h3 {
-  margin-top: 0;
-  margin-bottom: 0.3rem;
-}
-
-.dettaglio-articolo-manuale h4 {
-  margin-top: 0;
-  margin-bottom: 0.8rem;
-  font-style: italic;
-  color: #666; /* grigio medio */
-}
+/* Cestino */
 .btn-cestino {
-  background: none;
+  background: transparent;
   border: none;
-  color: #c00;
   cursor: pointer;
-  font-size: 24px; /* dimensione icona */
-  padding: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: color 0.3s ease;
+  color: #c00;
+  transition: color 0.2s ease;
 }
 
 .btn-cestino:hover {
-  color: #ff4444;
+  color: #a00;
 }
 
-.btn-cestino:focus {
-  outline: 2px solid #ff4444;
-  outline-offset: 2px;
+/* Overlay a schermo intero senza sfondo scuro */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent; /* nessuno sfondo scuro */
+  z-index: 1000;
+}
+
+/* Popup contenuto centrato fisso */
+.popup {
+  position: fixed;
+  top: 250px; /* distanza fissa dall’alto */
+  left: 50%;
+  transform: translateX(-50%);
+  background: #fff;
+  padding: 25px 30px;
+  max-width: 600px;
+  width: 90%;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+  z-index: 1001;
+}
+
+
+/* Pulsante chiusura a X in alto a sinistra */
+.popup .btn-chiudi {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #555;
+}
+
+.popup .btn-chiudi:hover {
+  color: #000;
 }
 
 /* Allinea l'icona accanto ai pulsanti */
 .auth-links {
   display: flex;
   align-items: center;
-  gap: 8px; /* spazio tra logout e icona */
 }
 
 .cronologia-icon {
-  font-size: 28px;
+  font-size: 33px;          /* più grande */
+  line-height: 1;           /* evita tagli */
+  height: 36px;             /* allinea altezza al font */
+  width: 36px;              /* opzionale, se vuoi area clic uniforme */
   cursor: pointer;
-  color: #555;
-  transition: color 0.2s ease;
+  color: #222;              /* nero elegante */
+  display: inline-flex;     /* centrare meglio l'icona */
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease, transform 0.2s ease;
+
 }
 
 .cronologia-icon:hover {
   color: #000;
+  transform: scale(1.1);
 }
+
 
 
 .lista-cronologia-flottante {
@@ -463,7 +637,7 @@
   right: 0;
   width: 340px;
   height: 100vh;
-  background-color: rgba(255, 255, 255, 0.8); /* come container */
+  background-color: rgba(255, 255, 255, 0.8);
   border: 1px solid rgba(255, 255, 255, 0.5);
   border-radius: 18px;
   backdrop-filter: blur(8px);
@@ -473,8 +647,9 @@
   z-index: 1000;
   animation: slideIn 0.3s ease-out;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  flex-direction: column;
 }
-
 
 @keyframes slideIn {
   from {
@@ -487,14 +662,41 @@
   }
 }
 
+
+.lista-cronologia-flottante .header-cronologia {
+  display: flex;
+  align-items: center; /* allinea testo e eventuali icone */
+  margin-top: 20px; /* spinge il testo sotto la X */
+  margin-bottom: 20px; /* distanza dai contenuti */
+  padding-left: 0; /* opzionale, se vuoi allineare il testo a sinistra */
+}
+
+
+/* Pulsante chiudi (X) */
+.lista-cronologia-flottante .chiudi-cronologia {
+  position: absolute; /* rimane sopra il contenuto */
+  top: 10px;
+  left: 10px; /* a sinistra */
+  background: none;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  color: rgb(12, 12, 12);
+  z-index: 1010;
+}
+
+/* Titolo della cronologia */
 .lista-cronologia-flottante h3 {
-  margin-top: 0;
+  margin-top: 40px; /* spinge il titolo sotto la X */
+  margin-bottom: 10px; /* distanza dai contenuti successivi */
   font-size: 1.4rem;
   font-weight: 600;
   color: #2c3e50;
   border-bottom: 2px solid #e6ecf3;
   padding-bottom: 8px;
 }
+
+
 
 .lista-cronologia-flottante .item-cronologia {
   padding: 10px 0;
@@ -527,4 +729,69 @@
   border-radius: 6px;
   font-size: 0.9rem;
   margin-top: 10px;
+}
+
+
+.login-alert {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: #ffe0e0;
+  color: #900;
+  padding: 12px 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  z-index: 1000;
+  font-weight: bold;
+}
+
+
+/* Overlay trasparente sopra contenuto */
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.45); /* scuro semitrasparente */
+  backdrop-filter: blur(4px);      /* effetto sfocatura sul contenuto dietro */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+/* Spinner circolare */
+.spinner {
+  border: 5px solid rgba(255, 255, 255, 0.3); /* bianco tenue */
+  border-top: 5px solid #1e732c;              /* verde elegante */
+  border-radius: 50%;
+  width: 55px;
+  height: 55px;
+  animation: spin 1s linear infinite;
+  margin-bottom: 15px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Testo elegante */
+.loading-overlay p {
+  font-size: 1.3rem;
+  color: #fff;             /* bianco su sfondo scuro */
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  margin-top: 12px;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+  animation: pulse 1.5s infinite;
+}
+
+/* Effetto pulsazione */
+@keyframes pulse {
+  0% { opacity: 0.6; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.05); }
+  100% { opacity: 0.6; transform: scale(1); }
 }

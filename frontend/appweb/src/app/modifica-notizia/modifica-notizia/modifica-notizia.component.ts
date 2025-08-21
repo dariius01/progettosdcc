@@ -3,11 +3,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NotizieService, Notizia } from '../../services/notizie.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms'; // <-- FormsModule qui!
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-modifica-notizia',
   standalone: true,
-  imports: [CommonModule, FormsModule], // <-- aggiunto FormsModule
+  imports: [CommonModule, FormsModule, MatIcon],
   templateUrl: './modifica-notizia.component.html',
   styleUrls: ['./modifica-notizia.component.css']
 })
@@ -40,7 +41,8 @@ export class ModificaNotiziaComponent implements OnInit {
     });
   }
 
-  annulla(): void {
+
+  tornaIndietro(): void {
     if (this.notizia?.id) {
       this.router.navigate(['/notizia', this.notizia.id]);
     } else {

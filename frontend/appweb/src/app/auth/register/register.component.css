@@ -1,30 +1,31 @@
 .register-container {
   width: 600px;
-  padding: 30px 40px;
-  background-color: rgba(255, 255, 255, 0.80);
-  border-radius: 12px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+  padding: 40px 50px;
+  background: rgba(255, 255, 255, 0.7); /* più trasparente come login */
+  border-radius: 18px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
   box-sizing: border-box;
   text-align: center;
-
   position: fixed;
-  top: 40%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  backdrop-filter: blur(8px);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  animation: fadeIn 0.5s ease;
 }
 
-/* Titolo (se presente) */
+/* Titolo */
 .register-container h2 {
-  margin-bottom: 25px;
+  margin-bottom: 15px;
   color: #222;
-  font-weight: 600;
-  font-size: 1.8rem;
+  font-weight: 700;
+  font-size: 2rem;
 }
 
-/* Wrapper dei singoli campi */
+/* Wrapper dei campi */
 .register-container > div {
-  margin-bottom: 18px;
+  margin-bottom: 20px;
   text-align: left;
 }
 
@@ -39,75 +40,121 @@
 
 /* Input */
 .register-container input[type="email"],
-.register-container input[type="password"] {
+.register-container input[type="password"],
+.register-container input[type="text"] {
   width: 100%;
-  padding: 12px 14px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
+  padding: 14px 16px;
+  border: 2px solid #ddd;
+  border-radius: 50px;
   font-size: 1rem;
   box-sizing: border-box;
-  transition: border-color 0.3s ease;
-  font-family: inherit;
+  transition: all 0.3s ease;
+  background-color: #fafafa;
 }
 
 .register-container input[type="email"]:focus,
-.register-container input[type="password"]:focus {
+.register-container input[type="password"]:focus,
+.register-container input[type="text"]:focus {
   border-color: #4a90e2;
+  background-color: #fff;
   outline: none;
+  box-shadow: 0 0 0 3px rgba(74,144,226,0.2);
 }
 
 /* Bottone submit */
 .register-container button[type="submit"] {
   width: 100%;
   padding: 14px;
-  background-color: #4a90e2;
+  margin-top: 20px; /* aggiunto margine sopra */
+  background: linear-gradient(145deg, #1e9d46, #28d05d);
   border: none;
-  border-radius: 8px;
+  border-radius: 50px;
   color: white;
   font-weight: 600;
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
 }
 
+
 .register-container button[type="submit"]:hover:not(:disabled) {
-  background-color: #357abd;
+  background: linear-gradient(145deg, #28d05d, #24902a);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.25);
 }
 
 .register-container button[type="submit"]:disabled {
   background-color: #999;
   cursor: not-allowed;
 }
+
+/* Messaggi di errore generici */
+.error-message,
+.errore {
+  margin-top: 15px;
+  color: #d9534f;
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-align: center;
+}
+
+/* Info password o altri avvisi */
 .info-password {
   font-size: 0.875rem;
   margin-top: 10px;
   margin-bottom: 10px;
   font-style: italic;
-  color: #0b0101; /* colore base */
+  color: #0b0101;
 }
 
 .info-password.errore {
-  color: #d9534f; /* rosso */
+  color: #d9534f;
 }
 
 .info-password.valido {
-  color: #28a745; /* verde */
+  color: #28a745;
+}
+
+/* Animazione fade-in */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translate(-50%, -45%); }
+  to { opacity: 1; transform: translate(-50%, -50%); }
 }
 
 
-
-/* Messaggi di errore */
-.errore {
-  color: #d9534f;
-  font-weight: 600;
-  font-size: 0.9rem;
-  margin-top: 5px;
+.icon-back {
+  position: absolute;
+  top: 22px;
+  left: 20px;
+  cursor: pointer;
+  font-size: 28px;   /* dimensione originale più sicura */
+  color: #333;
+  transition: transform 0.2s ease, color 0.2s ease;
+  transform: scale(1.25);  /* ingrandisce la freccia senza tagliarla */
+  transform-origin: left center; /* mantiene la freccia allineata a sinistra */
 }
 
-/* Messaggio di errore generico */
-.error-message {
-  margin-top: 15px;
-  color: #d9534f;
-  font-weight: 600;
-  text-align: center;
+.icon-back:hover {
+  transform: scale(1.2);
+  color: #007bff;
+}
+
+/* Click: zoom più evidente */
+.icon-back:active {
+  transform: scale(1.4);
+  color: #0056b3;
+}
+
+.icon-back:hover {
+  transform: scale(1.2);
+  color: #007bff;
+}
+
+/* Click: zoom più evidente */
+.icon-back:active {
+  transform: scale(1.4);
+  color: #0056b3;
+}
+.register-container {
+  position: relative;  /* necessario per il posizionamento assoluto della freccia */
 }

@@ -1,8 +1,9 @@
 <div class="container-dettaglio-elegante" *ngIf="notizia">
+  <mat-icon class="icon-back" (click)="tornaIndietro()">arrow_back</mat-icon>
   <h2>Modifica Notizia</h2>
 
   <label>Titolo</label>
-  <input [(ngModel)]="notizia.titolo" class="input-elegante" />
+  <input [(ngModel)]="notizia.titolo" class="input-elegante input-titolo" />
 
   <label>Sottotitolo</label>
   <input [(ngModel)]="notizia.sottotitolo" class="input-elegante" />
@@ -11,8 +12,9 @@
   <textarea [(ngModel)]="notizia.testo" class="input-elegante" rows="6"></textarea>
 
   <div class="azioni-form">
-    <button class="btn-salva" (click)="salvaModifiche()">💾 Salva</button>
-    <button class="btn-cancella" (click)="annulla()">❌ Annulla</button>
+    <button class="btn-salva" (click)="salvaModifiche()">
+      <mat-icon>save</mat-icon> Salva
+    </button>
   </div>
 
   <p class="errore" *ngIf="errore">{{ errore }}</p>

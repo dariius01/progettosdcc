@@ -1,17 +1,52 @@
+.icon-back {
+  position: absolute;
+  top: 22px;
+  left: 20px;
+  cursor: pointer;
+  font-size: 28px;   /* dimensione originale più sicura */
+  color: #333;
+  transition: transform 0.2s ease, color 0.2s ease;
+  transform: scale(1.25);  /* ingrandisce la freccia senza tagliarla */
+  transform-origin: left center; /* mantiene la freccia allineata a sinistra */
+}
+
+.icon-back:hover {
+  transform: scale(1.2);
+  color: #007bff;
+}
+
+/* Click: zoom più evidente */
+.icon-back:active {
+  transform: scale(1.4);
+  color: #0056b3;
+}
+
+.icon-back:hover {
+  transform: scale(1.2);
+  color: #007bff;
+}
+
+/* Click: zoom più evidente */
+.icon-back:active {
+  transform: scale(1.4);
+  color: #0056b3;
+}
+
 .form-manuale {
+  position: relative; /* serve per posizionare la freccia in alto */
   max-width: 700px;
-  margin: 2rem auto;
-  padding: 1.5rem 2rem;
-  background-color: rgba(255, 255, 255, 0.6);
+  margin: 3rem auto;
+  padding: 2rem;
+  background-color: rgba(255, 255, 255, 0.75);
   border: 1.5px solid var(--border);
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-  box-sizing: border-box;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
   color: #2c3e50;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
+
 
 .form-manuale h2 {
   margin-bottom: 1.5rem;
@@ -21,8 +56,29 @@
   text-align: center;
   letter-spacing: 1px;
   text-transform: uppercase;
-  font-family: 'Merriweather', serif;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
+
+h2 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;  /* spazio tra icona e testo */
+  font-weight: 800;
+  font-size: 1.5rem;
+  color: #34495e;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.icon-pencil {
+  font-size: 1.4rem;  /* dimensione della matita */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #28a745;      /* verde, come il pulsante */
+}
+
 
 .form-manuale label {
   display: block;
@@ -79,48 +135,50 @@
 }
 
 /* Stile base pulsanti */
-.btn-home,
+
+/* Pulsante stile login */
 .btn-success {
-  color: white;
+  width: auto;               
+  padding: 10px 20px;        
+  background: linear-gradient(145deg, #1e9d46, #28d05d);
   border: none;
-  padding: 10px 18px;
-  font-size: 1rem;
+  border-radius: 50px;
+  color: white;
   font-weight: 600;
-  border-radius: 8px;
+  font-size: 1rem;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
-  transition: background-color 0.25s ease;
+  transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  margin: 0 auto;            
 }
 
-/* Blu per btn-home */
-.btn-home {
-  background-color: #1976d2;
+/* Hover: gradiente + effetto “emersione” solo se abilitato */
+.btn-success:not(:disabled):hover {
+  background: linear-gradient(145deg, #28d05d, #24902a);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.35);
+  transform: translateY(-3px);  
 }
 
-.btn-home:hover {
-  background-color: #115293;
+/* Click: effetto pressione solo se abilitato */
+.btn-success:not(:disabled):active {
+  transform: translateY(0px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
 }
 
-/* Verde per btn-success */
-.btn-success {
-  background-color: #28a745;
-}
-
-.btn-success:hover {
-  background-color: #1e7e34;
-}
-
-/* Stato disabilitato per btn-success */
+/* Stato disabilitato: fermo e grigio */
 .btn-success:disabled {
-  background-color: #6c757d;
+  background: #6c757d;
   cursor: not-allowed;
   opacity: 0.7;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15); /* mantiene la stessa altezza visiva */
+  transform: none; /* nessun sollevamento */
 }
 
-/* Icone dimensioni e allineamento uniformi */
-.icon-home,
+/* Icona allineata */
 .icon-add {
   font-size: 20px;
   line-height: 1;

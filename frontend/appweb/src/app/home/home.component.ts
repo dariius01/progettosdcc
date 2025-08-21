@@ -3,8 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NotizieService } from '../services/notizie.service';
 import { MatIconModule } from '@angular/material/icon';
-import { Router } from '@angular/router';
-import { RouterLink } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { Subscription } from 'rxjs';
 import { ArticoliManualiService } from '../services/articoli-manuali.service';
@@ -12,7 +11,7 @@ import { ArticoliManualiService } from '../services/articoli-manuali.service';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, RouterLink, FormsModule, MatIconModule],
+  imports: [CommonModule, RouterModule, FormsModule, MatIconModule],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
 })
@@ -29,10 +28,16 @@ export class HomeComponent implements OnInit, OnDestroy {
   cronologiaNotizie: any[] = []; // ✅ nuove variabile
   isLoggedIn = false;
   erroreCronologia: string | null = null; 
+  nessunRisultato: boolean = false;
 
   articoliManuali: any[] = [];
   mostraArticoliManuali = false;
   articoloManualeSelezionato: any | null = null;
+  articoloPopup: any = null;
+  loginAlert: string | null = null;
+
+
+
 
   private authSubscription!: Subscription;
   private articoliSubscription!: Subscription;
@@ -69,6 +74,14 @@ export class HomeComponent implements OnInit, OnDestroy {
     if (this.articoliSubscription) this.articoliSubscription.unsubscribe();
   }
 
+  apriPopup(articolo: any) {
+    this.articoloPopup = articolo;
+  }
+
+  chiudiPopup() {
+    this.articoloPopup = null;
+  }
+
   cerca(): void {
     const trimmed = this.query.trim();
     if (!trimmed) return;
@@ -76,18 +89,22 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.loading = true;
     this.errore = null;
     this.notizieSelezionate = [];
+    this.nessunRisultato = false; // reset
 
     this.notizieService.cercaNotizie(trimmed).subscribe({
       next: (res) => {
         this.risultati = res || [];
         this.loading = false;
+        this.nessunRisultato = this.risultati.length === 0;
       },
       error: () => {
         this.errore = 'Errore durante la ricerca';
         this.loading = false;
+        this.nessunRisultato = false;
       },
     });
   }
+
 
   toggleSelezione(notizia: any, event: Event): void {
     event.stopPropagation();
@@ -150,7 +167,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
 
-  toggleCronologia(): void {
+   toggleCronologia(): void {
     this.mostraCronologia = !this.mostraCronologia;
 
     if (this.mostraCronologia && this.cronologiaNotizie.length === 0) {
@@ -168,6 +185,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
 
 
+
   logout(): void {
     this.authService.logout();
     this.router.navigate(['/']);
@@ -182,6 +200,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       }
     });
   }
+
 
   toggleMostraArticoliManuali(): void {
     this.mostraArticoliManuali = !this.mostraArticoliManuali;

@@ -1,22 +1,27 @@
 <div class="container">
   <!-- Barra login/logout + icona cronologia -->
   <div class="auth-links">
-    <button *ngIf="!isLoggedIn" routerLink="/login" class="btn-auth">Accedi</button>
-    <button *ngIf="!isLoggedIn" routerLink="/register" class="btn-auth">Registrati</button>
+    <!-- Mostra solo l'icona di login se l'utente non è loggato -->
+    <button *ngIf="!isLoggedIn" routerLink="/login" class="btn-auth btn-login" title="Accedi">
+      <span class="btn-text">Accedi</span>
+      <mat-icon>login</mat-icon>
+      
+    </button>
 
+
+    <!-- Logout e cronologia per utenti loggati -->
     <ng-container *ngIf="isLoggedIn">
-      <button (click)="logout()" class="btn-auth">Logout</button>
-      <mat-icon
-        (click)="toggleCronologia()"
-        class="cronologia-icon"
-        title="Visualizza cronologia"
-      >
-        access_time
-      </mat-icon>
+      <button (click)="logout()" class="btn-auth btn-login" title="Logout">
+        <span class="btn-text">Logout</span>
+        <mat-icon>logout</mat-icon>
+      </button>
     </ng-container>
   </div>
 
-  <h1 class="titolo">📰 Realizza un nuovo articolo!</h1>
+
+  <h1 class="titolo"> SportGenerator</h1>
+  <h2 class="sottotitolo">📰 Genera il tuo articolo sportivo!</h2>
+
 
   <!-- Barra di ricerca -->
   <div class="barra-ricerca-riga">
@@ -32,22 +37,37 @@
     </div>
   </div>
 
-  <!-- Bottone aggiungi manualmente -->
-  <div class="azioni-manuali">
-    <button (click)="vaiAdAggiuntaManuale()" class="btn-manuale">
-      <mat-icon class="icon-plus">add</mat-icon>
-      Aggiungi manualmente
-    </button>
 
-    <button
-      *ngIf="articoliManuali.length > 0"
-      (click)="toggleMostraArticoliManuali()"
-      class="btn-manuale"
+  <!-- Bottone aggiungi manualmente + cronologia -->
+  <div class="azioni-manuali">
+    <div class="azioni-sx">
+      <button (click)="vaiAdAggiuntaManuale()" class="btn-manuale">
+        <mat-icon class="icon-plus">add</mat-icon>
+        Aggiungi manualmente
+      </button>
+
+      <button
+        *ngIf="articoliManuali.length > 0"
+        (click)="toggleMostraArticoliManuali()"
+        class="btn-manuale"
+      >
+        <mat-icon class="icon-eye">visibility</mat-icon>
+        {{ mostraArticoliManuali ? 'Nascondi articoli aggiunti' : 'Mostra articoli aggiunti' }}
+      </button>
+    </div>
+
+    <!-- Icona cronologia solo se loggati -->
+    <mat-icon
+      *ngIf="isLoggedIn"
+      (click)="toggleCronologia()"
+      class="cronologia-icon"
+      title="Visualizza cronologia"
     >
-      <mat-icon class="icon-eye">visibility</mat-icon>
-      {{ mostraArticoliManuali ? 'Nascondi articoli aggiunti' : 'Mostra articoli aggiunti' }}
-    </button>
+      access_time
+    </mat-icon>
   </div>
+
+
 
   <!-- Lista articoli manuali -->
   <div *ngIf="mostraArticoliManuali" class="lista-articoli-manuali">
@@ -55,10 +75,11 @@
       <li
         *ngFor="let articolo of articoliManuali"
         [class.selezionato]="articoloManualeSelezionato === articolo"
-        style="cursor:pointer; padding: 5px; border-bottom: 1px solid #ddd; display: flex; justify-content: space-between; align-items: center;"
-        (click)="selezionaArticoloManuale(articolo)"
+        class="articolo-item"
       >
-        <span>{{ articolo.titolo }}</span>
+        <!-- Click sul titolo apre popup -->
+        <span class="titolo-articolo" (click)="apriPopup(articolo)">{{ articolo.titolo }}</span>
+
         <button
           class="btn-cestino"
           (click)="rimuoviArticoloManuale(articolo, $event)"
@@ -69,13 +90,19 @@
         </button>
       </li>
     </ul>
+  </div>
 
-    <div *ngIf="articoloManualeSelezionato" class="dettaglio-articolo-manuale" style="margin-top: 10px; padding: 10px; border: 1px solid #ccc;">
-      <h3>{{ articoloManualeSelezionato.titolo }}</h3>
-      <h4 *ngIf="articoloManualeSelezionato.sottotitolo"><em>{{ articoloManualeSelezionato.sottotitolo }}</em></h4>
-      <p>{{ articoloManualeSelezionato.testo }}</p>
+  <!-- Popup articolo -->
+ <div *ngIf="articoloPopup" class="overlay" (click)="chiudiPopup()">
+    <div class="popup" (click)="$event.stopPropagation()">
+      <button class="btn-chiudi" (click)="chiudiPopup()" aria-label="Chiudi">&times;</button>
+      <h2>{{ articoloPopup.titolo }}</h2>
+      <h4 *ngIf="articoloPopup.sottotitolo"><em>{{ articoloPopup.sottotitolo }}</em></h4>
+      <p>{{ articoloPopup.testo }}</p>
     </div>
   </div>
+
+
 
   <!-- Messaggio di errore generale -->
   <div *ngIf="errore" class="messaggio-errore">{{ errore }}</div>
@@ -114,9 +141,18 @@
         <p *ngIf="notizia.source" class="fonte">Fonte: {{ notizia.source }}</p>
       </div>
     </div>
+
+    <!-- Nessun risultato -->
+    <div *ngIf="!loading && nessunRisultato" class="nessun-risultato">
+      Mi dispiace, non ci sono articoli relativi a questo tema 😢
+    </div>
+
+
   </div>
 
+
   <!-- Generazione articolo -->
+  
   <div class="area-generazione" *ngIf="(risultati.length > 0) || (articoliManuali.length > 0)">
     <button
       (click)="generaNotizia()"
@@ -126,35 +162,34 @@
       {{ loadingGenerazione ? 'Generazione in corso...' : 'Genera Articolo' }}
     </button>
 
+    <!-- Spinner di caricamento -->
+    <div *ngIf="loadingGenerazione" class="loading-overlay">
+      <div class="spinner"></div>
+      <p>Sto generando il tuo articolo...</p>
+    </div>
+
     <div *ngIf="erroreGenerazione" class="messaggio-errore">
       {{ erroreGenerazione }}
     </div>
   </div>
+
 </div>
 
-<!-- CRONOLOGIA FUORI DAL CONTAINER -->
+
 <div *ngIf="mostraCronologia" class="lista-cronologia-flottante">
+  <button class="chiudi-cronologia" (click)="mostraCronologia = false">&times;</button>
   <h3>Cronologia articoli</h3>
-
-  <div *ngIf="erroreCronologia" class="messaggio-errore">
-    {{ erroreCronologia }}
-  </div>
-
+  <div *ngIf="erroreCronologia" class="messaggio-errore">{{ erroreCronologia }}</div>
   <ul *ngIf="!erroreCronologia">
     <li *ngFor="let notizia of cronologiaNotizie" class="item-cronologia">
-      <a 
-        *ngIf="notizia.id" 
-        [routerLink]="['/notizia', notizia.id]" 
-        [state]="{ query: query, risultati: risultati, notizieSelezionate: notizieSelezionate }" 
-        class="titolo-cronologia-link"
-      >
+      <a *ngIf="notizia.id" [routerLink]="['/notizia', notizia.id]" [state]="{ query: query, risultati: risultati, notizieSelezionate: notizieSelezionate }" class="titolo-cronologia-link">
         {{ notizia.titolo }}
       </a>
     </li>
   </ul>
+  <p *ngIf="!erroreCronologia && cronologiaNotizie.length === 0">Nessuna notizia in cronologia.</p>
+</div>
 
-
-  <p *ngIf="!erroreCronologia && cronologiaNotizie.length === 0">
-    Nessuna notizia in cronologia.
-  </p>
+<div *ngIf="loginAlert" class="login-alert">
+  {{ loginAlert }}
 </div>
