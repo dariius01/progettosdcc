@@ -1,13 +1,35 @@
+/* Freccia indietro */
+.icon-back {
+  position: absolute;
+  top: 22px;
+  left: 20px;
+  cursor: pointer;
+  font-size: 28px;
+  color: #333;
+  transition: transform 0.2s ease, color 0.2s ease;
+  transform: scale(1.25);
+  transform-origin: left center;
+}
+
+.icon-back:hover {
+  transform: scale(1.2);
+  color: #007bff;
+}
+
+.icon-back:active {
+  transform: scale(1.4);
+  color: #0056b3;
+}
+
 /* Contenitore login */
 .login-container {
   width: 600px;
   padding: 40px 50px;
-  background: rgba(255, 255, 255, 0.7); /* più trasparente rispetto a 0.9 */
+  background: rgba(255, 255, 255, 0.7);
   border-radius: 18px;
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
   box-sizing: border-box;
   text-align: center;
-
   position: fixed;
   top: 50%;
   left: 50%;
@@ -16,7 +38,6 @@
   animation: fadeIn 0.5s ease;
 }
 
-/* Titolo */
 .login-container h2 {
   margin-bottom: 30px;
   color: #222;
@@ -25,43 +46,30 @@
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* Input */
-.login-container input[type="email"],
-.login-container input[type="password"] {
+/* Input e bottone */
+.login-container input[type="email"] {
   width: 100%;
   padding: 14px 16px;
   margin-bottom: 20px;
   border: 2px solid #ddd;
   border-radius: 50px;
   font-size: 1rem;
+  background-color: #fafafa;
   box-sizing: border-box;
   transition: all 0.3s ease;
-  background-color: #fafafa;
 }
 
-.login-container input[type="email"]:focus,
-.login-container input[type="password"]:focus {
+.login-container input[type="email"]:focus {
   border-color: #4a90e2;
   background-color: #fff;
   outline: none;
-  box-shadow: 0 0 0 3px rgba(74,144,226,0.2);
+  box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
 }
 
-
-
-/* Bottone login: più staccato dai campi */
 .login-container button[type="submit"] {
-  margin-top: 25px; /* aumenta lo spazio dai campi di input */
+  margin-top: 25px;
 }
 
-/* Scritta "oppure" più grande */
-.register-section p {
-  font-size: 1.2rem;  /* più leggibile */
-  font-weight: 700;   /* grassetto */
-  margin: 25px 0;     /* spazio sopra e sotto */
-}
-
-/* Bottone login in stile "btn-manuale" */
 .login-container button {
   width: 100%;
   padding: 14px;
@@ -73,58 +81,79 @@
   font-size: 1.05rem;
   cursor: pointer;
   transition: background 0.3s ease, box-shadow 0.3s ease;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
 
 .login-container button:hover {
   background: linear-gradient(145deg, #28d05d, #24902a);
-  box-shadow: 0 6px 14px rgba(0,0,0,0.25);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
 }
 
-/* Messaggio errore */
 .error-message {
   margin-top: 8px;
-  color: #d9534f;              /* rosso chiaro e visibile */
-  font-weight: 700;             /* più marcata */
-  font-size: 1rem;              /* leggermente più grande */
+  color: #d9534f;
+  font-weight: 700;
+  font-size: 1rem;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  letter-spacing: 0.5px;        /* piccola spaziatura tra lettere per eleganza */
+  letter-spacing: 0.5px;
 }
 
+.password-field {
+  position: relative;
+}
 
-/* Sezione registrazione */
+.password-field input {
+  width: 100%;
+  padding: 14px 50px 14px 16px;
+  margin-bottom: 20px;
+  border: 2px solid #ddd;
+  border-radius: 50px;
+  font-size: 1rem;
+  background-color: #fafafa;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+}
+
+.password-field input:focus {
+  border-color: #4a90e2;
+  background-color: #fff;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
+}
+
+.toggle-password {
+  position: absolute;
+  top: 25px;
+  right: 18px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #888;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.3s ease;
+}
+
+.toggle-password:hover {
+  color: #333;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -45%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
+/* Bottone registrati*/
 .register-section {
   margin-top: 20px;
   text-align: center;
-}
-
-.register-section p {
-  margin-bottom: 12px;
-  font-weight: 500;
-  color: #444;
-}
-
-.register-section button {
-  padding: 12px 22px;
-  background: linear-gradient(145deg, #2369af, #2369af);
-  color: white;
-  border: none;
-  border-radius: 50px;
-  cursor: pointer;
-  font-weight: 600;
-  transition: background 0.3s ease, box-shadow 0.3s ease;
-  box-shadow: 0 3px 8px rgba(0,0,0,0.15);
-}
-
-.register-section button:hover {
-  background: linear-gradient(145deg, #1565c0, #143856);
-  box-shadow: 0 5px 12px rgba(0,0,0,0.2);
-}
-
-/* Animazione fade-in */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translate(-50%, -45%); }
-  to { opacity: 1; transform: translate(-50%, -50%); }
 }
 
 .register-section p {
@@ -146,39 +175,20 @@
   background: #ddd;
   margin: 0 10px;
 }
-.icon-back {
-  position: absolute;
-  top: 22px;
-  left: 20px;
+
+.register-section button {
+  padding: 12px 22px;
+  background: linear-gradient(145deg, #2369af, #2369af);
+  color: white;
+  border: none;
+  border-radius: 50px;
   cursor: pointer;
-  font-size: 28px;   /* dimensione originale più sicura */
-  color: #333;
-  transition: transform 0.2s ease, color 0.2s ease;
-  transform: scale(1.25);  /* ingrandisce la freccia senza tagliarla */
-  transform-origin: left center; /* mantiene la freccia allineata a sinistra */
+  font-weight: 600;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
 }
 
-.icon-back:hover {
-  transform: scale(1.2);
-  color: #007bff;
-}
-
-/* Click: zoom più evidente */
-.icon-back:active {
-  transform: scale(1.4);
-  color: #0056b3;
-}
-
-.icon-back:hover {
-  transform: scale(1.2);
-  color: #007bff;
-}
-
-/* Click: zoom più evidente */
-.icon-back:active {
-  transform: scale(1.4);
-  color: #0056b3;
-}
-.login-container {
-  position: relative;  /* necessario per il posizionamento assoluto della freccia */
+.register-section button:hover {
+  background: linear-gradient(145deg, #1565c0, #143856);
+  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.2);
 }

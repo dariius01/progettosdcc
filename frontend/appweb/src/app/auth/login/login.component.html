@@ -1,17 +1,22 @@
 <div class="login-container">
-  <!-- Freccia back solo icona -->
-  <mat-icon class="icon-back" (click)="goToHome()">arrow_back</mat-icon>
+  <mat-icon class="icon-back" (click)="tornaHome()">arrow_back</mat-icon>
 
   <h2>Login</h2>
   <form (submit)="onLogin()">
     <input type="email" [(ngModel)]="email" name="email" required placeholder="Email" />
-    <input type="password" [(ngModel)]="password" name="password" required placeholder="Password" />
+    <div class="password-field">
+      <input [type]="mostraPassword ? 'password' : 'text'" [(ngModel)]="password" name="password" required placeholder="Password" />
+      <mat-icon class="toggle-password" (click)="mostraPassword = !mostraPassword">
+        {{ mostraPassword ? 'visibility_off' : 'visibility' }}
+      </mat-icon>
+    </div>
+
     <p *ngIf="error" class="error-message">{{ error }}</p>
     <button type="submit">Login</button>
   </form>
 
   <div class="register-section">
     <p>oppure</p>
-    <button type="button" (click)="goToRegister()">Registrati</button>
+    <button type="button" (click)="vaiARegister()">Registrati</button>
   </div>
 </div>

@@ -1,14 +1,11 @@
-<div class="container-dettaglio-elegante">
+<div class="container-dettaglio">
   <ng-container *ngIf="loading">
     <p>Caricamento in corso...</p>
   </ng-container>
 
   <ng-container *ngIf="notizia && !loading">
-
-    <!-- Freccia torna indietro in alto a sinistra -->
     <mat-icon class="icon-back" (click)="tornaHome()">arrow_back</mat-icon>
 
-    <!-- Titolo e sottotitolo -->
     <h1 class="titolo">{{ notizia.titolo }}</h1>
     <h3 *ngIf="notizia.sottotitolo" class="sottotitolo">{{ notizia.sottotitolo }}</h3>
     <p class="testo">{{ notizia.testo }}</p>
@@ -19,7 +16,6 @@
       Modificato il: {{ notizia.data_modifica | date:'dd/MM/yyyy HH:mm' }}
     </p>
 
-    <!-- Bottoni in basso con icone -->
     <div class="action-icons-bottom">
       <button (click)="vaiAModifica()" title="Modifica" class="btn-modifica-bottom">
         <mat-icon>edit</mat-icon> Modifica
@@ -31,12 +27,9 @@
         <mat-icon>delete</mat-icon> Elimina
       </button>
     </div>
-
-
-
   </ng-container>
 
-  <!-- MODALE CONFERMA ELIMINAZIONE -->
+  <!-- Popup conferma eliminazione -->
   <div class="modal-overlay" *ngIf="mostraConfermaEliminazione">
     <div class="modal-content modal-danger">
       <h3>⚠️ Conferma eliminazione</h3>
@@ -48,7 +41,7 @@
     </div>
   </div>
 
-  <!-- MODALE SUCCESSO ELIMINAZIONE -->
+  <!-- Popup successo eliminazione -->
   <div class="modal-overlay" *ngIf="mostraSuccessoEliminazione">
     <div class="modal-content modal-success">
       <h3> Eliminazione completata!</h3>

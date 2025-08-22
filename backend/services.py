@@ -9,12 +9,14 @@ load_dotenv()
 news_api_key = os.getenv("NEWS_API_KEY")
 BASE_URL = 'https://newsapi.org/v2/everything'
 
+
+# NewsApi
 def cerca_notizie_web(query):
     if not news_api_key:
         logging.error("Chiave API per NewsAPI non trovata!")
         return []
 
-    terms = query.split()  # divide la query in singole parole
+    terms = query.split() 
     query_or = " OR ".join(terms)
 
     params = {

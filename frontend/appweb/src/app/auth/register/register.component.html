@@ -1,6 +1,6 @@
 <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="register-container">
   <h2>Registrati</h2>
-  <mat-icon class="icon-back" (click)="goToLogin()">arrow_back</mat-icon>
+  <mat-icon class="icon-back" (click)="vaiAlLogin()">arrow_back</mat-icon>
 
   <!-- Email -->
   <div>
@@ -20,14 +20,18 @@
   <!-- Password -->
   <div>
     <label for="password">Password:</label>
-    <input
-      id="password"
-      type="password"
-      formControlName="password"
-      placeholder="Password"
-    />
+      <div class="password-field">
+        <input
+          id="password"
+          [type]="mostraPassword ? 'password' : 'text'"
+          formControlName="password"
+          placeholder="Password"
+        />
+        <mat-icon class="toggle-password" (click)="mostraPassword = !mostraPassword">
+          {{ mostraPassword ? 'visibility_off' : 'visibility' }}
+        </mat-icon>
+    </div>
     
-    <!-- Messaggio fisso sulla lunghezza minima con colori dinamici -->
     <div
       class="info-password"
       [class.errore]="
@@ -46,11 +50,9 @@
     </div>
   </div>
 
-  <!-- Messaggio di errore generico del backend -->
   <div *ngIf="errorMessage" class="errore">
     {{ errorMessage }}
   </div>
 
-  <!-- Submit -->
   <button type="submit" [disabled]="registerForm.invalid">Registrati</button>
 </form>

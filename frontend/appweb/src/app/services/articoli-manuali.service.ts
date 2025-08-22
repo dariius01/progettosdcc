@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
-
 export interface ArticoloManuale {
   titolo: string;
   sottotitolo?: string;
@@ -29,8 +28,7 @@ export class ArticoliManualiService {
   }
 
   rimuoviArticolo(articolo: ArticoloManuale) {
-  this.articoli = this.articoli.filter(a => a !== articolo);
-  this.articoliSubject.next([...this.articoli]);
-}
-
+    this.articoli = this.articoli.filter(a => a !== articolo);
+    this.articoliSubject.next([...this.articoli]);
+  }
 }

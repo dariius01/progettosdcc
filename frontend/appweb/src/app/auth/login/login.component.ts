@@ -16,15 +16,18 @@ import { MatIcon } from '@angular/material/icon';
 export class LoginComponent {
   email = '';
   password = '';
-  showPassword = false;      // <- toggle password
   error = '';
   articoloDaSalvare: Notizia | null = null;
-  autoSave = false;          // <- aggiunto
+  autoSave = false;
+  mostraPassword = true;
 
   constructor(private router: Router, private authService: AuthService) {
-    const stato = this.router.getCurrentNavigation()?.extras.state as { articolo?: Notizia, autoSave?: boolean };
+    const stato = this.router.getCurrentNavigation()?.extras.state as {
+      articolo?: Notizia;
+      autoSave?: boolean;
+    };
     this.articoloDaSalvare = stato?.articolo ?? null;
-    this.autoSave = stato?.autoSave ?? false; // <- aggiunto
+    this.autoSave = stato?.autoSave ?? false;
   }
 
   onLogin() {
@@ -32,31 +35,26 @@ export class LoginComponent {
     this.authService.login(this.email, this.password).subscribe({
       next: () => {
         if (this.articoloDaSalvare) {
-          this.router.navigate(['/articolo-generato'], { 
-            state: { 
-              articolo: this.articoloDaSalvare, 
-              autoSave: this.autoSave
+          this.router.navigate(['/articolo-generato'], {
+            state: {
+              articolo: this.articoloDaSalvare,
+              autoSave: this.autoSave,
             },
-            replaceUrl: true
+            replaceUrl: true,
           });
         } else {
           this.router.navigate(['/'], { replaceUrl: true });
         }
       },
-      error: () => this.error = 'Credenziali errate'
+      error: () => (this.error = 'Credenziali errate'),
     });
   }
 
-  togglePassword() {
-  this.showPassword = !this.showPassword;
-}
-
-
-  goToRegister() {
+  vaiARegister() {
     this.router.navigate(['/register']);
   }
 
-  goToHome(){
+  tornaHome() {
     this.router.navigate(['/']);
   }
 }

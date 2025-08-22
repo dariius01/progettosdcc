@@ -3,9 +3,8 @@
   <h4>{{ articolo.sottotitolo }}</h4>
   <p>{{ articolo.testo }}</p>
 
-  <!-- Pulsanti Salva e Home sulla stessa riga -->
   <div class="btn-row">
-    <button class="btn-generico btn-home" (click)="tornaAllaHome()">
+    <button class="btn-generico btn-home" (click)="tornaHome()">
       <mat-icon>home</mat-icon> Torna alla Home
     </button>
 
@@ -19,7 +18,7 @@
   <p class="errore" *ngIf="errore">{{ errore }}</p>
 </div>
 
-<!-- MODALE per accesso richiesto -->
+<!-- Popup per salvataggio -->
 <div class="modal-overlay" *ngIf="mostraAccessoRichiesto">
   <div class="modal-content">
     <h3>Accesso richiesto</h3>
@@ -31,7 +30,7 @@
   </div>
 </div>
 
-<!-- ✅ MODALE SUCCESSO SALVATAGGIO -->
+<!-- Popup successo salvataggio -->
 <div class="modal-overlay" *ngIf="messaggio">
   <div class="modal-content modal-success">
     <h3>Salvataggio completato!</h3>
@@ -43,7 +42,7 @@
 </div>
 
 
-<!-- MODALE CONFERMA USCITA -->
+<!-- Popup uscita senza salvare -->
 <div class="modal-overlay" *ngIf="mostraConfermaUscita">
   <div class="modal-content modal-confirm">
     <h3>Sei sicuro?</h3>

@@ -1,7 +1,36 @@
+/* Freccia indietro*/
+.icon-back {
+  position: absolute;
+  top: 22px;
+  left: 20px;
+  cursor: pointer;
+  font-size: 28px;   
+  color: #333;
+  transition: transform 0.2s ease, color 0.2s ease;
+  transform: scale(1.25);  
+  transform-origin: left center; 
+}
+
+.icon-back:hover {
+  transform: scale(1.2);
+  color: #007bff;
+}
+
+.icon-back:active {
+  transform: scale(1.4);
+  color: #0056b3;
+}
+
+.icon-back:hover {
+  transform: scale(1.2);
+  color: #007bff;
+}
+
+/* Contenitore register */
 .register-container {
   width: 600px;
   padding: 40px 50px;
-  background: rgba(255, 255, 255, 0.7); /* più trasparente come login */
+  background: rgba(255, 255, 255, 0.7); 
   border-radius: 18px;
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
   box-sizing: border-box;
@@ -23,13 +52,11 @@
   font-size: 2rem;
 }
 
-/* Wrapper dei campi */
 .register-container > div {
   margin-bottom: 20px;
   text-align: left;
 }
 
-/* Label */
 .register-container label {
   display: block;
   margin-bottom: 6px;
@@ -38,7 +65,7 @@
   color: #333;
 }
 
-/* Input */
+/* Input + bottone */
 .register-container input[type="email"],
 .register-container input[type="password"],
 .register-container input[type="text"] {
@@ -61,11 +88,10 @@
   box-shadow: 0 0 0 3px rgba(74,144,226,0.2);
 }
 
-/* Bottone submit */
 .register-container button[type="submit"] {
   width: 100%;
   padding: 14px;
-  margin-top: 20px; /* aggiunto margine sopra */
+  margin-top: 20px; 
   background: linear-gradient(145deg, #1e9d46, #28d05d);
   border: none;
   border-radius: 50px;
@@ -88,7 +114,6 @@
   cursor: not-allowed;
 }
 
-/* Messaggi di errore generici */
 .error-message,
 .errore {
   margin-top: 15px;
@@ -98,7 +123,7 @@
   text-align: center;
 }
 
-/* Info password o altri avvisi */
+/* Password */
 .info-password {
   font-size: 0.875rem;
   margin-top: 10px;
@@ -115,46 +140,51 @@
   color: #28a745;
 }
 
+.password-field {
+  position: relative;
+}
+
+.password-field input {
+  width: 100%;
+  padding: 14px 50px 14px 16px; 
+  margin-bottom: 20px;
+  border: 2px solid #ddd;
+  border-radius: 50px;
+  font-size: 1rem;
+  background-color: #fafafa;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+}
+
+.password-field input:focus {
+  border-color: #4a90e2;
+  background-color: #fff;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(74,144,226,0.2);
+}
+
+.toggle-password {
+  position: absolute;
+  top: 25px;
+  right: 18px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #888;
+  font-size: 24px;
+  line-height: 1;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.3s ease;
+}
+
+.toggle-password:hover {
+  color: #333;
+}
+
 /* Animazione fade-in */
 @keyframes fadeIn {
   from { opacity: 0; transform: translate(-50%, -45%); }
   to { opacity: 1; transform: translate(-50%, -50%); }
-}
-
-
-.icon-back {
-  position: absolute;
-  top: 22px;
-  left: 20px;
-  cursor: pointer;
-  font-size: 28px;   /* dimensione originale più sicura */
-  color: #333;
-  transition: transform 0.2s ease, color 0.2s ease;
-  transform: scale(1.25);  /* ingrandisce la freccia senza tagliarla */
-  transform-origin: left center; /* mantiene la freccia allineata a sinistra */
-}
-
-.icon-back:hover {
-  transform: scale(1.2);
-  color: #007bff;
-}
-
-/* Click: zoom più evidente */
-.icon-back:active {
-  transform: scale(1.4);
-  color: #0056b3;
-}
-
-.icon-back:hover {
-  transform: scale(1.2);
-  color: #007bff;
-}
-
-/* Click: zoom più evidente */
-.icon-back:active {
-  transform: scale(1.4);
-  color: #0056b3;
-}
-.register-container {
-  position: relative;  /* necessario per il posizionamento assoluto della freccia */
 }

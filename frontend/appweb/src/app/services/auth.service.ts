@@ -3,46 +3,39 @@ import { HttpClient } from '@angular/common/http';
 import { tap } from 'rxjs/operators';
 import { Observable, BehaviorSubject } from 'rxjs';
 
-interface LoginResponse {
-  access_token: string;
-}
-
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   private apiUrl = 'http://localhost:5000/api';
-  private loggedIn = new BehaviorSubject<boolean>(this.hasToken());
+  private loggedIn = new BehaviorSubject<boolean>(false);
 
   constructor(private http: HttpClient) {}
 
-  private hasToken(): boolean {
-    return !!sessionStorage.getItem('access_token');
-  }
-
-  login(email: string, password: string): Observable<LoginResponse> {
-    return this.http.post<LoginResponse>(`${this.apiUrl}/login`, { email, password }).pipe(
-      tap(res => {
-        sessionStorage.setItem('access_token', res.access_token);
+  // (POST /api/login)
+  login(email: string, password: string): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/login`, { email, password }, { withCredentials: true }).pipe(
+      tap(() => {
         this.loggedIn.next(true);
       })
     );
   }
 
+  // (POST /api/register)
   register(email: string, password: string): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/register`, { email, password });
   }
 
-  logout() {
-    sessionStorage.removeItem('access_token');
-    this.loggedIn.next(false);
+  //(POST /api/logout)
+  logout(): Observable<any> {
+    return this.http.post(`${this.apiUrl}/logout`, {}, { withCredentials: true }).pipe(
+      tap(() => {
+        this.loggedIn.next(false);
+      })
+    );
   }
 
   isLoggedIn(): Observable<boolean> {
     return this.loggedIn.asObservable();
-  }
-
-  getToken(): string | null {
-    return sessionStorage.getItem('access_token');
   }
 }

@@ -1,13 +1,14 @@
+/* Freccia indietro */
 .icon-back {
   position: absolute;
   top: 22px;
   left: 20px;
   cursor: pointer;
-  font-size: 28px;   /* dimensione originale più sicura */
+  font-size: 28px;   
   color: #333;
   transition: transform 0.2s ease, color 0.2s ease;
-  transform: scale(1.25);  /* ingrandisce la freccia senza tagliarla */
-  transform-origin: left center; /* mantiene la freccia allineata a sinistra */
+  transform: scale(1.25);  
+  transform-origin: left center;
 }
 
 .icon-back:hover {
@@ -15,7 +16,6 @@
   color: #007bff;
 }
 
-/* Click: zoom più evidente */
 .icon-back:active {
   transform: scale(1.4);
   color: #0056b3;
@@ -26,14 +26,9 @@
   color: #007bff;
 }
 
-/* Click: zoom più evidente */
-.icon-back:active {
-  transform: scale(1.4);
-  color: #0056b3;
-}
-
-.form-manuale {
-  position: relative; /* serve per posizionare la freccia in alto */
+/* Contenitore aggiunta manuale */
+.container-manuale {
+  position: relative; 
   max-width: 700px;
   margin: 3rem auto;
   padding: 2rem;
@@ -48,7 +43,7 @@
 }
 
 
-.form-manuale h2 {
+.container-manuale h2 {
   margin-bottom: 1.5rem;
   font-weight: 800;
   font-size: 1.5rem;
@@ -63,7 +58,7 @@ h2 {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;  /* spazio tra icona e testo */
+  gap: 10px;  
   font-weight: 800;
   font-size: 1.5rem;
   color: #34495e;
@@ -72,15 +67,15 @@ h2 {
 }
 
 .icon-pencil {
-  font-size: 1.4rem;  /* dimensione della matita */
+  font-size: 1.4rem; 
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: #28a745;      /* verde, come il pulsante */
+  color: #28a745;    
 }
 
 
-.form-manuale label {
+.container-manuale label {
   display: block;
   font-weight: 700;
   margin-bottom: 0.6rem;
@@ -90,8 +85,9 @@ h2 {
   text-transform: capitalize;
 }
 
-.form-manuale input[type="text"],
-.form-manuale textarea {
+/* Input */
+.container-manuale input[type="text"],
+.container-manuale textarea {
   width: 100%;
   padding: 10px 14px;
   margin-bottom: 1.2rem;
@@ -107,8 +103,8 @@ h2 {
   margin-top: 0.4rem;
 }
 
-.form-manuale input[type="text"]:focus,
-.form-manuale textarea:focus {
+.container-manuale input[type="text"]:focus,
+.container-manuale textarea:focus {
   border-color: #2980b9;
   box-shadow: 0 0 8px rgba(41, 128, 185, 0.4);
   outline: none;
@@ -123,10 +119,12 @@ h2 {
   font-size: 1rem;
 }
 
+/* Input solo titolo per grassetto*/
 .input-titolo {
   font-weight: 700;
 }
 
+/* Bottone Aggiungi + icon */
 .button-row {
   display: flex;
   gap: 12px;
@@ -134,9 +132,6 @@ h2 {
   margin-top: 1rem;
 }
 
-/* Stile base pulsanti */
-
-/* Pulsante stile login */
 .btn-success {
   width: auto;               
   padding: 10px 20px;        
@@ -156,29 +151,25 @@ h2 {
   margin: 0 auto;            
 }
 
-/* Hover: gradiente + effetto “emersione” solo se abilitato */
 .btn-success:not(:disabled):hover {
   background: linear-gradient(145deg, #28d05d, #24902a);
   box-shadow: 0 8px 20px rgba(0,0,0,0.35);
   transform: translateY(-3px);  
 }
 
-/* Click: effetto pressione solo se abilitato */
 .btn-success:not(:disabled):active {
   transform: translateY(0px);
   box-shadow: 0 4px 10px rgba(0,0,0,0.25);
 }
 
-/* Stato disabilitato: fermo e grigio */
 .btn-success:disabled {
   background: #6c757d;
   cursor: not-allowed;
   opacity: 0.7;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.15); /* mantiene la stessa altezza visiva */
-  transform: none; /* nessun sollevamento */
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15); 
+  transform: none;
 }
 
-/* Icona allineata */
 .icon-add {
   font-size: 20px;
   line-height: 1;

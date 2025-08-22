@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { CommonModule } from '@angular/common';  // per *ngIf
+import { CommonModule } from '@angular/common'; 
 import { FormsModule } from '@angular/forms';
 import { ArticoliManualiService } from '../services/articoli-manuali.service';
 import { MatIcon } from '@angular/material/icon';
@@ -71,5 +71,4 @@ export class AggiuntaManualeComponent {
       },
     });
   }
-
 }

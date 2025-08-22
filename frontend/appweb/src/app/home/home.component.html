@@ -1,15 +1,12 @@
 <div class="container">
-  <!-- Barra login/logout + icona cronologia -->
   <div class="auth-links">
     <!-- Mostra solo l'icona di login se l'utente non è loggato -->
     <button *ngIf="!isLoggedIn" routerLink="/login" class="btn-auth btn-login" title="Accedi">
       <span class="btn-text">Accedi</span>
       <mat-icon>login</mat-icon>
-      
     </button>
 
-
-    <!-- Logout e cronologia per utenti loggati -->
+    <!-- Logout per utenti loggati -->
     <ng-container *ngIf="isLoggedIn">
       <button (click)="logout()" class="btn-auth btn-login" title="Logout">
         <span class="btn-text">Logout</span>
@@ -18,10 +15,8 @@
     </ng-container>
   </div>
 
-
   <h1 class="titolo"> SportGenerator</h1>
   <h2 class="sottotitolo">📰 Genera il tuo articolo sportivo!</h2>
-
 
   <!-- Barra di ricerca -->
   <div class="barra-ricerca-riga">
@@ -32,11 +27,10 @@
         [(ngModel)]="query"
         (keydown.enter)="cerca()"
         placeholder="Cerca notizie"
-        class="input-elegante"
+        class="input-barra"
       />
     </div>
   </div>
-
 
   <!-- Bottone aggiungi manualmente + cronologia -->
   <div class="azioni-manuali">
@@ -57,27 +51,18 @@
     </div>
 
     <!-- Icona cronologia solo se loggati -->
-    <mat-icon
-      *ngIf="isLoggedIn"
-      (click)="toggleCronologia()"
-      class="cronologia-icon"
-      title="Visualizza cronologia"
-    >
+    <mat-icon *ngIf="isLoggedIn" (click)="toggleCronologia()" class="cronologia-icon" title="Visualizza cronologia">
       access_time
     </mat-icon>
   </div>
 
-
-
   <!-- Lista articoli manuali -->
   <div *ngIf="mostraArticoliManuali" class="lista-articoli-manuali">
     <ul>
-      <li
-        *ngFor="let articolo of articoliManuali"
+      <li *ngFor="let articolo of articoliManuali"
         [class.selezionato]="articoloManualeSelezionato === articolo"
         class="articolo-item"
       >
-        <!-- Click sul titolo apre popup -->
         <span class="titolo-articolo" (click)="apriPopup(articolo)">{{ articolo.titolo }}</span>
 
         <button
@@ -102,12 +87,8 @@
     </div>
   </div>
 
-
-
-  <!-- Messaggio di errore generale -->
   <div *ngIf="errore" class="messaggio-errore">{{ errore }}</div>
 
-  <!-- Lista risultati ricerca -->
   <div class="lista-risultati">
     <div
       *ngFor="let notizia of risultati"
@@ -146,13 +127,9 @@
     <div *ngIf="!loading && nessunRisultato" class="nessun-risultato">
       Mi dispiace, non ci sono articoli relativi a questo tema 😢
     </div>
-
-
   </div>
 
-
-  <!-- Generazione articolo -->
-  
+  <!-- Generazione articolo -->  
   <div class="area-generazione" *ngIf="(risultati.length > 0) || (articoliManuali.length > 0)">
     <button
       (click)="generaNotizia()"
@@ -172,10 +149,9 @@
       {{ erroreGenerazione }}
     </div>
   </div>
-
 </div>
 
-
+ <!-- Tendina cronologia -->
 <div *ngIf="mostraCronologia" class="lista-cronologia-flottante">
   <button class="chiudi-cronologia" (click)="mostraCronologia = false">&times;</button>
   <h3>Cronologia articoli</h3>

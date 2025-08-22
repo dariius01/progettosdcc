@@ -19,7 +19,8 @@ export class RegisterComponent implements OnInit {
   errorMessage: string | null = null;
   articoloDaSalvare: Notizia | null = null;
   autoSave = false;
-  submitted = false;  // <--- variabile per controllo submit
+  submitted = false;  
+  mostraPassword = true;
 
   constructor(
     private fb: FormBuilder,
@@ -39,12 +40,11 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit(): void {
-    this.submitted = true;  // <--- segna che è stato premuto submit
+    this.submitted = true; 
 
     if (this.registerForm.invalid) return;
 
     const { email, password } = this.registerForm.value;
-
     this.authService.register(email, password).subscribe({
       next: () => {
         this.authService.login(email, password).subscribe({
@@ -86,7 +86,8 @@ export class RegisterComponent implements OnInit {
       }
     });
   }
-  goToLogin(){
+  
+  vaiAlLogin(){
     this.router.navigate(['/login']);
   }
 }

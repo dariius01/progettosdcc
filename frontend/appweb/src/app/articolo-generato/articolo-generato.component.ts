@@ -40,6 +40,7 @@ export class ArticoloGeneratoComponent {
     });
   }
 
+  //Rimuove caratteri extra
   private pulisciNotizia(n: Notizia): Notizia {
     return {
       ...n,
@@ -50,7 +51,7 @@ export class ArticoloGeneratoComponent {
     };
   }
 
-  tornaAllaHome(): void {
+  tornaHome(): void {
     if (this.articolo && !this.messaggio) {
       this.mostraConfermaUscita = true;
     } else {
@@ -58,6 +59,7 @@ export class ArticoloGeneratoComponent {
     }
   }
 
+  // Per confermare di non voler salvare
   tornaHomeConfermata() {
     this.mostraConfermaUscita = false;
     this.router.navigate(['/']);
@@ -103,7 +105,6 @@ export class ArticoloGeneratoComponent {
 
   chiudiMessaggio() {
     this.messaggio = null;
-    this.router.navigate(['/home']);
+    this.router.navigate(['/']);
   }
-
 }

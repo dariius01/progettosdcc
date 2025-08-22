@@ -6,13 +6,12 @@ import { Router } from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
 import jsPDF from 'jspdf';
 
-
 @Component({
   selector: 'app-dettagli-notizia',
   templateUrl: './dettagli-notizia.component.html',
   styleUrls: ['./dettagli-notizia.component.css'],
   standalone: true,
-  imports: [CommonModule, MatIcon],  // qui importa CommonModule per *ngIf e pipe date
+  imports: [CommonModule, MatIcon],  
 })
 export class DettagliNotiziaComponent implements OnInit {
   notizia?: Notizia;
@@ -23,7 +22,6 @@ export class DettagliNotiziaComponent implements OnInit {
   notizieSelezionateCorrenti: any[] = [];
   mostraConfermaEliminazione = false;
   mostraSuccessoEliminazione = false;
-
 
   constructor(
     private route: ActivatedRoute,
@@ -75,9 +73,8 @@ export class DettagliNotiziaComponent implements OnInit {
   }
 
   onEliminaNotizia(): void {
-  // invece di confirm() apriamo la modale di conferma
-  this.mostraConfermaEliminazione = true;
-}
+    this.mostraConfermaEliminazione = true;
+  }
 
   confermaEliminazione(): void {
     if (!this.notizia?.id) return;
@@ -85,7 +82,7 @@ export class DettagliNotiziaComponent implements OnInit {
     this.notizieService.eliminaNotizia(this.notizia.id).subscribe({
       next: () => {
         this.mostraConfermaEliminazione = false;
-        this.mostraSuccessoEliminazione = true; // ✅ mostra popup verde
+        this.mostraSuccessoEliminazione = true; 
       },
       error: (err) => {
         console.error('Errore durante l\'eliminazione', err);
@@ -99,7 +96,6 @@ export class DettagliNotiziaComponent implements OnInit {
     this.mostraConfermaEliminazione = false;
   }
 
-
   tornaHome(): void {
    this.router.navigate(['/'], {
       state: {
@@ -110,7 +106,7 @@ export class DettagliNotiziaComponent implements OnInit {
     });
   }
 
-
+  // Gestione PDF
   scaricaPDF(): void {
     if (!this.notizia) return;
 
@@ -118,23 +114,20 @@ export class DettagliNotiziaComponent implements OnInit {
     const pageWidth = doc.internal.pageSize.getWidth();
     const pageHeight = doc.internal.pageSize.getHeight();
     const margin = 20;
-    let y = 40; // partire un po' più in basso
+    let y = 40;
 
-    // Titolo centrato, grassetto, grande
     doc.setFont('helvetica', 'bold');
     doc.setFontSize(24);
-    doc.setTextColor(34, 15, 103); // blu elegante
+    doc.setTextColor(34, 15, 103); 
     const titleLines = doc.splitTextToSize(this.notizia.titolo || '', pageWidth - 2 * margin);
     doc.text(titleLines, pageWidth / 2, y, { align: 'center' });
     y += titleLines.length * 10 + 5;
 
-    // Linea sottile sotto il titolo
     doc.setDrawColor(34, 15, 103);
     doc.setLineWidth(0.5);
     doc.line(margin, y, pageWidth - margin, y);
     y += 10;
 
-    // Sottotitolo in corsivo, grigio scuro
     if (this.notizia.sottotitolo) {
       doc.setFont('helvetica', 'italic');
       doc.setFontSize(14);
@@ -144,7 +137,6 @@ export class DettagliNotiziaComponent implements OnInit {
       y += subLines.length * 8 + 10;
     }
 
-    // Testo normale, giustificato
     doc.setFont('helvetica', 'normal');
     doc.setFontSize(12);
     doc.setTextColor(0, 0, 0);
@@ -157,10 +149,9 @@ export class DettagliNotiziaComponent implements OnInit {
         y = 30;
       }
       doc.text(line, margin, y, { align: 'justify', maxWidth: pageWidth - 2 * margin });
-      y += 7; // distanza tra le righe leggermente più compatta
+      y += 7; 
     }
 
-    // Data pubblicazione in basso a destra
     doc.setFontSize(10);
     doc.setFont('helvetica', 'italic');
     doc.setTextColor(100, 100, 100);
@@ -169,5 +160,4 @@ export class DettagliNotiziaComponent implements OnInit {
 
     doc.save(`${this.notizia.titolo || 'articolo'}.pdf`);
   }
-
 }

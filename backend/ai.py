@@ -24,10 +24,14 @@ def genera_notizia_da_ai(prompt: str) -> dict:
             "sottotitolo": sezioni.get("sottotitolo", ""),
             "testo": sezioni.get("testo", ""),
         }
+    
+    except openai.AuthenticationError:
+        return {"titolo": "", "sottotitolo": "", "testo": "Errore di autenticazione: la chiave API non è valida."}
+    
     except Exception as e:
         return {"titolo": "", "sottotitolo": "", "testo": f"Errore AI: {str(e)}"}
 
-# ---
+
 
 def parse_articolo_flessibile(testo_generato: str) -> dict:
     """
@@ -46,9 +50,9 @@ def parse_articolo_flessibile(testo_generato: str) -> dict:
         "testo": testo
     }
 
-# ---
 
 def genera_prompt_da_articoli(articoli_web: list[dict], articoli_manuali: list[dict], tema: str) -> str:
+    
     def format_articoli(lista):
         testi = []
         for art in lista:
@@ -74,10 +78,9 @@ def genera_prompt_da_articoli(articoli_web: list[dict], articoli_manuali: list[d
     return prompt
 
 
-# ---
-
 def genera_notizia_da_articoli(articoli_web: list[dict], articoli_manuali: list[dict], tema: str = "") -> dict:
-    # Se il tema non è fornito, prova a inferirlo dai titoli degli articoli
+
+    # Se il tema non è fornito, lo fornisco dai titoli degli articoli
     if not tema:
         if articoli_web and articoli_web[0].get("titolo"):
             tema = articoli_web[0]["titolo"]

@@ -1,6 +1,4 @@
-/* ----------------------------- */
-/* CONTENITORE PRINCIPALE ARTICOLO */
-/* ----------------------------- */
+/* Contenitore articolo */
 .container-articolo {
   max-width: 750px;
   margin: 30px auto;
@@ -34,9 +32,7 @@
   color: #333;
 }
 
-/* ----------------------------- */
-/* PULSANTI ARTICOLO */
-/* ----------------------------- */
+/* pulsanti home e salva */
 .btn-row {
   display: flex;
   gap: 15px;
@@ -77,9 +73,6 @@
   background-color: #1b5e20;
 }
 
-/* ----------------------------- */
-/* FEEDBACK TESTO */
-/* ----------------------------- */
 .messaggio {
   margin-top: 15px;
   color: green;
@@ -92,9 +85,7 @@
   font-weight: 600;
 }
 
-/* ----------------------------- */
-/* MODALE ELEGANTE GENERALE */
-/* ----------------------------- */
+/* Finestra Popup */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -135,9 +126,7 @@
   color: #555;
 }
 
-/* ----------------------------- */
-/* PULSANTI MODALI */
-/* ----------------------------- */
+/* Pulsanti Popup */
 .modal-actions {
   display: flex;
   justify-content: center;
@@ -156,7 +145,6 @@
   min-width: 100px;
 }
 
-/* LOGIN / REGISTRAZIONE */
 .modal-btn-login {
   background-color: #4a90e2;
   color: #fff;
@@ -179,31 +167,6 @@
   box-shadow: 0 5px 15px rgba(57, 154, 99, 0.3);
 }
 
-/* SUCCESSO SALVATAGGIO */
-
-.modal-success .modal-btn-ok {
-  background-color: #50b37f;
-  color: #fff;
-}
-
-.modal-success .modal-btn-ok:hover {
-  background-color: #399a63;
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(57, 154, 99, 0.3);
-}
-
-/* CONFERMA USCITA */
-
-.modal-confirm h3 {
-  color: #8c2212;
-  margin-bottom: 10px;
-}
-
-.modal-confirm p {
-  color: #333;
-  margin-bottom: 20px;
-}
-
 .modal-btn-conferma {
   background: linear-gradient(145deg, #1d6e43, #399a63);
   color: #fff;
@@ -216,7 +179,6 @@
   background: linear-gradient(145deg, #399a63, #1d6e43);
 }
 
-
 .modal-btn-nega {
   background: linear-gradient(145deg, #861c18, #b50d0d);
   color: #fff;
@@ -228,10 +190,29 @@
   background: linear-gradient(145deg, #b50d0d, #861c18);
 }
 
+.modal-confirm h3 {
+  color: #8c2212;
+  margin-bottom: 10px;
+}
 
-/* ----------------------------- */
-/* ANIMAZIONI COMPARSA MODALE */
-/* ----------------------------- */
+.modal-confirm p {
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* Popup successo salvataggio */
+.modal-success .modal-btn-ok {
+  background-color: #50b37f;
+  color: #fff;
+}
+
+.modal-success .modal-btn-ok:hover {
+  background-color: #399a63;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(57, 154, 99, 0.3);
+}
+
+/* Animazioni Popup */
 .modal-overlay.show {
   opacity: 1;
   transform: scale(1);
@@ -242,9 +223,7 @@
   transform: scale(0.95);
 }
 
-/* ----------------------------- */
-/* ICONE MATERIAL */
-/* ----------------------------- */
+/* MatIcon */
 .mat-icon {
   font-size: 20px;
   vertical-align: middle;

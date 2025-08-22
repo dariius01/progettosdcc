@@ -1,18 +1,4 @@
-.container-dettaglio-elegante {
-  position: relative;
-  max-width: 700px;
-  margin: 40px auto;
-  padding: 25px 30px 100px; /* spazio extra per bottoni */
-  background-color: rgba(255, 255, 255, 0.9);
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  border-radius: 18px;
-  backdrop-filter: blur(8px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-  color: #222;
-  overflow: hidden;
-}
-
-/* Freccia torna indietro */
+/* Freccia indietro */
 .icon-back {
   position: absolute;
   top: 22px;
@@ -29,6 +15,21 @@
 .icon-back:active {
   transform: scale(1.4);
   color: #0056b3;
+}
+
+/* Container dettaglio*/
+.container-dettaglio {
+  position: relative;
+  max-width: 700px;
+  margin: 40px auto;
+  padding: 25px 30px 100px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 18px;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  color: #222;
+  overflow: hidden;
 }
 
 .titolo {
@@ -57,7 +58,6 @@
   font-style: italic;
 }
 
-/* Bottoni in basso */
 .action-icons-bottom {
   position: absolute;
   bottom: 15px;
@@ -105,7 +105,7 @@
   background: linear-gradient(145deg, #bdbdbd, #9e9e9e);
 }
 
-/* Modali */
+/* Popup */
 .modal-overlay {
   position: fixed;
   top: 0; left: 0;
@@ -145,7 +145,7 @@
 }
 
 .modal-confirm h3 {
-  color: #1d6e43; /* verde */
+  color: #1d6e43; 
   margin-bottom: 10px;
 }
 
@@ -165,7 +165,7 @@
   min-width: 100px;
 }
 
-/* Conferma (verde) */
+/* Conferma */
 .modal-btn-conferma {
   background: linear-gradient(145deg, #1d6e43, #399a63);
   color: #fff;
@@ -177,7 +177,7 @@
   background: linear-gradient(145deg, #399a63, #1d6e43);
 }
 
-/* Annulla (rosso scuro) */
+/* Annulla */
 .modal-btn-nega {
   background: linear-gradient(145deg, #861c18, #b50d0d);
   color: #fff;

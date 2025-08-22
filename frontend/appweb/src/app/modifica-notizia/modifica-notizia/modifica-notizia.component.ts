@@ -41,12 +41,11 @@ export class ModificaNotiziaComponent implements OnInit {
     });
   }
 
-
   tornaIndietro(): void {
     if (this.notizia?.id) {
       this.router.navigate(['/notizia', this.notizia.id]);
     } else {
-      this.router.navigate(['/home']);
+      this.router.navigate(['/']);
     }
   }
 }

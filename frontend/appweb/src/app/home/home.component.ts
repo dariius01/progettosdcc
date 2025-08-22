@@ -25,7 +25,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   loadingGenerazione = false;
   erroreGenerazione: string | null = null;
   mostraCronologia = false;
-  cronologiaNotizie: any[] = []; // ✅ nuove variabile
+  cronologiaNotizie: any[] = [];
   isLoggedIn = false;
   erroreCronologia: string | null = null; 
   nessunRisultato: boolean = false;
@@ -35,9 +35,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   articoloManualeSelezionato: any | null = null;
   articoloPopup: any = null;
   loginAlert: string | null = null;
-
-
-
 
   private authSubscription!: Subscription;
   private articoliSubscription!: Subscription;
@@ -59,7 +56,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.articoliManuali = articoli;
     });
 
-    // Riprendi stato se esiste
+    // Riprende stato se esiste
     const state = history.state;
     if (state) {
       if (state.query) this.query = state.query;
@@ -104,7 +101,6 @@ export class HomeComponent implements OnInit, OnDestroy {
       },
     });
   }
-
 
   toggleSelezione(notizia: any, event: Event): void {
     event.stopPropagation();
@@ -159,36 +155,38 @@ export class HomeComponent implements OnInit, OnDestroy {
     });
   }
 
-
   apriLink(notizia: any): void {
     if (notizia && notizia.url) {
       window.open(notizia.url, '_blank', 'noopener,noreferrer');
     }
   }
 
-
-   toggleCronologia(): void {
+  toggleCronologia(): void {
     this.mostraCronologia = !this.mostraCronologia;
 
     if (this.mostraCronologia && this.cronologiaNotizie.length === 0) {
       this.notizieService.getAllNotizie().subscribe({
         next: (res) => {
           this.cronologiaNotizie = res;
-          this.erroreCronologia = null; // ✅ reset
+          this.erroreCronologia = null;
         },
         error: () => {
-          this.erroreCronologia = 'Errore nel recupero della cronologia.'; // ✅ messaggio
+          this.erroreCronologia = 'Errore nel recupero della cronologia.';
         }
       });
     }
   }
 
-
-
-
   logout(): void {
-    this.authService.logout();
-    this.router.navigate(['/']);
+    this.authService.logout().subscribe({
+      next: () => {
+        this.router.navigate(['/']);
+      },
+      error: (err) => {
+        console.error('Errore durante il logout', err);
+        this.router.navigate(['/']);
+      }
+    });
   }
 
   vaiAdAggiuntaManuale(): void {
@@ -200,7 +198,6 @@ export class HomeComponent implements OnInit, OnDestroy {
       }
     });
   }
-
 
   toggleMostraArticoliManuali(): void {
     this.mostraArticoliManuali = !this.mostraArticoliManuali;
@@ -216,7 +213,6 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.articoloManualeSelezionato = articolo;
     }
   }
-
 
   rimuoviArticoloManuale(articolo: any, event: Event): void {
     event.stopPropagation();

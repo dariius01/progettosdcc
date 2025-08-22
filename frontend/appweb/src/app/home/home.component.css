@@ -11,17 +11,18 @@
   --error: #d32f2f;
 }
 
+/* Contenitore home*/
 .container {
   max-width: 1000px;
   margin: 40px auto 0; 
   padding: 10px;
   box-sizing: border-box;
 
-  background-color: rgba(255, 255, 255, 0.8); /* un po' più opaco */
-  border: 1px solid rgba(255, 255, 255, 0.5); /* bordo chiaro sottile */
+  background-color: rgba(255, 255, 255, 0.8); 
+  border: 1px solid rgba(255, 255, 255, 0.5); 
   border-radius: 18px;
-  backdrop-filter: blur(8px); /* sfocatura più evidente */
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.45); /* ombra soft */
+  backdrop-filter: blur(8px); 
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.45); 
 }
 
 .titolo {
@@ -30,23 +31,17 @@
   text-align: center;
   margin-bottom: 10px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-
-  /* Gradient più brillante */
   background: linear-gradient(45deg, #ff5f6d, #ffc371, #6a11cb, #2575fc, #279439);
   background-size: 300% 300%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-
-  /* Ombra glow */
   text-shadow: 0 0 8px rgba(255,255,255,0.3), 2px 2px 6px rgba(0,0,0,0.3);
-
-  /* Animazione di ingresso */
   opacity: 0;
   transform: translateY(-20px);
-  animation: titoloEntrata 1s forwards, gradientShift 20s ease infinite; /* durata più lunga */
+  animation: titoloEntrata 1s forwards, gradientShift 20s ease infinite; 
 }
 
-/* Entrata morbida */
+/* Animazioni titolo*/
 @keyframes titoloEntrata {
   to {
     opacity: 1;
@@ -54,32 +49,99 @@
   }
 }
 
-/* Animazione gradient più lenta */
 @keyframes gradientShift {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
 }
 
-
-
 .sottotitolo {
   font-size: 1.4rem;
   font-weight: 500;
-  color: #141414;  /* verde elegante */
+  color: #141414;  
   text-align: center;
   margin-bottom: 20px;
   letter-spacing: 0.5px;
   font-style: italic;
-  animation: fadeIn 1.2s ease; /* effetto ingresso */
+  animation: fadeIn 1.2s ease; 
   margin-top: 10px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
-
-/* Animazione ingresso morbido */
+ /* Animazioni sottotitolo */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(-8px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+/* Autenticazione */
+.auth-links {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.btn-auth {
+  background-color: #1976d2;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.btn-auth:hover {
+  background-color: #125ea4;
+  transform: translateY(-1px); 
+}
+
+.btn-login {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #111; 
+  background-color: transparent;
+  border: 2px solid #111; 
+  border-radius: 50px; 
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.08); 
+}
+
+.btn-login mat-icon {
+  font-size: 1.5rem;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.btn-login:hover {
+  color: #fff; 
+  background: linear-gradient(135deg, #333, #555); 
+  transform: translateY(-2px); 
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.btn-login:hover mat-icon {
+  transform: rotate(15deg) scale(1.2); 
+  color: #f8f8f8; 
+}
+
+.login-alert {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: #ffe0e0;
+  color: #900;
+  padding: 12px 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  z-index: 1000;
+  font-weight: bold;
 }
 
 .barra-ricerca {
@@ -89,10 +151,8 @@
   width: 100%;
   background: #fff;
   padding: 12px 16px;
-  border-radius: 12px; /* più morbida e moderna */
+  border-radius: 12px; 
   box-sizing: border-box;
-
-  /* Ombra fissa elegante */
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12), 
               0 4px 12px rgba(0, 0, 0, 0.08);
 
@@ -102,7 +162,7 @@
 .barra-ricerca:focus-within {
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18), 
               0 8px 24px rgba(0, 0, 0, 0.12);
-  transform: translateY(-2px); /* leggero sollevamento */
+  transform: translateY(-2px); 
 }
 
 .icona-lente {
@@ -111,9 +171,8 @@
   margin-right: 10px;
   pointer-events: none;
 }
-
-
-.input-elegante {
+ /* Input barra */
+.input-barra {
   flex: 1;
   border: none;
   outline: none;
@@ -129,8 +188,7 @@
   text-align: center;
 }
 
-
-
+/* Lista articoli web */
 .lista-risultati { 
   display: flex;
   flex-direction: column; 
@@ -149,8 +207,6 @@
 .lista-risultati::-webkit-scrollbar-thumb { background-color: var(--accent); 
   border-radius: 8px; 
   border: 2px solid var(--light-bg); 
-
-
 }
 
 .nessun-risultato {
@@ -165,8 +221,6 @@
   box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
-
-
 
 /* Card notizia */
 .card-notizia {
@@ -195,9 +249,16 @@
   box-shadow: 0 8px 18px rgba(38, 166, 154, 0.25);
 }
 
+.contenuto-notizia {
+  flex: 1;
+}
+.contenuto-notizia h3 {
+  margin: 0 0 0.3rem 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
 
-
-/* Checkbox elegante */
+/* Checkbox */
 .check-container {
   position: relative;
   width: 22px;
@@ -221,9 +282,9 @@
   left: 0;
   width: 24px;
   height: 24px;
-  border: 1px solid #000; /* bordo nero sempre visibile */
+  border: 1px solid #000; 
   border-radius: 6px;
-  background-color: #fff; /* sfondo bianco fisso */
+  background-color: #fff; 
   cursor: pointer;
   transition: border-color 0.3s, box-shadow 0.3s;
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
@@ -232,20 +293,19 @@
 .custom-check::after {
   content: '';
   position: absolute;
-  left: 6px;  /* più centrata */
+  left: 6px;  
   top: 1px;
-  width: 7px;  /* più larga */
-  height: 14px; /* più lunga */
+  width: 7px;  
+  height: 14px; 
   border: solid rgb(39, 148, 57);
-  border-width: 0 3px 3px 0; /* linea un po' più spessa */
+  border-width: 0 3px 3px 0; 
   transform: rotate(45deg) scale(0);
   opacity: 0;
   transition: transform 0.25s ease, opacity 0.25s ease;
 }
 
-
 .check-container input:checked + .custom-check {
-  border-color: #000; /* resta nero */
+  border-color: #000; 
   box-shadow: 0 2px 6px rgba(0,0,0,0.15);
 }
 
@@ -254,39 +314,27 @@
   opacity: 1;
 }
 
-
-/* Contenuto notizia */
-.contenuto-notizia {
-  flex: 1;
-}
-.contenuto-notizia h3 {
-  margin: 0 0 0.3rem 0;
-  font-size: 1.25rem;
-  font-weight: 600;
-}
-
 /* Link del titolo della notizia */
 .titolo-notizia-link {
-  color: #1976d2; /* blu moderno */
+  color: #1976d2; 
   text-decoration: underline;
-  text-underline-offset: 4px; /* distanza sottolineatura dal testo */
-  text-decoration-thickness: qpx; /* linea più marcata */
+  text-underline-offset: 4px; 
+  text-decoration-thickness: qpx; 
   transition: color 0.2s ease;
 }
 
 .titolo-notizia-link:hover {
-  color: #0d47a1; /* blu più scuro al passaggio */
+  color: #0d47a1; 
 }
 
-
-/* Descrizione */
+/* Descrizione notizia */
 .contenuto-notizia p {
   margin: 0.3rem 0;
   color: var(--muted);
   line-height: 1.4;
 }
 
-/* Fonte */
+/* Fonte notizia */
 .fonte {
   font-size: 0.85rem;
   font-style: italic;
@@ -304,170 +352,20 @@
   color: var(--primary-hover);
 }
 
-
-
-.azioni-manuali {
-  margin: 10px 0;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  align-items: flex-start; /* Allinea i bottoni a sinistra senza riempire il container */
-}
-
-.btn-manuale {
-  padding: 6px 12px;
-  font-size: 14px;
-  background-color: #1976d2;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  display: inline-flex; /* Larghezza basata sul contenuto */
-  align-items: center;
-  gap: 6px;
-}
-
-.btn-manuale:hover {
-  background-color: #145ca0;
-}
-
-.icon-plus {
-  font-size: 18px;
-}
-
-
-.area-generazione {
-  max-width: 800px;
-  margin: 2rem auto 4rem;
-  padding: 1rem 2rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-/* Bottone moderno e grande */
-.area-generazione button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  padding: 16px 25px; /* più grande */
-  font-size: 1.2rem;  /* testo più grande */
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  color: #fff;
-  background: linear-gradient(135deg, #30c653, #186e3c); /* gradiente verde */
-  border: none;
-  border-radius: 50px;
-  cursor: not-allowed;
-  transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-  text-align: center;
-  min-width: 260px; /* per dargli presenza */
-}
-
-/* Stato attivo */
-.area-generazione button.attivo {
-  cursor: pointer;
-  background: #32ab4f;
-}
-
-.area-generazione button.attivo:hover {
-  background: linear-gradient(135deg, #30c653, #186e3c);
-  transform: translateY(-3px);
-  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.25);
-}
-
-/* Stato disabilitato */
-.area-generazione button:disabled {
-  background: linear-gradient(135deg, #b0b0b0, #8c8c8c);
-  cursor: not-allowed;
-  box-shadow: none;
-}
-
-/* Stato loading */
-.area-generazione button.loading {
-  background: linear-gradient(135deg, #1976d2, #1e88e5); /* blu per feedback */
-  cursor: progress;
-}
-
-
-.auth-links {
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
-  margin-bottom: 15px;
-}
-
-/* Bottone principale (eventuali altri usi) */
-.btn-auth {
-  background-color: #1976d2;
-  color: white;
-  border: none;
-  padding: 8px 16px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: 600;
-  font-size: 1rem;
-  transition: background-color 0.3s, transform 0.2s;
-}
-
-.btn-auth:hover {
-  background-color: #125ea4;
-  transform: translateY(-1px); /* leggero sollevamento */
-}
-
-/* Bottone login con icona + testo */
-.btn-login {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 20px;
-  font-size: 1rem;
-  font-weight: 600;
-  color: #111; /* quasi nero, meno duro del nero pieno */
-  background-color: transparent;
-  border: 2px solid #111; /* sottile e netto */
-  border-radius: 50px; /* pill shape, molto elegante */
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.08); /* leggero rilievo */
-}
-
-.btn-login mat-icon {
-  font-size: 1.5rem;
-  transition: transform 0.3s ease, color 0.3s ease;
-}
-
-.btn-login:hover {
-  color: #fff; /* testo diventa bianco */
-  background: linear-gradient(135deg, #333, #555); /* effetto elegante e soft */
-  transform: translateY(-2px); /* leggero sollevamento */
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2); /* shadow più evidente al passaggio */
-}
-
-.btn-login:hover mat-icon {
-  transform: rotate(15deg) scale(1.2); /* piccola rotazione + ingrandimento icona */
-  color: #f8f8f8; /* optional: un dettaglio di colore per icona */
-}
-
-
-
-/* Pulsanti "Aggiungi manualmente" e "Mostra articoli aggiunti" */
+/* Aggiunta manuale */
 .azioni-manuali {
   display: flex;
   flex-direction: row;
-  justify-content: space-between; /* bottoni a sx e cronologia a dx */
+  justify-content: space-between; 
   align-items: center;
   margin-top: 20px;
 }
 
 .azioni-sx {
   display: flex;
-  gap: 8px; /* mantiene la distanza tra i bottoni */
+  gap: 8px; 
   align-items: center;
 }
-
 
 .btn-manuale {
   display: inline-flex;
@@ -498,9 +396,8 @@
 }
 
 /* Lista articoli manuali */
-/* Lista articoli manuali */
 .lista-articoli-manuali {
-  margin-top: 16px; /* distanza dai pulsanti sopra */
+  margin-top: 16px; 
 }
 
 .lista-articoli-manuali ul {
@@ -521,22 +418,22 @@
   border-radius: 12px;
   transition: all 0.3s ease;
   background-color: #fff;
-  margin-bottom: 10px; /* più spazio tra i blocchi */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25); /* ombra più visibile */
+  margin-bottom: 10px; 
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25); 
 }
 
 .lista-articoli-manuali li:hover {
   background-color: #f0f8ff;
   color: #007acc;
-  transform: translateY(-3px); /* sollevamento maggiore */
-  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.18); /* ombra più intensa */
+  transform: translateY(-3px); 
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.18); 
 }
 
 .lista-articoli-manuali li.selezionato {
   background-color: #007acc;
   color: #fff;
   font-weight: 600;
-  box-shadow: 0 6px 14px rgba(0, 122, 204, 0.5); /* glow blu */
+  box-shadow: 0 6px 14px rgba(0, 122, 204, 0.5); 
 }
 
 /* Titolo articolo a sinistra in grassetto e più grande */
@@ -546,7 +443,6 @@
   font-weight: 700;
   font-size: 1.1rem;
 }
-
 
 /* Cestino */
 .btn-cestino {
@@ -568,14 +464,14 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: transparent; /* nessuno sfondo scuro */
+  background: transparent; 
   z-index: 1000;
 }
 
-/* Popup contenuto centrato fisso */
+/* Popup */
 .popup {
   position: fixed;
-  top: 250px; /* distanza fissa dall’alto */
+  top: 250px; 
   left: 50%;
   transform: translateX(-50%);
   background: #fff;
@@ -586,7 +482,6 @@
   box-shadow: 0 6px 20px rgba(0,0,0,0.15);
   z-index: 1001;
 }
-
 
 /* Pulsante chiusura a X in alto a sinistra */
 .popup .btn-chiudi {
@@ -604,20 +499,101 @@
   color: #000;
 }
 
-/* Allinea l'icona accanto ai pulsanti */
-.auth-links {
+/* Generazione notizia*/
+.area-generazione {
+  max-width: 800px;
+  margin: 2rem auto 4rem;
+  padding: 1rem 2rem;
   display: flex;
+  justify-content: center;
   align-items: center;
 }
 
-.cronologia-icon {
-  font-size: 33px;          /* più grande */
-  line-height: 1;           /* evita tagli */
-  height: 36px;             /* allinea altezza al font */
-  width: 36px;              /* opzionale, se vuoi area clic uniforme */
+.area-generazione button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 16px 25px; 
+  font-size: 1.2rem;  
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: #fff;
+  background: linear-gradient(135deg, #30c653, #186e3c); 
+  border: none;
+  border-radius: 50px;
+  cursor: not-allowed;
+  transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  text-align: center;
+  min-width: 260px;
+}
+
+.area-generazione button.attivo {
   cursor: pointer;
-  color: #222;              /* nero elegante */
-  display: inline-flex;     /* centrare meglio l'icona */
+  background: #32ab4f;
+}
+
+.area-generazione button.attivo:hover {
+  background: linear-gradient(135deg, #30c653, #186e3c);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.25);
+}
+
+.area-generazione button:disabled {
+  background: linear-gradient(135deg, #b0b0b0, #8c8c8c);
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* Stato loading */
+.area-generazione button.loading {
+  background: linear-gradient(135deg, #1976d2, #1e88e5); 
+  cursor: progress;
+}
+
+/* Spinner circolare */
+.spinner {
+  border: 5px solid rgba(255, 255, 255, 0.3); 
+  border-top: 5px solid #1e732c;             
+  border-radius: 50%;
+  width: 55px;
+  height: 55px;
+  animation: spin 1s linear infinite;
+  margin-bottom: 15px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loading-overlay p {
+  font-size: 1.3rem;
+  color: #fff;             
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  margin-top: 12px;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+  animation: pulse 1.5s infinite;
+}
+
+/* Effetto pulsazione */
+@keyframes pulse {
+  0% { opacity: 0.6; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.05); }
+  100% { opacity: 0.6; transform: scale(1); }
+}
+
+/* Cronologia */
+.cronologia-icon {
+  font-size: 33px;          
+  line-height: 1;          
+  height: 36px;             
+  width: 36px;            
+  cursor: pointer;
+  color: #222;           
+  display: inline-flex;    
   align-items: center;
   justify-content: center;
   transition: color 0.2s ease, transform 0.2s ease;
@@ -628,8 +604,6 @@
   color: #000;
   transform: scale(1.1);
 }
-
-
 
 .lista-cronologia-flottante {
   position: fixed;
@@ -665,18 +639,17 @@
 
 .lista-cronologia-flottante .header-cronologia {
   display: flex;
-  align-items: center; /* allinea testo e eventuali icone */
-  margin-top: 20px; /* spinge il testo sotto la X */
-  margin-bottom: 20px; /* distanza dai contenuti */
-  padding-left: 0; /* opzionale, se vuoi allineare il testo a sinistra */
+  align-items: center; 
+  margin-top: 20px; 
+  margin-bottom: 20px; 
+  padding-left: 0;
 }
 
-
-/* Pulsante chiudi (X) */
+/* Pulsante chiudi */
 .lista-cronologia-flottante .chiudi-cronologia {
-  position: absolute; /* rimane sopra il contenuto */
+  position: absolute; 
   top: 10px;
-  left: 10px; /* a sinistra */
+  left: 10px; 
   background: none;
   border: none;
   font-size: 2rem;
@@ -687,16 +660,14 @@
 
 /* Titolo della cronologia */
 .lista-cronologia-flottante h3 {
-  margin-top: 40px; /* spinge il titolo sotto la X */
-  margin-bottom: 10px; /* distanza dai contenuti successivi */
+  margin-top: 40px; 
+  margin-bottom: 10px; 
   font-size: 1.4rem;
   font-weight: 600;
   color: #2c3e50;
   border-bottom: 2px solid #e6ecf3;
   padding-bottom: 8px;
 }
-
-
 
 .lista-cronologia-flottante .item-cronologia {
   padding: 10px 0;
@@ -731,67 +702,17 @@
   margin-top: 10px;
 }
 
-
-.login-alert {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  background-color: #ffe0e0;
-  color: #900;
-  padding: 12px 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-  z-index: 1000;
-  font-weight: bold;
-}
-
-
-/* Overlay trasparente sopra contenuto */
 .loading-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.45); /* scuro semitrasparente */
-  backdrop-filter: blur(4px);      /* effetto sfocatura sul contenuto dietro */
+  background: rgba(0, 0, 0, 0.45); 
+  backdrop-filter: blur(4px);      
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   z-index: 9999;
-}
-
-/* Spinner circolare */
-.spinner {
-  border: 5px solid rgba(255, 255, 255, 0.3); /* bianco tenue */
-  border-top: 5px solid #1e732c;              /* verde elegante */
-  border-radius: 50%;
-  width: 55px;
-  height: 55px;
-  animation: spin 1s linear infinite;
-  margin-bottom: 15px;
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-/* Testo elegante */
-.loading-overlay p {
-  font-size: 1.3rem;
-  color: #fff;             /* bianco su sfondo scuro */
-  font-weight: 600;
-  letter-spacing: 0.5px;
-  margin-top: 12px;
-  text-shadow: 0 1px 3px rgba(0,0,0,0.6);
-  animation: pulse 1.5s infinite;
-}
-
-/* Effetto pulsazione */
-@keyframes pulse {
-  0% { opacity: 0.6; transform: scale(1); }
-  50% { opacity: 1; transform: scale(1.05); }
-  100% { opacity: 0.6; transform: scale(1); }
 }
