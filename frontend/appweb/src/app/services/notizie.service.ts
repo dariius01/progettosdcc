@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http'; 
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 export interface Notizia {
   id?: number;
@@ -15,7 +16,7 @@ export interface Notizia {
   providedIn: 'root',
 })
 export class NotizieService {
-  private apiUrl = 'http://localhost:5000/api'; 
+  private apiUrl = environment.apiUrl;; 
 
   constructor(private http: HttpClient) {}
 

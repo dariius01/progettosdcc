@@ -7,7 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
   selector: 'app-root',
   imports: [
     RouterOutlet,
-    MatIconModule  // aggiungi qui
+    MatIconModule
   ],
   template: `<router-outlet></router-outlet>`,
 })

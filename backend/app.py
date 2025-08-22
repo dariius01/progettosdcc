@@ -18,7 +18,11 @@ load_dotenv()
 app = Flask(__name__)
 
 # Configurazione Cors
-CORS(app, origins=["http://localhost:4200"], supports_credentials=True)
+CORS(app,
+     origins=["http://localhost:4200", "http://frontend:80"],
+     supports_credentials=True,
+     methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"])
+
 
 # Configurazione
 app.config['JWT_SECRET_KEY'] = os.getenv('JWT_SECRET_KEY', 'super-secret-key')
@@ -40,8 +44,7 @@ MIN_LEN_PASSWORD=8
 # ROUTES
 
 ## REGISTRAZIONE
-@app.route('/api/register', methods=['POST', 'OPTIONS'])
-@cross_origin(origin='http://localhost:4200', supports_credentials=True)
+@app.route('/api/register', methods=['POST'])
 def register():
     data = request.get_json()
     email = data.get('email', '').strip()
@@ -236,3 +239,4 @@ def ricerca_notizie():
 if __name__ == '__main__':
     print("🚀 Avvio server Flask...")
     app.run(debug=True, host='0.0.0.0', port=5000)
+
