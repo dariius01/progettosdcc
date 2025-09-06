@@ -27,6 +27,7 @@ export class RegisterComponent implements OnInit {
     private authService: AuthService,
     private router: Router
   ) {
+    // Verifica se si cerca di salvare articolo senza essere registrato
     const stato = this.router.getCurrentNavigation()?.extras.state as { articolo?: Notizia, autoSave?: boolean };
     this.articoloDaSalvare = stato?.articolo ?? null;
     this.autoSave = stato?.autoSave ?? false;

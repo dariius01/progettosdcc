@@ -1,6 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 from datetime import timezone, timedelta
+from werkzeug.security import generate_password_hash, check_password_hash
 
 db = SQLAlchemy()
 
@@ -24,8 +25,6 @@ class Notizia(db.Model):
             'data_creazione': self.data_creazione.replace(tzinfo=timezone.utc).astimezone(local_tz).isoformat(),
             'data_modifica': self.data_modifica.replace(tzinfo=timezone.utc).astimezone(local_tz).isoformat()
         }
-from werkzeug.security import generate_password_hash, check_password_hash
-
 
 
 # DB User

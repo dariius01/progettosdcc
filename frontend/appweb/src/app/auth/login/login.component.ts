@@ -22,6 +22,7 @@ export class LoginComponent {
   mostraPassword = true;
 
   constructor(private router: Router, private authService: AuthService) {
+    // Verifica se presente flag autosave (si è cercato di salvare l'articolo denza essere loggati)
     const stato = this.router.getCurrentNavigation()?.extras.state as {
       articolo?: Notizia;
       autoSave?: boolean;

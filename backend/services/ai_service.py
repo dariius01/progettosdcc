@@ -68,7 +68,8 @@ def genera_prompt_da_articoli(articoli_web: list[dict], articoli_manuali: list[d
         "La notizia DEVE avere come focus principale il termine indicato nel tema e menzionarlo esplicitamente almeno una volta nel testo. "
         "La notizia deve essere chiara, sintetica e informativa, rivolta a un pubblico appassionato di sport. "
         "Scrivi la notizia nel formato richiesto: la prima riga è il titolo, la seconda il sottotitolo (deve essere sempre presente), e il resto è il corpo del testo.\n"
-        "Il titolo non deve superare le 10 parole. Il sottotitolo deve essere una breve frase che approfondisce il titolo. Il testo deve essere un riassunto conciso e dettagliato, massimo 500 caratteri.\n"
+        "Il titolo non deve superare le 10 parole. Il sottotitolo deve essere una breve frase che approfondisce il titolo.\n" 
+        "Il testo deve essere un riassunto conciso e dettagliato, massimo 500 caratteri.\n"
         "Evita ripetizioni e usa un linguaggio semplice e diretto.\n\n"
         "Articoli web:\n"
         f"{format_articoli(articoli_web)}\n\n"
@@ -86,8 +87,6 @@ def genera_notizia_da_articoli(articoli_web: list[dict], articoli_manuali: list[
             tema = articoli_web[0]["titolo"]
         elif articoli_manuali and articoli_manuali[0].get("titolo"):
             tema = articoli_manuali[0]["titolo"]
-        else:
-            tema = "Sport"
 
     prompt = genera_prompt_da_articoli(articoli_web, articoli_manuali, tema)
     return genera_notizia_da_ai(prompt)

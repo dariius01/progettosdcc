@@ -16,28 +16,29 @@ def cerca_notizie_web(query):
 
     # Pulizia e preparazione query
     terms = query.lower().split()
-    query_phrase = f'"{query}"'  # frase esatta tra virgolette
-    query_and = " AND ".join(terms)  # tutte le parole devono comparire
-
+    query_phrase = f'"{query}"'
+    query_and = " AND ".join(terms)
     final_query = f'{query_phrase} OR {query_and}'
 
-    params = {
-        'q': final_query,
-        'apiKey': news_api_key,
-        'pageSize': 10,
-        'language': 'it',
-        'sortBy': 'relevancy',
-        'searchIn': 'title,description',
-        'from': (datetime.utcnow() - timedelta(days=7)).strftime('%Y-%m-%dT%H:%M:%SZ')
-    }
-
-    try:
+    def fetch_news(days):
+        params = {
+            'q': final_query,
+            'apiKey': news_api_key,
+            'pageSize': 15,
+            'language': 'it',
+            'sortBy': 'relevancy',
+            'searchIn': 'title,description',
+            'from': (datetime.utcnow() - timedelta(days=days)).strftime('%Y-%m-%dT%H:%M:%SZ')
+        }
         response = requests.get(BASE_URL, params=params, timeout=5)
         response.raise_for_status()
-        dati = response.json()
-        articoli = dati.get('articles', [])
+        return response.json().get('articles', [])
 
-        # Filtro di rilevanza generico: l'articolo deve contenere tutti i termini
+    try:
+        articoli = fetch_news(7)  
+        if not articoli:
+            articoli = fetch_news(30)  
+
         def è_rilevante(art):
             testo = f"{art.get('title', '')} {art.get('description', '')} {art.get('content', '')}".lower()
             return all(t in testo for t in terms)

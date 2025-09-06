@@ -78,7 +78,7 @@ def modifica_notizia(id):
 ## SALVA NOTIZIA
 @notizia_bp.route('/salva-notizia', methods=['POST'])
 @jwt_required()
-def salva_notizia_route():
+def salva_notizia():
     
     dati = request.get_json()
 
